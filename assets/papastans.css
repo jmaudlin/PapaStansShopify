@@ -409,7 +409,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 @media (max-width: 680px) and (orientation: portrait) {
   .ps-hamburger { display: flex; }
   /* Hide account link from the top bar — it lives in the drawer instead */
-  .ps-nav-actions .ps-nav-account-link { display: none; }
+  .ps-nav-actions .ps-nav-account-link { display: none !important; }
   /* Show the drawer account item */
   .ps-nav-drawer-account { display: block; }
 
@@ -451,8 +451,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   }
   .ps-nav-links a:hover { background: var(--lav-light); border-color: var(--border); color: var(--lav) !important; }
 
-  /* Account link in drawer */
-  .ps-nav-account-link {
+  /* Account link in drawer - scoped to drawer item only */
+  .ps-nav-drawer-account .ps-nav-account-link {
     display: block !important;
     font-size: .85rem;
     padding: .7rem 1rem;
@@ -460,6 +460,11 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
     color: var(--lav-ink) !important;
     border: 2px solid transparent;
     text-decoration: none;
+  }
+  .ps-nav-drawer-account .ps-nav-account-link:hover {
+    background: var(--lav-light);
+    border-color: var(--border);
+    color: var(--lav) !important;
   }
 }
 
