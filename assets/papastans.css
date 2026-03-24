@@ -131,7 +131,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-hero-offer { position:absolute;right:4%;top:30%;z-index:5;background:#fff;border:4px solid var(--lavender);padding:1.2rem 1.4rem;max-width:200px;text-align:center;transform:rotate(3deg);box-shadow:6px 6px 0 var(--bark);opacity:0;animation:psPopIn .7s cubic-bezier(.34,1.56,.64,1) forwards 1s; }
 .ps-offer-icon { font-size:1.8rem; }
 .ps-offer-title { font-family:'Luckiest Guy',cursive;font-size:1rem;color:var(--lav-dark);letter-spacing:.04em;margin:.3rem 0 .2rem; }
-.ps-offer-body { font-size:.7rem;font-weight:700;color:var(--brown);line-height:1.4; }
+.ps-offer-body { font-size:.7rem;font-weight:700;color:var(--lav-mid);line-height:1.4; }
 .ps-hero-phone { position:absolute;bottom:2.5rem;left:5rem;z-index:5;display:flex;align-items:center;gap:.6rem;opacity:0;animation:psFadeIn .8s ease forwards 1.2s; }
 .ps-hero-phone a { font-family:'Caveat',cursive;font-size:1.15rem;color:var(--tan);text-decoration:none;font-weight:600; }
 .ps-hero-phone a:hover { color:var(--sun); }
@@ -175,7 +175,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-badge-est span:last-child { font-family:'Luckiest Guy',cursive;font-size:1.2rem;color:var(--lav-ink);letter-spacing:.04em; }
 .ps-about-text { padding:6rem 5rem;background: var(--lav-xlight);display:flex;flex-direction:column;justify-content:center;position:relative; }
 .ps-about-text::before { content:'';position:absolute;left:0;top:5%;bottom:5%;width:6px;background:repeating-linear-gradient(180deg,var(--barn) 0px,var(--barn) 10px,transparent 10px,transparent 16px); }
-.ps-about-body { font-size:1.05rem;font-weight:600;line-height:1.8;color:var(--brown);margin:1rem 0 1.5rem; }
+.ps-about-body { font-size:1.05rem;font-weight:600;line-height:1.8;color:var(--lav-mid);margin:1rem 0 1.5rem; }
 .ps-vet-banner { display:flex;align-items:center;gap:1rem;background:var(--lav);border:3px solid var(--bark);padding:1rem 1.2rem;border-radius:8px;box-shadow:4px 4px 0 var(--bark);margin-bottom:2rem; }
 .ps-vet-icon { font-size:2rem; }
 .ps-vet-banner h4 { font-family:'Luckiest Guy',cursive;font-size:.95rem;color:var(--sun);letter-spacing:.04em;margin:0; }
@@ -183,7 +183,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-about-stats { display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.5rem; }
 .ps-a-stat { background:#fff;border:3px solid var(--border);padding:1.2rem;text-align:center;border-radius:8px;box-shadow:3px 3px 0 var(--border); }
 .ps-stat-n { font-family:'Luckiest Guy',cursive;font-size:2rem;color:var(--barn);letter-spacing:.04em;line-height:1; }
-.ps-stat-l { font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brown);margin-top:.2rem; }
+.ps-stat-l { font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lav-mid);margin-top:.2rem; }
 
 /* ── Products ── */
 .ps-products { padding:7rem 4rem;background: var(--offwhite); }
@@ -191,7 +191,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-view-all { font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--barrel);text-decoration:none;border-bottom:3px solid var(--barrel);padding-bottom:.1rem;transition:color .2s; }
 .ps-view-all:hover { color:var(--barn2); }
 .ps-cat-tabs { display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap; }
-.ps-cat-tab { padding:.45rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;border:3px solid var(--border);color:var(--brown);cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:3px 3px 0 var(--border); }
+.ps-cat-tab { padding:.45rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;border:3px solid var(--border);color:var(--lav-mid);cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:3px 3px 0 var(--border); }
 .ps-cat-tab:hover, .ps-cat-tab.active { background:var(--lav);border-color:var(--lav-ink);color:#fff;box-shadow:3px 3px 0 var(--bark); }
 .ps-pgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem; }
 .ps-load-more-wrap { text-align:center;margin-top:2.5rem; }
@@ -216,11 +216,11 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-pc-name a { color:inherit;text-decoration:none; }
 .ps-pc-name a:hover { color:var(--barn); }
 .ps-pc-price { font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--barrel);letter-spacing:.04em; }
-.ps-pc-price.ps-sold-out { color:var(--brown);text-decoration:line-through;font-size:1rem; }
+.ps-pc-price.ps-sold-out { color:var(--lav-mid);text-decoration:line-through;font-size:1rem; }
 .ps-pc-foot { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.8rem; }
 .ps-atc { padding:.45rem 1rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--lav-dark);cursor:pointer;border-radius:6px;box-shadow:2px 2px 0 var(--lav-dark);transition:all .2s; }
 .ps-atc:hover { background:var(--lav-dark);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--lav-dark); }
-.ps-atc:disabled { background:var(--tan);border-color:var(--border);color:var(--brown);cursor:not-allowed;box-shadow:none; }
+.ps-atc:disabled { background:var(--tan);border-color:var(--border);color:var(--lav-mid);cursor:not-allowed;box-shadow:none; }
 
 /* ── Scents ── */
 .ps-scents { position:relative;min-height:80vh;overflow:hidden;display:flex;align-items:center; }
@@ -251,7 +251,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-tc:hover { transform:translate(-3px,-4px) rotate(0deg) !important;box-shadow:8px 8px 0 var(--border); }
 .ps-tc-quote { font-family:'Luckiest Guy',cursive;font-size:4rem;line-height:.7;color:var(--lavender);opacity:.2;margin-bottom:.4rem;letter-spacing:.04em; }
 .ps-tc-stars { color:var(--butter-dk);margin-bottom:.5rem;font-size:1.1rem;letter-spacing:.05em; }
-.ps-tc-text { font-size:.95rem;font-weight:600;line-height:1.7;color:var(--brown);margin-bottom:1.2rem; }
+.ps-tc-text { font-size:.95rem;font-weight:600;line-height:1.7;color:var(--lav-mid);margin-bottom:1.2rem; }
 .ps-tc-author { font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:var(--lav-dark); }
 
 /* ── Local ── */
@@ -261,7 +261,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-local-card { background: var(--lav-xlight);border:4px solid var(--border);border-radius:12px;padding:2.5rem;text-align:center;box-shadow:8px 8px 0 rgba(0,0,0,.3);transform:rotate(-1deg); }
 .ps-local-card-icon { font-size:4rem;margin-bottom:.5rem; }
 .ps-local-card h3 { font-family:'Luckiest Guy',cursive;font-size:1.8rem;color:var(--lav-ink);letter-spacing:.04em; }
-.ps-local-card p { font-family:'Caveat',cursive;font-size:1.1rem;color:var(--brown);margin-top:.3rem; }
+.ps-local-card p { font-family:'Caveat',cursive;font-size:1.1rem;color:var(--lav-mid);margin-top:.3rem; }
 .ps-phone-link { font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--lavender);display:block;margin-top:.8rem;text-decoration:none;letter-spacing:.04em; }
 .ps-phone-link:hover { color:var(--barn2); }
 .ps-local-detail { display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.4rem; }
@@ -275,7 +275,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-nl-sub { font-size:1rem;font-weight:600;color:rgba(255,255,255,.9);margin-bottom:2.5rem;position:relative;z-index:1; }
 .ps-nl-form { display:flex;max-width:460px;margin:0 auto;position:relative;z-index:1; }
 .ps-nl-input { flex:1;padding:.9rem 1.3rem;background:#fff;border:3px solid var(--bark);border-right:none;color:var(--lav-ink);font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:600;outline:none;border-radius:8px 0 0 8px; }
-.ps-nl-input::placeholder { color:var(--brown);opacity:.5; }
+.ps-nl-input::placeholder { color:var(--lav-mid);opacity:.5; }
 .ps-nl-input:focus { border-color:var(--barn); }
 .ps-nl-btn { padding:.9rem 1.6rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:3px solid var(--bark);border-radius:0 8px 8px 0;cursor:pointer;transition:background .25s; }
 .ps-nl-btn:hover { background: var(--lav-dark); }
@@ -311,7 +311,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-cart-close { background:var(--barn);border:2px solid var(--bark);color:#fff;cursor:pointer;font-size:1rem;font-weight:800;width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background .2s; }
 .ps-cart-close:hover { background:var(--barn2); }
 .ps-cart-items { flex:1;overflow-y:auto;padding:1.2rem 1.6rem; }
-.ps-cart-empty { text-align:center;padding:3.5rem 1rem;font-family:'Caveat',cursive;font-size:1.2rem;color:var(--brown); }
+.ps-cart-empty { text-align:center;padding:3.5rem 1rem;font-family:'Caveat',cursive;font-size:1.2rem;color:var(--lav-mid); }
 .ps-cart-item { display:grid;grid-template-columns:65px 1fr auto;gap:.8rem;align-items:start;padding:.9rem 0;border-bottom:2px dashed var(--border); }
 .ps-ci-img { width:65px;height:65px;object-fit:cover;border:2px solid var(--border);border-radius:6px;background: var(--lav-xlight); }
 .ps-ci-name { font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--lav-ink);margin-bottom:.2rem; }
@@ -324,16 +324,16 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-ci-remove:hover { opacity:1; }
 .ps-cart-foot { padding:1.2rem 1.6rem;border-top:3px solid var(--border);background: var(--lav-xlight); }
 .ps-ship-bar-wrap { margin-bottom:.9rem; }
-.ps-ship-bar-msg { font-size:.7rem;font-weight:700;color:var(--brown);margin-bottom:.35rem;text-align:center; }
+.ps-ship-bar-msg { font-size:.7rem;font-weight:700;color:var(--lav-mid);margin-bottom:.35rem;text-align:center; }
 .ps-ship-bar-msg strong { color:var(--moss); }
 .ps-ship-bar-bg { height:6px;background:var(--tan);border-radius:3px;overflow:hidden;border:1px solid var(--border); }
 .ps-ship-bar-fill { height:100%;background:linear-gradient(90deg,var(--lavender),var(--lav-dark));border-radius:3px;transition:width .5s ease; }
 .ps-cart-subtotal { display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem; }
-.ps-cart-subtotal span:first-child { font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--brown); }
+.ps-cart-subtotal span:first-child { font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lav-mid); }
 .ps-cart-subtotal span:last-child { font-family:'Luckiest Guy',cursive;font-size:1.5rem;color:var(--barn);letter-spacing:.04em; }
 .ps-cart-checkout { display:block;width:100%;padding:.95rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:3px solid var(--bark);cursor:pointer;transition:all .2s;text-align:center;border-radius:8px;box-shadow:4px 4px 0 var(--bark);text-decoration:none; }
 .ps-cart-checkout:hover { background: var(--lav-dark);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--bark);color:#fff; }
-.ps-cart-note { text-align:center;margin-top:.7rem;font-size:.68rem;font-weight:700;color:var(--brown); }
+.ps-cart-note { text-align:center;margin-top:.7rem;font-size:.68rem;font-weight:700;color:var(--lav-mid); }
 .ps-cart-note strong { color:var(--moss); }
 
 /* ── Toast ── */
@@ -380,7 +380,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 /* ── Solid nav (for inner pages) ── */
 .ps-nav-solid { background: rgba(253,250,255,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); margin-top: 0 !important; position: sticky !important; }
 .ps-nav-solid .ps-nav-links a { color: var(--lav-ink); }
-.ps-nav-solid .ps-nav-links a:hover { color: var(--bark) !important; background: var(--butter); }
+.ps-nav-solid .ps-nav-links a:hover { color: #fff !important; background: var(--lav); }
 .ps-nav-solid .ps-nav-account-link { color: var(--lav) !important; border-color: var(--lav-light) !important; }
 .ps-nav-solid .ps-nav-account-link:hover { background: var(--lav-light) !important; color: var(--lav-dark) !important; }
 .ps-nav-solid .ps-nav-search-btn { color: var(--lav) !important; }
@@ -391,18 +391,18 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-page-wrap { max-width: 1200px; margin: 0 auto; padding: 4rem 4rem 5rem; }
 
 /* ── Breadcrumb ── */
-.ps-breadcrumb { font-size: .8rem; font-weight: 600; color: var(--brown); margin-bottom: 2rem; }
+.ps-breadcrumb { font-size: .8rem; font-weight: 600; color: var(--lav-mid); margin-bottom: 2rem; }
 .ps-breadcrumb a { color: var(--barn); text-decoration: none; }
 .ps-breadcrumb a:hover { text-decoration: underline; }
 
 /* ── Collection toolbar ── */
 .ps-coll-header { margin-bottom: 2.5rem; }
-.ps-coll-desc { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-top: .5rem; }
+.ps-coll-desc { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); margin-top: .5rem; }
 .ps-coll-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
 .ps-sort-select { padding: .5rem 1rem; font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700; background: #fff; border: 3px solid var(--border); border-radius: 8px; color: var(--lav-ink); cursor: pointer; box-shadow: 2px 2px 0 var(--border); }
 .ps-sort-select:focus { outline: none; border-color: var(--barn); }
 .ps-pagination { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
-.ps-page-info { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); }
+.ps-page-info { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); }
 
 /* ── Product detail ── */
 .ps-product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; }
@@ -414,9 +414,9 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-product-title { font-family: 'Luckiest Guy', cursive; font-size: clamp(1.8rem,3.5vw,2.8rem); color: var(--lav-ink); letter-spacing: .04em; line-height: 1.1; margin-bottom: .8rem; }
 .ps-product-price { margin: 1rem 0; }
 .ps-price-current { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: var(--barn); letter-spacing: .04em; }
-.ps-price-compare { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--brown); text-decoration: line-through; margin-right: .5rem; opacity: .6; }
+.ps-price-compare { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav-mid); text-decoration: line-through; margin-right: .5rem; opacity: .6; }
 .ps-variant-wrap { margin-bottom: 1rem; }
-.ps-variant-label { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); margin-bottom: .4rem; }
+.ps-variant-label { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); margin-bottom: .4rem; }
 .ps-variant-select { padding: .6rem 1rem; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 600; background: #fff; border: 3px solid var(--border); border-radius: 8px; color: var(--lav-ink); width: 100%; cursor: pointer; box-shadow: 2px 2px 0 var(--border); }
 .ps-qty-row { display: flex; gap: 1rem; align-items: center; margin: 1.2rem 0; flex-wrap: wrap; }
 .ps-qty-wrap { display: flex; align-items: center; border: 3px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 2px 2px 0 var(--border); }
@@ -426,8 +426,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-qty-input:focus { outline: none; }
 .ps-atc-big { font-size: .9rem !important; padding: .9rem 2rem !important; }
 .ps-product-perks { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0; }
-.ps-product-perks span { background: var(--lav-xlight); border: 2px solid var(--border); padding: .3rem .7rem; border-radius: 20px; font-size: .72rem; font-weight: 700; color: var(--brown); }
-.ps-product-desc { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--border); font-size: .95rem; font-weight: 600; color: var(--brown); line-height: 1.75; }
+.ps-product-perks span { background: var(--lav-xlight); border: 2px solid var(--border); padding: .3rem .7rem; border-radius: 20px; font-size: .72rem; font-weight: 700; color: var(--lav-mid); }
+.ps-product-desc { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--border); font-size: .95rem; font-weight: 600; color: var(--lav-mid); line-height: 1.75; }
 .ps-product-desc h1,.ps-product-desc h2,.ps-product-desc h3 { font-family: 'Luckiest Guy', cursive; color: var(--lav-ink); margin: 1rem 0 .5rem; }
 
 /* ── Cart page ── */
@@ -440,7 +440,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-cart-summary-box { background: var(--lav-xlight); border: 3px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 5px 5px 0 var(--border); position: sticky; top: 100px; }
 
 /* ── Page content ── */
-.ps-page-content { font-size: 1rem; font-weight: 600; line-height: 1.8; color: var(--brown); max-width: 800px; }
+.ps-page-content { font-size: 1rem; font-weight: 600; line-height: 1.8; color: var(--lav-mid); max-width: 800px; }
 .ps-page-content h1,.ps-page-content h2,.ps-page-content h3 { font-family: 'Luckiest Guy', cursive; color: var(--lav-ink); margin: 1.5rem 0 .8rem; }
 .ps-page-content a { color: var(--barn); }
 .ps-page-content p { margin-bottom: 1rem; }
@@ -467,10 +467,10 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-contact-info-col { display: flex; flex-direction: column; gap: 1.2rem; }
 .ps-contact-info-card { background: var(--lav-xlight); border: 3px solid var(--border); border-radius: 12px; padding: 1.4rem 1.6rem; box-shadow: 3px 3px 0 var(--border); }
 .ps-contact-info-title { font-family: 'Luckiest Guy', cursive; font-size: 1rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .9rem; }
-.ps-contact-info-addr { font-size: .9rem; font-weight: 600; color: var(--brown); line-height: 1.7; margin-bottom: .4rem; }
+.ps-contact-info-addr { font-size: .9rem; font-weight: 600; color: var(--lav-mid); line-height: 1.7; margin-bottom: .4rem; }
 .ps-contact-info-row { display: flex; justify-content: space-between; align-items: center; padding: .4rem 0; border-bottom: 1px dashed var(--border); font-size: .82rem; }
 .ps-contact-info-row:last-child { border-bottom: none; }
-.ps-contact-info-row span:first-child { font-weight: 800; color: var(--brown); text-transform: uppercase; font-size: .65rem; letter-spacing: .1em; }
+.ps-contact-info-row span:first-child { font-weight: 800; color: var(--lav-mid); text-transform: uppercase; font-size: .65rem; letter-spacing: .1em; }
 .ps-contact-info-row a, .ps-contact-info-row span:last-child { font-weight: 600; color: var(--lav); text-decoration: none; }
 .ps-contact-info-row a:hover { color: var(--lav-dark); }
 .ps-contact-socials { display: flex; flex-direction: column; gap: .6rem; }
@@ -481,7 +481,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 /* ── Contact form fields ── */
 .ps-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .ps-form-group { margin-bottom: 1.2rem; }
-.ps-form-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); margin-bottom: .4rem; }
+.ps-form-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); margin-bottom: .4rem; }
 .ps-required { color: var(--pink); }
 .ps-form-input { width: 100%; padding: .75rem 1rem; background: var(--white); border: 3px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 600; color: var(--lav-ink); outline: none; transition: border-color .25s; box-shadow: 2px 2px 0 var(--border); appearance: none; }
 .ps-form-input:focus { border-color: var(--lav); box-shadow: 2px 2px 0 var(--lav); }
@@ -501,7 +501,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* ── Policy Pages ── */
 .ps-policy-header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 3px dashed var(--border); }
-.ps-policy-updated { font-family: 'Caveat', cursive; font-size: 1rem; color: var(--brown); margin-top: .4rem; opacity: .7; }
+.ps-policy-updated { font-family: 'Caveat', cursive; font-size: 1rem; color: var(--lav-mid); margin-top: .4rem; opacity: .7; }
 
 .ps-policy-grid { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; align-items: start; }
 
@@ -525,7 +525,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-policy-sidebar { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 100px; }
 .ps-policy-sidebar-card { background: var(--lav-xlight); border: 3px solid var(--border); border-radius: 12px; padding: 1.3rem 1.5rem; box-shadow: 3px 3px 0 var(--border); }
 .ps-policy-sidebar-title { font-family: 'Luckiest Guy', cursive; font-size: .95rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .9rem; }
-.ps-policy-sidebar-body { font-size: .82rem; font-weight: 600; color: var(--brown); line-height: 1.6; }
+.ps-policy-sidebar-body { font-size: .82rem; font-weight: 600; color: var(--lav-mid); line-height: 1.6; }
 .ps-policy-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .3rem; }
 .ps-policy-links a { display: block; padding: .55rem .8rem; font-size: .82rem; font-weight: 700; color: var(--lav-ink); text-decoration: none; border-radius: 6px; transition: all .2s; border: 2px solid transparent; }
 .ps-policy-links a:hover { background: var(--lav-light); color: var(--lav-dark); border-color: var(--border); }
@@ -557,14 +557,14 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-account-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 3rem; padding-bottom: 4rem; }
 .ps-account-card { width: 100%; max-width: 480px; background: var(--white); border: 3px solid var(--border); border-radius: 16px; padding: 2.5rem; box-shadow: 6px 6px 0 var(--border); }
 .ps-account-title { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .3rem; text-align: center; }
-.ps-account-sub { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--brown); text-align: center; margin-bottom: 1.8rem; }
+.ps-account-sub { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--lav-mid); text-align: center; margin-bottom: 1.8rem; }
 .ps-account-section-h { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .5rem; }
 .ps-account-forgot { text-align: right; margin-bottom: .4rem; }
 .ps-account-link-btn { background: none; border: none; cursor: pointer; color: var(--lav); font-family: 'Nunito', sans-serif; font-size: .82rem; font-weight: 800; text-decoration: underline; padding: 0; }
 .ps-account-link-btn:hover { color: var(--lav-dark); }
 .ps-account-divider { text-align: center; margin: 1.5rem 0; position: relative; }
 .ps-account-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
-.ps-account-divider span { position: relative; background: var(--white); padding: 0 1rem; font-size: .78rem; font-weight: 700; color: var(--brown); text-transform: uppercase; letter-spacing: .1em; }
+.ps-account-divider span { position: relative; background: var(--white); padding: 0 1rem; font-size: .78rem; font-weight: 700; color: var(--lav-mid); text-transform: uppercase; letter-spacing: .1em; }
 
 /* Form errors */
 .ps-form-error { background: #fdecea; border: 2px solid #e53e3e; border-radius: 8px; padding: .8rem 1rem; font-size: .85rem; font-weight: 700; color: #c53030; margin-bottom: 1.2rem; }
@@ -578,17 +578,17 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-account-section-card { background: var(--lav-xlight); border: 3px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: 3px 3px 0 var(--border); }
 .ps-account-section-title { font-family: 'Luckiest Guy', cursive; font-size: 1.05rem; color: var(--lav); letter-spacing: .04em; margin-bottom: 1rem; }
 .ps-account-name { font-family: 'Luckiest Guy', cursive; font-size: 1.1rem; color: var(--lav-ink); letter-spacing: .03em; margin-bottom: .2rem; }
-.ps-account-email { font-size: .82rem; font-weight: 600; color: var(--brown); margin-bottom: .8rem; }
+.ps-account-email { font-size: .82rem; font-weight: 600; color: var(--lav-mid); margin-bottom: .8rem; }
 .ps-account-address { font-size: .85rem; font-weight: 600; color: var(--lav-ink); line-height: 1.7; padding: .8rem; background: var(--white); border: 2px solid var(--border); border-radius: 8px; margin-bottom: .5rem; }
 .ps-account-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .3rem; }
 .ps-account-links a { display: block; padding: .5rem .8rem; font-size: .85rem; font-weight: 700; color: var(--lav-ink); text-decoration: none; border-radius: 6px; transition: all .2s; }
 .ps-account-links a:hover { background: var(--lav-light); color: var(--lav-dark); }
-.ps-account-empty { text-align: center; padding: 2.5rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--brown); }
+.ps-account-empty { text-align: center; padding: 2.5rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-mid); }
 
 /* Order table */
 .ps-order-table-wrap { overflow-x: auto; }
 .ps-order-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-.ps-order-table th { font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--brown); padding: .6rem .8rem; border-bottom: 3px solid var(--border); text-align: left; white-space: nowrap; }
+.ps-order-table th { font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--lav-mid); padding: .6rem .8rem; border-bottom: 3px solid var(--border); text-align: left; white-space: nowrap; }
 .ps-order-table td { padding: .75rem .8rem; border-bottom: 1px dashed var(--border); vertical-align: middle; font-weight: 600; color: var(--lav-ink); }
 .ps-order-table tr:last-child td { border-bottom: none; }
 .ps-order-table tr:hover td { background: var(--lav-xlight); }
@@ -605,7 +605,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   .ps-account-sidebar { position: static; }
   .ps-order-table thead { display: none; }
   .ps-order-table td { display: flex; justify-content: space-between; padding: .5rem .8rem; }
-  .ps-order-table td::before { content: attr(data-label); font-weight: 800; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); }
+  .ps-order-table td::before { content: attr(data-label); font-weight: 800; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); }
   .ps-order-table tr { display: block; border: 2px solid var(--border); border-radius: 8px; margin-bottom: .8rem; }
   .ps-order-table tr:hover td { background: var(--white); }
 }
@@ -626,7 +626,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* Blog page header */
 .ps-blog-header { margin-bottom: 2rem; }
-.ps-blog-header-sub { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-top: .3rem; }
+.ps-blog-header-sub { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); margin-top: .3rem; }
 
 /* Blog search bar */
 .ps-blog-search { display: flex; gap: .6rem; max-width: 540px; margin-bottom: 2.5rem; }
@@ -645,14 +645,14 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-blog-card-meta { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; flex-wrap: wrap; }
 .ps-blog-tag { display: inline-block; background: var(--lav-light); color: var(--lav-dark); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 10px; text-decoration: none; }
 .ps-blog-tag:hover { background: var(--lav); color: #fff; }
-.ps-blog-date { font-size: .72rem; font-weight: 600; color: var(--brown); }
+.ps-blog-date { font-size: .72rem; font-weight: 600; color: var(--lav-mid); }
 .ps-blog-card-title { font-family: 'Luckiest Guy', cursive; font-size: 1.15rem; line-height: 1.2; letter-spacing: .03em; color: var(--lav-ink); margin-bottom: .5rem; }
 .ps-blog-card-title a { text-decoration: none; color: inherit; }
 .ps-blog-card-title a:hover { color: var(--lav); }
-.ps-blog-card-excerpt { font-size: .85rem; font-weight: 600; color: var(--brown); line-height: 1.6; margin-bottom: .8rem; flex: 1; }
+.ps-blog-card-excerpt { font-size: .85rem; font-weight: 600; color: var(--lav-mid); line-height: 1.6; margin-bottom: .8rem; flex: 1; }
 .ps-blog-read-more { font-size: .75rem; font-weight: 800; color: var(--lav); text-decoration: none; letter-spacing: .06em; text-transform: uppercase; margin-top: auto; }
 .ps-blog-read-more:hover { color: var(--lav-dark); }
-.ps-blog-empty { text-align: center; padding: 4rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--brown); }
+.ps-blog-empty { text-align: center; padding: 4rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-mid); }
 
 /* Article page */
 .ps-article-wrap { max-width: 1200px; }
@@ -663,7 +663,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-article-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 3px dashed var(--border); }
 .ps-article-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
 .ps-article-title { font-family: 'Luckiest Guy', cursive; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--lav); letter-spacing: .04em; line-height: 1.1; margin-bottom: .8rem; }
-.ps-article-meta { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .78rem; font-weight: 600; color: var(--brown); }
+.ps-article-meta { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .78rem; font-weight: 600; color: var(--lav-mid); }
 .ps-article-content.rte { font-size: 1rem; line-height: 1.85; color: var(--lav-ink); font-weight: 500; }
 .ps-article-content.rte h1,.ps-article-content.rte h2 { font-family: 'Luckiest Guy', cursive; color: var(--lav); letter-spacing: .04em; margin: 2rem 0 .8rem; }
 .ps-article-content.rte h2 { font-size: 1.4rem; }
@@ -687,10 +687,10 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-search-input { flex: 1; }
 .ps-search-btn { white-space: nowrap; }
 .ps-search-type-tabs { display: flex; gap: .5rem; }
-.ps-search-type-tab { display: flex; align-items: center; gap: .4rem; padding: .4rem .9rem; border: 2px solid var(--border); border-radius: 20px; font-size: .72rem; font-weight: 800; cursor: pointer; transition: all .2s; color: var(--brown); }
+.ps-search-type-tab { display: flex; align-items: center; gap: .4rem; padding: .4rem .9rem; border: 2px solid var(--border); border-radius: 20px; font-size: .72rem; font-weight: 800; cursor: pointer; transition: all .2s; color: var(--lav-mid); }
 .ps-search-type-tab:hover,.ps-search-type-active { background: var(--lav); border-color: var(--lav-dark); color: #fff; }
 .ps-search-type-tab input { display: none; }
-.ps-search-summary { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-bottom: 1.5rem; }
+.ps-search-summary { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); margin-bottom: 1.5rem; }
 .ps-search-results { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
 .ps-search-result-card { display: flex; gap: 1.2rem; align-items: flex-start; background: var(--white); border: 3px solid var(--border); border-radius: 12px; padding: 1.2rem; box-shadow: 3px 3px 0 var(--border); transition: transform .2s; }
 .ps-search-result-card:hover { transform: translateY(-2px); }
@@ -701,7 +701,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-search-result-title { font-family: 'Luckiest Guy', cursive; font-size: 1.05rem; letter-spacing: .03em; color: var(--lav-ink); margin-bottom: .3rem; }
 .ps-search-result-title a { text-decoration: none; color: inherit; }
 .ps-search-result-title a:hover { color: var(--lav); }
-.ps-search-result-excerpt { font-size: .85rem; font-weight: 600; color: var(--brown); line-height: 1.6; }
+.ps-search-result-excerpt { font-size: .85rem; font-weight: 600; color: var(--lav-mid); line-height: 1.6; }
 .ps-search-product-img { width: 90px; height: 90px; overflow: hidden; border-radius: 8px; border: 2px solid var(--border); flex-shrink: 0; }
 .ps-search-product-img img { width: 100%; height: 100%; object-fit: cover; }
 .ps-search-suggestions { margin-top: 1rem; }
@@ -758,7 +758,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   padding: .3rem 0;
   min-width: 0;
 }
-.ps-search-bar-input::placeholder { color: var(--brown); opacity: .5; }
+.ps-search-bar-input::placeholder { color: var(--lav-mid); opacity: .5; }
 
 .ps-search-bar-submit {
   background: var(--lav);
@@ -778,7 +778,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-search-bar-close {
   background: none;
   border: 2px solid var(--border);
-  color: var(--brown);
+  color: var(--lav-mid);
   font-size: .85rem;
   font-weight: 800;
   width: 30px; height: 30px;
@@ -826,7 +826,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   font-weight: 800;
   letter-spacing: .15em;
   text-transform: uppercase;
-  color: var(--brown);
+  color: var(--lav-mid);
   padding: .6rem 1.2rem .3rem;
   opacity: .7;
 }
@@ -860,7 +860,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-sd-info { flex: 1; min-width: 0; }
 .ps-sd-title { display: block; font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 700; color: var(--lav-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ps-sd-price { display: block; font-family: 'Luckiest Guy', cursive; font-size: .88rem; color: var(--lav); letter-spacing: .04em; margin-top: .1rem; }
-.ps-sd-meta { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brown); margin-top: .1rem; opacity: .65; }
+.ps-sd-meta { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lav-mid); margin-top: .1rem; opacity: .65; }
 
 .ps-sd-mark { background: var(--lav-light); color: var(--lav-dark); border-radius: 2px; padding: 0 1px; font-style: normal; }
 
@@ -868,7 +868,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   padding: 1.5rem 1.2rem;
   font-size: .9rem;
   font-weight: 600;
-  color: var(--brown);
+  color: var(--lav-mid);
   text-align: center;
   font-family: 'Caveat', cursive;
   font-size: 1.05rem;

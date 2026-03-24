@@ -83,7 +83,7 @@
               {%- unless a.handle == article.handle -%}
                 <li>
                   <a href="{{ a.url }}">
-                    <span style="font-size:.75rem;color:var(--brown);display:block">{{ a.published_at | date: "%b %d, %Y" }}</span>
+                    <span style="font-size:.75rem;color:var(--lav-ink);display:block">{{ a.published_at | date: "%b %d, %Y" }}</span>
                     {{ a.title | truncate: 45 }}
                   </a>
                 </li>

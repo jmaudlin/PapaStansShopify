@@ -18,7 +18,7 @@
   {%- if cart.item_count == 0 -%}
     <div style="text-align:center;padding:4rem 1rem">
       <div style="font-size:4rem;margin-bottom:1rem">🛒</div>
-      <p style="font-family:'Caveat',cursive;font-size:1.5rem;color:var(--brown);margin-bottom:2rem">Your cart is empty!</p>
+      <p style="font-family:'Caveat',cursive;font-size:1.5rem;color:var(--lav-ink);margin-bottom:2rem">Your cart is empty!</p>
       <a href="{{ shop.url }}/collections/all" class="ps-btn-primary">Start Shopping 🌿</a>
     </div>
   {%- else -%}
@@ -32,24 +32,24 @@
             <div class="ps-cart-page-item-info">
               <a href="{{ item.url }}" class="ps-cart-page-item-name">{{ item.product_title }}</a>
               {%- if item.variant_title != 'Default Title' -%}
-                <p style="font-size:.8rem;color:var(--brown)">{{ item.variant_title }}</p>
+                <p style="font-size:.8rem;color:var(--lav-ink)">{{ item.variant_title }}</p>
               {%- endif -%}
-              <p style="font-family:'Luckiest Guy',cursive;color:var(--barn);font-size:1.1rem;letter-spacing:.04em;margin:.3rem 0">{{ item.price | money }}</p>
+              <p style="font-family:'Luckiest Guy',cursive;color:var(--lav);font-size:1.1rem;letter-spacing:.04em;margin:.3rem 0">{{ item.price | money }}</p>
               <div class="ps-ci-qty" style="margin-top:.5rem">
                 <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" class="ps-qty-btn-a">−</a>
                 <span style="font-weight:800;min-width:24px;text-align:center">{{ item.quantity }}</span>
                 <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" class="ps-qty-btn-a">+</a>
-                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" style="margin-left:.8rem;font-size:.75rem;color:var(--barn);font-weight:700">Remove</a>
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" style="margin-left:.8rem;font-size:.75rem;color:var(--lav);font-weight:700">Remove</a>
               </div>
             </div>
-            <div style="font-family:'Luckiest Guy',cursive;color:var(--bark);font-size:1.1rem;letter-spacing:.04em;white-space:nowrap">{{ item.line_price | money }}</div>
+            <div style="font-family:'Luckiest Guy',cursive;color:var(--lav-ink);font-size:1.1rem;letter-spacing:.04em;white-space:nowrap">{{ item.line_price | money }}</div>
           </div>
         {%- endfor -%}
       </div>
 
       <div class="ps-cart-page-summary">
         <div class="ps-cart-summary-box">
-          <h3 style="font-family:'Luckiest Guy',cursive;font-size:1.4rem;color:var(--bark);letter-spacing:.04em;margin-bottom:1.2rem">Order Summary</h3>
+          <h3 style="font-family:'Luckiest Guy',cursive;font-size:1.4rem;color:var(--lav-ink);letter-spacing:.04em;margin-bottom:1.2rem">Order Summary</h3>
           {%- assign free_ship_threshold = 5500 -%}
           {%- if cart.total_price < free_ship_threshold -%}
             {%- assign remaining = free_ship_threshold | minus: cart.total_price -%}
@@ -60,12 +60,12 @@
           {%- else -%}
             <div class="ps-ship-bar-msg" style="text-align:center;margin-bottom:1rem"><strong>🎉 You've unlocked free shipping!</strong></div>
           {%- endif -%}
-          <div style="display:flex;justify-content:space-between;margin-bottom:.6rem;font-weight:700;color:var(--brown)">
-            <span>Subtotal</span><span style="font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--barn);letter-spacing:.04em">{{ cart.total_price | money }}</span>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.6rem;font-weight:700;color:var(--lav-ink)">
+            <span>Subtotal</span><span style="font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--lav);letter-spacing:.04em">{{ cart.total_price | money }}</span>
           </div>
-          <p style="font-size:.75rem;color:var(--brown);margin-bottom:1.2rem">Shipping &amp; taxes calculated at checkout</p>
+          <p style="font-size:.75rem;color:var(--lav-ink);margin-bottom:1.2rem">Shipping &amp; taxes calculated at checkout</p>
           <a href="/checkout" class="ps-cart-checkout" style="text-decoration:none;display:block">Checkout Now! →</a>
-          <a href="{{ shop.url }}/collections/all" style="display:block;text-align:center;margin-top:.8rem;font-size:.78rem;font-weight:700;color:var(--barn);text-decoration:none">← Continue Shopping</a>
+          <a href="{{ shop.url }}/collections/all" style="display:block;text-align:center;margin-top:.8rem;font-size:.78rem;font-weight:700;color:var(--lav);text-decoration:none">← Continue Shopping</a>
         </div>
       </div>
     </div>
