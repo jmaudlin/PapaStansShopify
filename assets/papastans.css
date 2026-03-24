@@ -51,10 +51,23 @@ body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(-
 .ps-nav-logo { text-decoration: none; display: flex; align-items: center; }
 .ps-nav-logo-img { height: 60px; width: auto; object-fit: contain; filter: drop-shadow(2px 2px 6px rgba(0,0,0,.6)); transition: all .3s; }
 .ps-nav.scrolled .ps-nav-logo-img { height: 52px; filter: drop-shadow(1px 1px 3px rgba(0,0,0,.2)); }
-.ps-nav-links { display: flex; gap: 2rem; list-style: none; }
-.ps-nav-links a { font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,.9); transition: color .3s; }
+.ps-nav-links { display: flex; gap: 0; list-style: none; }
+.ps-nav-links a {
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,.9);
+  transition: color .25s, background .25s;
+  padding: .45rem .9rem;
+  border-radius: 20px;
+}
 .ps-nav.scrolled .ps-nav-links a { color: var(--bark); }
-.ps-nav-links a:hover { color: var(--sun) !important; }
+.ps-nav-links a:hover {
+  color: var(--bark) !important;
+  background: var(--sun);
+}
 .ps-nav-actions { display: flex; align-items: center; }
 .ps-cart-btn { display: flex; align-items: center; gap: .5rem; background: var(--sun); border: 3px solid var(--bark); color: var(--bark); font-family: 'Nunito', sans-serif; font-size: .75rem; font-weight: 800; padding: .4rem 1rem; cursor: pointer; border-radius: 20px; transition: all .2s; box-shadow: 3px 3px 0 var(--bark); }
 .ps-cart-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--bark); }
@@ -309,7 +322,6 @@ body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(-
 @media (max-width: 960px) {
   .ps-nav { padding:1rem 1.5rem; }
   .ps-nav.scrolled { padding:.7rem 1.5rem; }
-  .ps-nav-links { display:none; }
   .ps-hero-content { padding:0 2rem; }
   .ps-hero-offer { display:none; }
   .ps-about { grid-template-columns:1fr; }
@@ -321,6 +333,9 @@ body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(-
   .ps-local-inner { grid-template-columns:1fr; }
   .ps-footer-top { grid-template-columns:1fr 1fr;gap:2.5rem; }
   .ps-cart-drawer { width:100%;max-width:100%; }
+}
+@media (max-width: 680px) {
+  .ps-nav-links { display: none; }
 }
 @media (max-width: 600px) {
   .ps-hero-h1 { font-size:2.5rem; }
