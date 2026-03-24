@@ -6,8 +6,10 @@
   </a>
   <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li></ul>
   <div class="ps-nav-actions">
-    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
 </nav>
+
+{% render 'ps-search-bar' %}
 
 <div class="ps-page-wrap">
   <div class="ps-section-tag" style="margin-bottom:.5rem">🛒 Your Cart</div>

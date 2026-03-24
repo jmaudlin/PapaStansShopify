@@ -706,3 +706,176 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   .ps-article-nav-link { max-width: 100%; }
   .ps-article-nav-next { text-align: left; margin-left: 0; }
 }
+
+/* ═══════════════════════════════════════
+   Papa Stan's — Predictive Search Bar
+   ═══════════════════════════════════════ */
+
+/* The search bar sits in the nav - hidden until opened */
+.ps-search-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.ps-search-bar--open {
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ps-search-bar-form {
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-bottom: 3px solid var(--lav);
+  box-shadow: 0 4px 24px rgba(74,40,112,.18);
+  padding: .7rem 1.5rem;
+  gap: .6rem;
+}
+
+.ps-search-bar-input {
+  flex: 1;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--lav-ink);
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: .3rem 0;
+  min-width: 0;
+}
+.ps-search-bar-input::placeholder { color: var(--brown); opacity: .5; }
+
+.ps-search-bar-submit {
+  background: var(--lav);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  padding: .45rem .9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .2s;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.ps-search-bar-submit:hover { background: var(--lav-dark); }
+
+.ps-search-bar-close {
+  background: none;
+  border: 2px solid var(--border);
+  color: var(--brown);
+  font-size: .85rem;
+  font-weight: 800;
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.ps-search-bar-close:hover { background: var(--lav-light); border-color: var(--lav); color: var(--lav); }
+
+/* Search trigger button in nav */
+.ps-nav-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  padding: .38rem .55rem;
+  border-radius: 8px;
+  transition: background .2s;
+  cursor: pointer;
+  color: rgba(255,255,255,.9);
+  border: 2px solid transparent;
+}
+.ps-nav.scrolled .ps-nav-search-btn { color: var(--lav); }
+.ps-nav-search-btn:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.3); color: #fff; }
+.ps-nav.scrolled .ps-nav-search-btn:hover { background: var(--lav-light); border-color: var(--lav); color: var(--lav-dark); }
+
+/* Dropdown */
+.ps-search-dropdown {
+  background: var(--white);
+  border: 3px solid var(--lav);
+  border-top: none;
+  box-shadow: 0 8px 32px rgba(74,40,112,.18);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.ps-search-dropdown[hidden] { display: none; }
+.ps-search-dropdown-inner { padding: .5rem 0; }
+
+.ps-sd-section-label {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--brown);
+  padding: .6rem 1.2rem .3rem;
+  opacity: .7;
+}
+
+.ps-sd-item {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: .6rem 1.2rem;
+  text-decoration: none;
+  transition: background .15s;
+  cursor: pointer;
+  outline: none;
+}
+.ps-sd-item:hover,
+.ps-sd-item:focus { background: var(--lav-xlight); }
+
+.ps-sd-thumb { flex-shrink: 0; }
+.ps-sd-img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; border: 2px solid var(--border); display: block; }
+.ps-sd-img-fallback {
+  width: 48px; height: 48px;
+  background: var(--lav-light);
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.ps-sd-img-fallback--article { background: #fef9e7; }
+.ps-sd-img-fallback--page { background: #e8f8f5; }
+
+.ps-sd-info { flex: 1; min-width: 0; }
+.ps-sd-title { display: block; font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 700; color: var(--lav-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ps-sd-price { display: block; font-family: 'Luckiest Guy', cursive; font-size: .88rem; color: var(--lav); letter-spacing: .04em; margin-top: .1rem; }
+.ps-sd-meta { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brown); margin-top: .1rem; opacity: .65; }
+
+.ps-sd-mark { background: var(--lav-light); color: var(--lav-dark); border-radius: 2px; padding: 0 1px; font-style: normal; }
+
+.ps-sd-empty {
+  padding: 1.5rem 1.2rem;
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--brown);
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+}
+
+.ps-sd-view-all {
+  display: block;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--lav);
+  text-decoration: none;
+  border-top: 2px dashed var(--border);
+  margin-top: .4rem;
+  transition: background .15s;
+}
+.ps-sd-view-all:hover { background: var(--lav-xlight); }
+.ps-sd-view-all strong { color: var(--lav-dark); }

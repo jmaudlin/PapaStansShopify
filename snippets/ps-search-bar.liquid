@@ -1,0 +1,203 @@
+<div class="ps-search-bar" id="psSearchBar">
+  <form action="{{ routes.search_url }}" method="get" class="ps-search-bar-form" role="search" autocomplete="off">
+    <input type="hidden" name="options[prefix]" value="last">
+    <input type="hidden" name="type" value="product,article,page">
+    <input
+      type="search"
+      name="q"
+      id="psSearchInput"
+      class="ps-search-bar-input"
+      placeholder="Search products, scents…"
+      aria-label="Search"
+      aria-expanded="false"
+      aria-controls="psSearchDropdown"
+      aria-autocomplete="list"
+      spellcheck="false">
+    <button type="submit" class="ps-search-bar-submit" aria-label="Submit search">🔍</button>
+    <button type="button" class="ps-search-bar-close" id="psSearchClose" aria-label="Close search">✕</button>
+  </form>
+  <div class="ps-search-dropdown" id="psSearchDropdown" role="listbox" aria-label="Search suggestions" hidden>
+    <div class="ps-search-dropdown-inner" id="psSearchDropdownInner"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const input    = document.getElementById('psSearchInput');
+  const dropdown = document.getElementById('psSearchDropdown');
+  const inner    = document.getElementById('psSearchDropdownInner');
+  const closeBtn = document.getElementById('psSearchClose');
+  const bar      = document.getElementById('psSearchBar');
+
+  let debounceTimer = null;
+  let currentQuery  = '';
+  let abortCtrl     = null;
+
+  // ── Open / close ──
+  function openBar() {
+    bar.classList.add('ps-search-bar--open');
+    input.focus();
+  }
+  function closeBar() {
+    bar.classList.remove('ps-search-bar--open');
+    hideDropdown();
+    input.value = '';
+    currentQuery = '';
+  }
+  function showDropdown() {
+    dropdown.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+  function hideDropdown() {
+    dropdown.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+    inner.innerHTML = '';
+  }
+
+  closeBtn.addEventListener('click', closeBar);
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!bar.contains(e.target)) closeBar();
+  });
+
+  // ── Keyboard nav in dropdown ──
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeBar(); return; }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const first = inner.querySelector('[role="option"]');
+      first?.focus();
+    }
+  });
+  inner.addEventListener('keydown', e => {
+    const items = [...inner.querySelectorAll('[role="option"]')];
+    const idx   = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[idx + 1]?.focus(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); idx === 0 ? input.focus() : items[idx - 1]?.focus(); }
+    if (e.key === 'Escape')    { closeBar(); }
+  });
+
+  // ── Fetch predictive results ──
+  async function fetchSuggestions(q) {
+    if (abortCtrl) abortCtrl.abort();
+    abortCtrl = new AbortController();
+
+    try {
+      const url = `/search/suggest.json?q=${encodeURIComponent(q)}&resources[type]=product,article,page&resources[limit]=5&resources[options][unavailable_products]=last`;
+      const res = await fetch(url, { signal: abortCtrl.signal, headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      renderResults(data.resources?.results || {}, q);
+    } catch(err) {
+      if (err.name !== 'AbortError') hideDropdown();
+    }
+  }
+
+  function renderResults(results, q) {
+    const products = results.products || [];
+    const articles = results.articles || [];
+    const pages    = results.pages    || [];
+    const total    = products.length + articles.length + pages.length;
+
+    if (total === 0) {
+      inner.innerHTML = `<div class="ps-sd-empty">No results for <strong>"${escHtml(q)}"</strong></div>`;
+      showDropdown();
+      return;
+    }
+
+    let html = '';
+
+    if (products.length) {
+      html += `<div class="ps-sd-section-label">🛒 Products</div>`;
+      products.forEach(p => {
+        const price = p.variants_min_price
+          ? '$' + (p.variants_min_price / 100).toFixed(2)
+          : '';
+        const img = p.featured_image?.url
+          ? `<img src="${escHtml(p.featured_image.url + '&width=80')}" alt="${escHtml(p.title)}" class="ps-sd-img" loading="lazy">`
+          : `<div class="ps-sd-img-fallback">🧼</div>`;
+        html += `<a href="${escHtml(p.url)}" class="ps-sd-item" role="option" tabindex="0">
+          <div class="ps-sd-thumb">${img}</div>
+          <div class="ps-sd-info">
+            <span class="ps-sd-title">${highlight(p.title, q)}</span>
+            ${price ? `<span class="ps-sd-price">${price}</span>` : ''}
+          </div>
+        </a>`;
+      });
+    }
+
+    if (articles.length) {
+      html += `<div class="ps-sd-section-label">📝 Blog</div>`;
+      articles.forEach(a => {
+        html += `<a href="${escHtml(a.url)}" class="ps-sd-item" role="option" tabindex="0">
+          <div class="ps-sd-thumb"><div class="ps-sd-img-fallback ps-sd-img-fallback--article">📝</div></div>
+          <div class="ps-sd-info">
+            <span class="ps-sd-title">${highlight(a.title, q)}</span>
+            <span class="ps-sd-meta">Blog post</span>
+          </div>
+        </a>`;
+      });
+    }
+
+    if (pages.length) {
+      html += `<div class="ps-sd-section-label">📄 Pages</div>`;
+      pages.forEach(pg => {
+        html += `<a href="${escHtml(pg.url)}" class="ps-sd-item" role="option" tabindex="0">
+          <div class="ps-sd-thumb"><div class="ps-sd-img-fallback ps-sd-img-fallback--page">📄</div></div>
+          <div class="ps-sd-info">
+            <span class="ps-sd-title">${highlight(pg.title, q)}</span>
+            <span class="ps-sd-meta">Page</span>
+          </div>
+        </a>`;
+      });
+    }
+
+    html += `<a href="/search?q=${encodeURIComponent(q)}&type=product,article,page&options[prefix]=last" class="ps-sd-view-all">
+      See all results for "<strong>${escHtml(q)}</strong>" →
+    </a>`;
+
+    inner.innerHTML = html;
+    showDropdown();
+  }
+
+  // Highlight matching text
+  function highlight(text, q) {
+    if (!q) return escHtml(text);
+    const safe = escHtml(text);
+    const safeQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return safe.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark class="ps-sd-mark">$1</mark>');
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Input handler ──
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    currentQuery = q;
+    clearTimeout(debounceTimer);
+    if (q.length < 2) { hideDropdown(); return; }
+    debounceTimer = setTimeout(() => fetchSuggestions(q), 220);
+  });
+
+  input.addEventListener('focus', () => {
+    if (currentQuery.length >= 2) showDropdown();
+  });
+
+  // ── Wire up the search icon button in nav ──
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('psSearchTrigger');
+    if (trigger) {
+      trigger.addEventListener('click', e => {
+        e.preventDefault();
+        openBar();
+      });
+    }
+  });
+
+  // Expose openBar globally for inline onclick
+  window.psOpenSearch = openBar;
+})();
+</script>

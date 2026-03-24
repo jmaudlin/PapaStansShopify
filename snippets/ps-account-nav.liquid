@@ -16,7 +16,7 @@
     <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
-    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button>
     {%- if customer -%}
       <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
     {%- else -%}
@@ -30,3 +30,5 @@
     </button>
   </div>
 </nav>
+
+{% render 'ps-search-bar' %}

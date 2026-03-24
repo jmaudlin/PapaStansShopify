@@ -16,12 +16,14 @@
     <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
-    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button>
     <button class="ps-cart-btn" onclick="psOpenCart()">
       🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>
   </div>
 </nav>
+
+{% render 'ps-search-bar' %}
 
 <div class="ps-page-wrap">
 
