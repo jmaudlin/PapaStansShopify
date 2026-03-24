@@ -19,6 +19,14 @@
       🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>
   </div>
+<div>
+{% if shop.customer_accounts_enabled %}
+
+<shopify-account menu="customer-account-main-menu">
+</shopify-account>
+
+{% endif %}
+</div>
 </nav>
 
 <div class="ps-page-wrap">
