@@ -379,6 +379,12 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* ── Solid nav (for inner pages) ── */
 .ps-nav-solid { background: rgba(253,250,255,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); margin-top: 0 !important; position: sticky !important; }
+.ps-nav-solid .ps-nav-links a { color: var(--lav-ink); }
+.ps-nav-solid .ps-nav-links a:hover { color: var(--bark) !important; background: var(--butter); }
+.ps-nav-solid .ps-nav-account-link { color: var(--lav) !important; border-color: var(--lav-light) !important; }
+.ps-nav-solid .ps-nav-account-link:hover { background: var(--lav-light) !important; color: var(--lav-dark) !important; }
+.ps-nav-solid .ps-nav-search-btn { color: var(--lav) !important; }
+.ps-nav-solid .ps-nav-search-btn:hover { background: var(--lav-light) !important; }
 
 
 /* ── Page wrapper ── */

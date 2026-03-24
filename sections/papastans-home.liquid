@@ -50,7 +50,7 @@
   <div class="ps-hero-content">
     <div class="ps-hero-eyebrow">🌿 Handcrafted · Small Batch · All Natural</div>
     <h1 class="ps-hero-h1"><span>Soaps, Lotions</span><br>&amp; Candles!</h1>
-    <p class="ps-hero-sub">Made with love right here in<br>Oskaloosa, Iowa since 2019 🇺🇸</p>
+    <p class="ps-hero-sub">Made with love right here in<br>Oskaloosa, Iowa since 2019 &nbsp;<span class="ps-flag">🇺🇸</span></p>
     <div class="ps-hero-btns">
       <a href="#ps-products" class="ps-btn-primary">Shop Now 🛒</a>
       <a href="{{ shop.url }}/pages/our-story" class="ps-btn-secondary">Our Story 🏡</a>
@@ -66,7 +66,7 @@
 <!-- MARQUEE -->
 <div class="ps-marquee">
   <div class="ps-marquee-inner">
-    {%- assign marquee_items = "🧼 Soaps,🧴 Lotions,🕯️ Candles,🧖 Face Scrubs,🌿 All Natural,🇺🇸 Veteran Owned,📍 Oskaloosa Iowa,⭐ 190+ Products,🎁 Free Samples" | split: "," -%}
+    {%- assign marquee_items = "🧼 Soaps,🧴 Lotions,🕯️ Candles,🧖 Face Scrubs,🌿 All Natural,🎖️ Veteran Owned,📍 Oskaloosa Iowa,⭐ 190+ Products,🎁 Free Samples" | split: "," -%}
     {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
     {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
   </div>
