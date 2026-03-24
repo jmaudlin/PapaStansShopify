@@ -1,0 +1,15 @@
+<div class="ps-rainbow-bar"></div>
+<div class="ps-announce">🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp; 🚚 <strong>FREE Shipping</strong> on $55+</div>
+<nav class="ps-nav ps-nav-solid" id="psNav">
+  <a href="{{ shop.url }}" class="ps-nav-logo">
+    <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
+    <span class="ps-nav-logo-text"><span class="ps-nav-logo-main">Papa Stan's</span><span class="ps-nav-logo-sub">Oskaloosa, Iowa</span></span>
+  </a>
+  <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li><li><a href="{{ shop.url }}">Home</a></li></ul>
+</nav>
+<div class="ps-page-wrap">
+  <h1 class="ps-section-h2" style="margin-bottom:2rem">{{ page.title }}</h1>
+  <div class="ps-page-content">{{ page.content }}</div>
+</div>
+<script>window.addEventListener('scroll',()=>document.getElementById('psNav').classList.toggle('scrolled',window.scrollY>10),{passive:true});</script>
+{% schema %}{ "name": "Page", "settings": [], "presets": [{ "name": "Page" }] }{% endschema %}

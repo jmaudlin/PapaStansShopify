@@ -333,3 +333,75 @@ body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(-
   .ps-about-stats { grid-template-columns:1fr 1fr; }
   .ps-hero-phone { display:none; }
 }
+
+/* ── Solid nav (for inner pages) ── */
+.ps-nav-solid { background: rgba(253,248,238,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(92,61,30,.1); margin-top: 36px; }
+.ps-nav-solid .ps-nav-logo-main { color: var(--barn) !important; text-shadow: 2px 2px 0 rgba(92,61,30,.15) !important; }
+.ps-nav-solid .ps-nav-logo-sub { color: var(--brown) !important; }
+.ps-nav-solid .ps-nav-links a { color: var(--bark) !important; }
+
+/* ── Page wrapper ── */
+.ps-page-wrap { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem 5rem; }
+
+/* ── Breadcrumb ── */
+.ps-breadcrumb { font-size: .8rem; font-weight: 600; color: var(--brown); margin-bottom: 2rem; }
+.ps-breadcrumb a { color: var(--barn); text-decoration: none; }
+.ps-breadcrumb a:hover { text-decoration: underline; }
+
+/* ── Collection toolbar ── */
+.ps-coll-header { margin-bottom: 2.5rem; }
+.ps-coll-desc { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-top: .5rem; }
+.ps-coll-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+.ps-sort-select { padding: .5rem 1rem; font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700; background: #fff; border: 3px solid var(--border); border-radius: 8px; color: var(--bark); cursor: pointer; box-shadow: 2px 2px 0 var(--border); }
+.ps-sort-select:focus { outline: none; border-color: var(--barn); }
+.ps-pagination { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
+.ps-page-info { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); }
+
+/* ── Product detail ── */
+.ps-product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; }
+.ps-product-main-img img { width: 100%; height: auto; border: 3px solid var(--border); border-radius: 12px; box-shadow: 5px 5px 0 var(--border); }
+.ps-product-img-fallback { aspect-ratio: 1; background: linear-gradient(135deg, var(--warm), var(--tan)); display: flex; align-items: center; justify-content: center; font-size: 6rem; border: 3px solid var(--border); border-radius: 12px; }
+.ps-product-thumbs { display: flex; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+.ps-product-thumb { width: 70px; height: 70px; object-fit: cover; border: 3px solid var(--border); border-radius: 6px; cursor: pointer; transition: border-color .2s; }
+.ps-product-thumb.active, .ps-product-thumb:hover { border-color: var(--barn); }
+.ps-product-title { font-family: 'Luckiest Guy', cursive; font-size: clamp(1.8rem,3.5vw,2.8rem); color: var(--bark); letter-spacing: .04em; line-height: 1.1; margin-bottom: .8rem; }
+.ps-product-price { margin: 1rem 0; }
+.ps-price-current { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: var(--barn); letter-spacing: .04em; }
+.ps-price-compare { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--brown); text-decoration: line-through; margin-right: .5rem; opacity: .6; }
+.ps-variant-wrap { margin-bottom: 1rem; }
+.ps-variant-label { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); margin-bottom: .4rem; }
+.ps-variant-select { padding: .6rem 1rem; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 600; background: #fff; border: 3px solid var(--border); border-radius: 8px; color: var(--bark); width: 100%; cursor: pointer; box-shadow: 2px 2px 0 var(--border); }
+.ps-qty-row { display: flex; gap: 1rem; align-items: center; margin: 1.2rem 0; flex-wrap: wrap; }
+.ps-qty-wrap { display: flex; align-items: center; border: 3px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 2px 2px 0 var(--border); }
+.ps-qty-btn { width: 36px; height: 40px; background: var(--warm); border: none; font-size: 1.2rem; font-weight: 800; cursor: pointer; color: var(--bark); transition: background .2s; }
+.ps-qty-btn:hover { background: var(--tan); }
+.ps-qty-input { width: 50px; height: 40px; border: none; border-left: 2px solid var(--border); border-right: 2px solid var(--border); text-align: center; font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800; color: var(--bark); background: #fff; }
+.ps-qty-input:focus { outline: none; }
+.ps-atc-big { font-size: .9rem !important; padding: .9rem 2rem !important; }
+.ps-product-perks { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0; }
+.ps-product-perks span { background: var(--warm); border: 2px solid var(--border); padding: .3rem .7rem; border-radius: 20px; font-size: .72rem; font-weight: 700; color: var(--brown); }
+.ps-product-desc { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--border); font-size: .95rem; font-weight: 600; color: var(--brown); line-height: 1.75; }
+.ps-product-desc h1,.ps-product-desc h2,.ps-product-desc h3 { font-family: 'Luckiest Guy', cursive; color: var(--bark); margin: 1rem 0 .5rem; }
+
+/* ── Cart page ── */
+.ps-cart-page-grid { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+.ps-cart-page-item { display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: start; padding: 1.2rem 0; border-bottom: 2px dashed var(--border); }
+.ps-cart-page-item-name { font-family: 'Caveat', cursive; font-size: 1.15rem; font-weight: 700; color: var(--bark); text-decoration: none; display: block; margin-bottom: .2rem; }
+.ps-cart-page-item-name:hover { color: var(--barn); }
+.ps-qty-btn-a { width: 26px; height: 26px; background: var(--warm); border: 2px solid var(--border); color: var(--bark); text-decoration: none; font-weight: 800; font-size: .9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background .2s; }
+.ps-qty-btn-a:hover { background: var(--tan); }
+.ps-cart-summary-box { background: var(--warm); border: 3px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 5px 5px 0 var(--border); position: sticky; top: 100px; }
+
+/* ── Page content ── */
+.ps-page-content { font-size: 1rem; font-weight: 600; line-height: 1.8; color: var(--brown); max-width: 800px; }
+.ps-page-content h1,.ps-page-content h2,.ps-page-content h3 { font-family: 'Luckiest Guy', cursive; color: var(--bark); margin: 1.5rem 0 .8rem; }
+.ps-page-content a { color: var(--barn); }
+.ps-page-content p { margin-bottom: 1rem; }
+
+/* ── Responsive for inner pages ── */
+@media (max-width: 860px) {
+  .ps-page-wrap { padding: 5rem 1.5rem 3rem; }
+  .ps-product-detail { grid-template-columns: 1fr; gap: 2rem; }
+  .ps-cart-page-grid { grid-template-columns: 1fr; }
+  .ps-cart-summary-box { position: static; }
+}

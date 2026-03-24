@@ -1,0 +1,187 @@
+<div class="ps-rainbow-bar"></div>
+<div class="ps-announce">
+  🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
+  🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+  📞 <a href="tel:6416701573">641.670.1573</a>
+</div>
+<nav class="ps-nav ps-nav-solid" id="psNav">
+  <a href="{{ shop.url }}" class="ps-nav-logo">
+    <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
+    <span class="ps-nav-logo-text">
+      <span class="ps-nav-logo-main">Papa Stan's</span>
+      <span class="ps-nav-logo-sub">Oskaloosa, Iowa</span>
+    </span>
+  </a>
+  <ul class="ps-nav-links">
+    <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
+    <li><a href="{{ shop.url }}/#ps-about">Our Story</a></li>
+    <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="ps-page-wrap">
+  <div class="ps-breadcrumb">
+    <a href="{{ shop.url }}">Home</a> &rsaquo;
+    <a href="{{ shop.url }}/collections/all">Shop</a> &rsaquo;
+    {{ product.title }}
+  </div>
+
+  <div class="ps-product-detail">
+    <!-- Images -->
+    <div class="ps-product-gallery">
+      <div class="ps-product-main-img">
+        {%- if product.featured_image -%}
+          <img id="psMainImg"
+            src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+            alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+            width="600" height="600">
+        {%- else -%}
+          <div class="ps-product-img-fallback">🧼</div>
+        {%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="ps-product-thumbs">
+          {%- for image in product.images -%}
+            <img class="ps-product-thumb {% if forloop.first %}active{% endif %}"
+              src="{{ image | img_url: '120x120', crop: 'center' }}"
+              alt="{{ image.alt | escape }}"
+              onclick="document.getElementById('psMainImg').src='{{ image | img_url: '600x600', crop: 'center' }}'; document.querySelectorAll('.ps-product-thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="ps-product-info">
+      <div class="ps-section-tag" style="margin-bottom:.5rem">
+        {%- assign t = product.type | downcase -%}
+        {%- if t contains 'candle' -%}🕯️ Candle
+        {%- elsif t contains 'lotion' or t contains 'cream' -%}🧴 Lotion
+        {%- elsif t contains 'scrub' -%}🌸 Scrub
+        {%- else -%}🧼 Soap{%- endif -%}
+      </div>
+      <h1 class="ps-product-title">{{ product.title }}</h1>
+
+      {%- form 'product', product, id: 'psProductForm' -%}
+        <!-- Variants -->
+        {%- if product.variants.size > 1 -%}
+          <div class="ps-variant-wrap">
+            <label class="ps-variant-label">Options:</label>
+            <select name="id" class="ps-variant-select" id="psVariantSelect">
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}"
+                  {%- unless variant.available %} disabled{%- endunless -%}
+                  {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>
+                  {{ variant.title }} — {{ variant.price | money }}
+                  {%- unless variant.available %} (Sold Out){%- endunless -%}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+
+        <!-- Price -->
+        <div class="ps-product-price" id="psProductPrice">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="ps-price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="ps-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
+        </div>
+
+        <!-- Add to cart -->
+        {%- if product.available -%}
+          <div class="ps-qty-row">
+            <div class="ps-qty-wrap">
+              <button type="button" class="ps-qty-btn" onclick="psChangeQty(-1)">−</button>
+              <input type="number" name="quantity" value="1" min="1" id="psQtyInput" class="ps-qty-input">
+              <button type="button" class="ps-qty-btn" onclick="psChangeQty(1)">+</button>
+            </div>
+            <button type="submit" class="ps-btn-primary ps-atc-big" id="psAtcBtn">Add to Cart 🛒</button>
+          </div>
+        {%- else -%}
+          <button class="ps-btn-primary ps-atc-big" disabled style="opacity:.5;cursor:not-allowed">Sold Out 😢</button>
+        {%- endif -%}
+
+        <div class="ps-product-perks">
+          <span>🌿 All Natural</span>
+          <span>🇺🇸 Made in Iowa</span>
+          <span>🎁 Free Samples on Orders</span>
+          <span>🚚 Free Shipping $55+</span>
+        </div>
+      {%- endform -%}
+
+      <!-- Description -->
+      {%- if product.description != blank -%}
+        <div class="ps-product-desc">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- Back to shop -->
+  <div style="text-align:center;margin:3rem 0">
+    <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary">← Back to All Products</a>
+  </div>
+</div>
+
+{% render 'ps-cart-drawer' %}
+
+<script>
+const PS_FREE_SHIP_CENTS = 5500;
+function psChangeQty(delta) {
+  const input = document.getElementById('psQtyInput');
+  input.value = Math.max(1, parseInt(input.value) + delta);
+}
+// Handle form submit via AJAX
+document.getElementById('psProductForm')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('psAtcBtn');
+  const variantId = form.querySelector('[name="id"]')?.value || '{{ product.selected_or_first_available_variant.id }}';
+  const qty = parseInt(document.getElementById('psQtyInput')?.value || 1);
+  btn.textContent = 'Adding… ⏳';
+  btn.disabled = true;
+  try {
+    await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: qty })
+    });
+    await psRefreshCart();
+    psShowToast('✅ Added to cart!');
+    psOpenCart();
+  } catch(e) { psShowToast('Something went wrong.'); }
+  btn.textContent = 'Add to Cart 🛒';
+  btn.disabled = false;
+});
+async function psUpdateQty(key, qty) { const u = {}; u[key]=qty; await fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({updates:u})}); await psRefreshCart(); }
+async function psRemoveLine(key) { await psUpdateQty(key, 0); }
+async function psRefreshCart() {
+  const r = await fetch('/cart.js',{headers:{'Accept':'application/json'}}); const cart=await r.json();
+  psRenderCart(cart); document.getElementById('psCartCount').textContent=cart.item_count||0;
+}
+function psMoney(c){return '$'+(c/100).toFixed(2);}
+function psRenderCart(cart) {
+  const el=document.getElementById('psCartItems'),ft=document.getElementById('psCartFoot');
+  if(!cart.items||!cart.items.length){el.innerHTML='<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';ft.style.display='none';return;}
+  ft.style.display='block';
+  el.innerHTML=cart.items.map(item=>`<div class="ps-cart-item"><img class="ps-ci-img" src="${item.image?item.image.replace('http:','https:'):''}" alt="${item.title}" onerror="this.style.visibility='hidden'"><div><div class="ps-ci-name">${item.product_title}</div><div class="ps-ci-price">${psMoney(item.price)}</div><div class="ps-ci-qty"><button onclick="psUpdateQty('${item.key}',${item.quantity-1})">−</button><span>${item.quantity}</span><button onclick="psUpdateQty('${item.key}',${item.quantity+1})">+</button></div></div><button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button></div>`).join('');
+  document.getElementById('psCartTotal').textContent=psMoney(cart.total_price);
+  const pct=Math.min((cart.total_price/PS_FREE_SHIP_CENTS)*100,100);
+  document.getElementById('psShipFill').style.width=pct+'%';
+  const rem=psMoney(Math.max(PS_FREE_SHIP_CENTS-cart.total_price,0));
+  document.getElementById('psShipMsg').innerHTML=cart.total_price>=PS_FREE_SHIP_CENTS?'<strong>🎉 Free shipping unlocked!</strong>':`Add <strong>${rem} more</strong> for free shipping 🚚`;
+}
+function psOpenCart(){psRefreshCart();document.getElementById('psCartDrawer').classList.add('open');document.getElementById('psCartOverlay').classList.add('open');}
+function psCloseCart(){document.getElementById('psCartDrawer').classList.remove('open');document.getElementById('psCartOverlay').classList.remove('open');}
+let psToastTimer;
+function psShowToast(msg){const t=document.getElementById('psToast');t.textContent=msg;t.classList.add('show');clearTimeout(psToastTimer);psToastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+window.addEventListener('scroll',()=>document.getElementById('psNav').classList.toggle('scrolled',window.scrollY>10),{passive:true});
+psRefreshCart();
+</script>
+
+{% schema %}{ "name": "Product", "settings": [], "presets": [{ "name": "Product" }] }{% endschema %}
