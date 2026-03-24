@@ -468,6 +468,14 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   }
 }
 
+/* ── Portrait mobile: limit homepage products to 6 ── */
+@media (max-width: 680px) and (orientation: portrait) {
+  /* Hide product cards beyond the 6th */
+  .ps-pgrid .ps-pc:nth-child(n+7) { display: none !important; }
+  /* Show the mobile-only "view all" nudge */
+  .ps-mobile-view-all { display: block !important; }
+}
+
 /* Landscape mobile / tablet: show links normally, hide hamburger */
 @media (max-width: 680px) and (orientation: landscape) {
   .ps-hamburger { display: none !important; }
