@@ -73,25 +73,25 @@
         <h4 class="ps-policy-sidebar-title">📋 All Policies</h4>
         <ul class="ps-policy-links">
           <li>
-            <a href="{{ shop.shipping_policy.url }}"
+            <a href="{{ shop.url }}/pages/shipping"
                {% if policy.title contains 'Shipping' %}class="ps-policy-link-active"{% endif %}>
               🚚 Shipping Info
             </a>
           </li>
           <li>
-            <a href="{{ shop.refund_policy.url }}"
+            <a href="{{ shop.url }}/pages/returns"
                {% if policy.title contains 'Refund' or policy.title contains 'Return' %}class="ps-policy-link-active"{% endif %}>
               ↩️ Returns &amp; Refunds
             </a>
           </li>
           <li>
-            <a href="{{ shop.privacy_policy.url }}"
+            <a href="{{ shop.url }}/pages/privacy-policy"
                {% if policy.title contains 'Privacy' %}class="ps-policy-link-active"{% endif %}>
               🔒 Privacy Policy
             </a>
           </li>
           <li>
-            <a href="{{ shop.terms_of_service.url }}"
+            <a href="{{ shop.url }}/pages/terms-of-service"
                {% if policy.title contains 'Terms' %}class="ps-policy-link-active"{% endif %}>
               📋 Terms of Service
             </a>
@@ -156,10 +156,10 @@
       <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
     </ul></div>
     <div class="ps-footer-col"><h5>Help</h5><ul>
-      <li><a href="{{ shop.shipping_policy.url }}">Shipping Info</a></li>
-      <li><a href="{{ shop.refund_policy.url }}">Returns &amp; Refunds</a></li>
-      <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
-      <li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>
+      <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
+      <li><a href="{{ shop.url }}/pages/returns">Returns &amp; Refunds</a></li>
+      <li><a href="{{ shop.url }}/pages/privacy-policy">Privacy Policy</a></li>
+      <li><a href="{{ shop.url }}/pages/terms-of-service">Terms of Service</a></li>
       <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
       <li><a href="{{ shop.url }}/cart">View Cart</a></li>
     </ul></div>

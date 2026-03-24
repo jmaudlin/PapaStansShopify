@@ -23,6 +23,17 @@
 
 <div class="ps-page-wrap">
 
+  {%- assign is_shipping  = false -%}
+  {%- assign is_returns   = false -%}
+  {%- assign is_privacy   = false -%}
+  {%- assign is_tos       = false -%}
+  {%- if page.handle == 'shipping' or page.handle == 'shipping-policy' -%}{%- assign is_shipping = true -%}{%- endif -%}
+  {%- if page.handle == 'returns' or page.handle == 'returns-refunds' or page.handle == 'refund-policy' -%}{%- assign is_returns = true -%}{%- endif -%}
+  {%- if page.handle == 'privacy-policy' or page.handle == 'privacy' -%}{%- assign is_privacy = true -%}{%- endif -%}
+  {%- if page.handle == 'terms-of-service' or page.handle == 'terms' -%}{%- assign is_tos = true -%}{%- endif -%}
+  {%- assign is_policy = false -%}
+  {%- if is_shipping or is_returns or is_privacy or is_tos -%}{%- assign is_policy = true -%}{%- endif -%}
+
   {%- if page.handle == 'contact' -%}
 
     <div class="ps-contact-grid">
@@ -117,6 +128,56 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+  {%- elsif is_policy -%}
+
+    {%- if is_shipping -%}
+      {%- assign policy_obj = shop.shipping_policy -%}
+      {%- assign policy_icon = '🚚' -%}
+      {%- assign policy_tag  = 'Shipping Info' -%}
+    {%- elsif is_returns -%}
+      {%- assign policy_obj = shop.refund_policy -%}
+      {%- assign policy_icon = '↩️' -%}
+      {%- assign policy_tag  = 'Returns & Refunds' -%}
+    {%- elsif is_privacy -%}
+      {%- assign policy_obj = shop.privacy_policy -%}
+      {%- assign policy_icon = '🔒' -%}
+      {%- assign policy_tag  = 'Privacy Policy' -%}
+    {%- elsif is_tos -%}
+      {%- assign policy_obj = shop.terms_of_service -%}
+      {%- assign policy_icon = '📋' -%}
+      {%- assign policy_tag  = 'Terms of Service' -%}
+    {%- endif -%}
+
+    <div class="ps-policy-header">
+      <div class="ps-section-tag" style="margin-bottom:.8rem">{{ policy_icon }} {{ policy_tag }}</div>
+      <h1 class="ps-section-h2">{{ policy_obj.title }}</h1>
+      <p class="ps-policy-updated">Last updated: {{ policy_obj.updated_at | date: "%B %d, %Y" }}</p>
+    </div>
+
+    <div class="ps-policy-grid">
+      <div class="ps-policy-content rte">
+        {{ policy_obj.body }}
+      </div>
+      <div class="ps-policy-sidebar">
+        <div class="ps-policy-sidebar-card">
+          <h4 class="ps-policy-sidebar-title">📋 All Policies</h4>
+          <ul class="ps-policy-links">
+            <li><a href="{{ shop.url }}/pages/shipping" {% if is_shipping %}class="ps-policy-link-active"{% endif %}>🚚 Shipping Info</a></li>
+            <li><a href="{{ shop.url }}/pages/returns" {% if is_returns %}class="ps-policy-link-active"{% endif %}>↩️ Returns &amp; Refunds</a></li>
+            <li><a href="{{ shop.url }}/pages/privacy-policy" {% if is_privacy %}class="ps-policy-link-active"{% endif %}>🔒 Privacy Policy</a></li>
+            <li><a href="{{ shop.url }}/pages/terms-of-service" {% if is_tos %}class="ps-policy-link-active"{% endif %}>📋 Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="ps-policy-sidebar-card">
+          <h4 class="ps-policy-sidebar-title">💬 Questions?</h4>
+          <p class="ps-policy-sidebar-body">Have a question about our policies? We're happy to help!</p>
+          <a href="{{ shop.url }}/pages/contact" class="ps-btn-primary" style="display:block;text-align:center;margin-top:1rem;">Contact Us</a>
+          <div class="ps-policy-contact-row"><a href="tel:{{ shop.phone }}">📞 {{ shop.phone | default: '641.670.1573' }}</a></div>
+        </div>
+        <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary" style="display:block;text-align:center;">← Back to Shop</a>
       </div>
     </div>
 
