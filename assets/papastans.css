@@ -73,15 +73,10 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 /* ── Nav ── */
 .ps-nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: .6rem 3rem; transition: all .4s; }
 .ps-nav.scrolled { background: rgba(253,250,255,.97); backdrop-filter: blur(12px); top: 0; padding: .5rem 3rem; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); }
-.ps-nav-logo { text-decoration: none; display: flex; align-items: center; gap: .5rem; }
-.ps-nav-logo-icon { font-size: 2rem; line-height: 1; }
-.ps-nav-logo-text { line-height: 1.15; }
-.ps-nav-logo-main { font-family: 'Luckiest Guy', cursive; font-size: 1.45rem; color: #fff; display: block; letter-spacing: .05em; text-shadow: 2px 2px 0 rgba(0,0,0,.35); transition: color .4s; }
-.ps-nav.scrolled .ps-nav-logo-main { color: var(--lav); text-shadow: 1px 1px 0 rgba(74,40,112,.15); }
-.ps-nav-logo-sub { font-family: 'Caveat', cursive; font-size: .88rem; font-weight: 600; color: rgba(255,255,255,.8); display: block; transition: color .4s; }
-.ps-nav.scrolled .ps-nav-logo-sub { color: var(--lav-mid); }
-.ps-nav-solid .ps-nav-logo-main { color: var(--lav) !important; text-shadow: none !important; }
-.ps-nav-solid .ps-nav-logo-sub { color: var(--lav-mid) !important; }
+.ps-nav-logo { text-decoration: none; display: flex; align-items: center; }
+.ps-nav-logo-img { height: 64px; width: auto; object-fit: contain; transition: height .4s; }
+.ps-nav.scrolled .ps-nav-logo-img { height: 54px; }
+.ps-nav-solid .ps-nav-logo-img { height: 54px; }
 
 
 .ps-nav-links { display: flex; gap: 0; list-style: none; }
