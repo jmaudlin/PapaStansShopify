@@ -1,14 +1,159 @@
 <div class="ps-rainbow-bar"></div>
-<div class="ps-announce">🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp; 🚚 <strong>FREE Shipping</strong> on $55+</div>
+<div class="ps-announce">
+  🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
+  🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+  📞 <a href="tel:6416701573">641.670.1573</a>
+</div>
 <nav class="ps-nav ps-nav-solid" id="psNav">
   <a href="{{ shop.url }}" class="ps-nav-logo">
     <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
-  <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li><li><a href="{{ shop.url }}">Home</a></li></ul>
+  <ul class="ps-nav-links">
+    <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
+    <li><a href="{{ shop.url }}/#ps-scents">Scents</a></li>
+    <li><a href="{{ shop.url }}/#ps-about">Our Story</a></li>
+    <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
+    </button>
+  </div>
 </nav>
+
 <div class="ps-page-wrap">
-  <h1 class="ps-section-h2" style="margin-bottom:2rem">{{ page.title }}</h1>
-  <div class="ps-page-content">{{ page.content }}</div>
+
+  {%- if page.handle == 'contact' -%}
+
+    <div class="ps-contact-grid">
+
+      <!-- LEFT: Contact Form -->
+      <div class="ps-contact-form-col">
+        <div class="ps-section-tag" style="margin-bottom:.8rem">✉️ Get in Touch</div>
+        <h1 class="ps-section-h2" style="margin-bottom:.5rem">Contact <em>Us!</em></h1>
+        <p style="font-family:'Caveat',cursive;font-size:1.15rem;color:var(--brown);margin-bottom:2rem;">
+          Questions about products, custom orders, wholesale, local pickup — we'd love to hear from you!
+        </p>
+
+        {%- form 'contact', id: 'ContactForm' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="ps-form-success">
+              🎉 Thanks for reaching out! We'll get back to you within 1–2 business days.
+            </div>
+          {%- endif -%}
+
+          <div class="ps-form-row">
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="ContactForm-name">Your Name</label>
+              <input type="text" id="ContactForm-name" name="contact[name]" class="ps-form-input" placeholder="Jane Smith" value="{{ form.name }}" autocomplete="name">
+            </div>
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="ContactForm-email">Email <span class="ps-required">*</span></label>
+              <input type="email" id="ContactForm-email" name="contact[email]" class="ps-form-input" placeholder="jane@example.com" value="{{ form.email }}" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="ps-form-group">
+            <label class="ps-form-label" for="ContactForm-phone">Phone (optional)</label>
+            <input type="tel" id="ContactForm-phone" name="contact[phone]" class="ps-form-input" placeholder="641-555-0123" value="{{ form.phone }}" autocomplete="tel">
+          </div>
+
+          <div class="ps-form-group">
+            <label class="ps-form-label" for="ContactForm-subject">Subject</label>
+            <select id="ContactForm-subject" name="contact[subject]" class="ps-form-input">
+              <option value="">— Select a topic —</option>
+              <option value="Product Question">Product Question</option>
+              <option value="Order Status">Order Status</option>
+              <option value="Custom / Wholesale Order">Custom / Wholesale Order</option>
+              <option value="Local Pickup">Local Pickup</option>
+              <option value="General Inquiry">General Inquiry</option>
+            </select>
+          </div>
+
+          <div class="ps-form-group">
+            <label class="ps-form-label" for="ContactForm-body">Message <span class="ps-required">*</span></label>
+            <textarea id="ContactForm-body" name="contact[body]" class="ps-form-input ps-form-textarea" placeholder="Tell us how we can help..." required>{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="ps-btn-primary" style="width:100%;text-align:center;">Send Message 💌</button>
+        {%- endform -%}
+      </div>
+
+      <!-- RIGHT: Info sidebar -->
+      <div class="ps-contact-info-col">
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">📍 Our Location</h3>
+          <p class="ps-contact-info-addr">
+            {{ shop.address.address1 }}<br>
+            {{ shop.address.city }}, {{ shop.address.province_code }} {{ shop.address.zip }}<br>
+            {{ shop.address.country }}
+          </p>
+          <a href="https://maps.google.com/?q={{ shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | url_encode }}" target="_blank" class="ps-contact-map-link">Get Directions →</a>
+          <div class="ps-contact-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24530!2d-92.6438!3d41.2959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee4e3ec5fca9a5%3A0xabcdef123456!2sOskaloosa%2C+IA+52577!5e0!3m2!1sen!2sus!4v1"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">📞 Reach Us Directly</h3>
+          <div class="ps-contact-info-row"><span>Phone</span><a href="tel:{{ shop.phone }}">{{ shop.phone | default: '641.670.1573' }}</a></div>
+          <div class="ps-contact-info-row"><span>Email</span><a href="mailto:{{ shop.email }}">{{ shop.email }}</a></div>
+          <div class="ps-contact-info-row"><span>Response</span><span>1–2 business days</span></div>
+        </div>
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">🌿 Follow Along</h3>
+          <div class="ps-contact-socials">
+            <a href="https://facebook.com/PapaStansSoaps" target="_blank" class="ps-contact-social-btn">
+              <strong>f</strong> PapaStansSoaps
+            </a>
+            <a href="https://instagram.com/PapaStansSoaps" target="_blank" class="ps-contact-social-btn">
+              <strong>ig</strong> PapaStansSoaps
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  {%- else -%}
+
+    <!-- Generic page template -->
+    <h1 class="ps-section-h2" style="margin-bottom:2rem">{{ page.title }}</h1>
+    <div class="ps-page-content">{{ page.content }}</div>
+
+  {%- endif -%}
+
 </div>
-<script>window.addEventListener('scroll',()=>document.getElementById('psNav').classList.toggle('scrolled',window.scrollY>10),{passive:true});</script>
+
+{% render 'ps-cart-drawer' %}
+
+<script>
+async function psUpdateQty(key,qty){const u={};u[key]=qty;await fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({updates:u})});await psRefreshCart();}
+async function psRemoveLine(key){await psUpdateQty(key,0);}
+async function psRefreshCart(){const r=await fetch('/cart.js',{headers:{'Accept':'application/json'}});const cart=await r.json();psRenderCart(cart);document.getElementById('psCartCount').textContent=cart.item_count||0;}
+function psMoney(c){return '$'+(c/100).toFixed(2);}
+function psRenderCart(cart){
+  const el=document.getElementById('psCartItems'),ft=document.getElementById('psCartFoot');
+  if(!cart.items||!cart.items.length){el.innerHTML='<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';ft.style.display='none';return;}
+  ft.style.display='block';
+  el.innerHTML=cart.items.map(item=>`<div class="ps-cart-item"><img class="ps-ci-img" src="${item.image?item.image.replace('http:','https:'):''}" alt="${item.title}" onerror="this.style.visibility='hidden'"><div><div class="ps-ci-name">${item.product_title}</div><div class="ps-ci-price">${psMoney(item.price)}</div><div class="ps-ci-qty"><button onclick="psUpdateQty('${item.key}',${item.quantity-1})">−</button><span>${item.quantity}</span><button onclick="psUpdateQty('${item.key}',${item.quantity+1})">+</button></div></div><button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button></div>`).join('');
+  document.getElementById('psCartTotal').textContent=psMoney(cart.total_price);
+  const pct=Math.min((cart.total_price/5500)*100,100);
+  document.getElementById('psShipFill').style.width=pct+'%';
+  const rem=psMoney(Math.max(5500-cart.total_price,0));
+  document.getElementById('psShipMsg').innerHTML=cart.total_price>=5500?'<strong>🎉 Free shipping unlocked!</strong>':`Add <strong>${rem} more</strong> for free shipping 🚚`;
+}
+function psOpenCart(){psRefreshCart();document.getElementById('psCartDrawer').classList.add('open');document.getElementById('psCartOverlay').classList.add('open');}
+function psCloseCart(){document.getElementById('psCartDrawer').classList.remove('open');document.getElementById('psCartOverlay').classList.remove('open');}
+let psToastTimer;
+function psShowToast(msg){const t=document.getElementById('psToast');t.textContent=msg;t.classList.add('show');clearTimeout(psToastTimer);psToastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+window.addEventListener('scroll',()=>document.getElementById('psNav').classList.toggle('scrolled',window.scrollY>10),{passive:true});
+psRefreshCart();
+</script>
+
 {% schema %}{ "name": "Page", "settings": [], "presets": [{ "name": "Page" }] }{% endschema %}

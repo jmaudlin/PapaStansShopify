@@ -44,11 +44,7 @@
       <a href="#ps-about" class="ps-btn-secondary">Our Story 🏡</a>
     </div>
   </div>
-  <div class="ps-hero-offer">
-    <div class="ps-offer-icon">🎁</div>
-    <div class="ps-offer-title">Free Samples!</div>
-    <div class="ps-offer-body">Try 4 free samples + free shipping on $55+</div>
-  </div>
+
   <div class="ps-hero-phone">
     <span>📞</span>
     <a href="tel:6416701573">641.670.1573</a>
@@ -225,21 +221,60 @@
 <!-- FIND US -->
 <section class="ps-local" id="ps-find-us">
   <div class="ps-local-inner">
-    <div class="ps-local-card ps-reveal ps-from-left">
-      <div class="ps-local-card-icon">📍</div>
-      <h3>Oskaloosa, Iowa</h3>
-      <p>Mahaska County · Since 2019</p>
-      <a href="tel:6416701573" class="ps-phone-link">641.670.1573</a>
-      <div style="margin-top:.8rem;font-family:'Caveat',cursive;font-size:.9rem;color:var(--brown);">papastanssoapsandcandles.com</div>
+
+    <!-- Embedded Google Map -->
+    <div class="ps-map-wrap ps-reveal ps-from-left">
+      <iframe
+        class="ps-map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3066.5!2d-92.6438!3d41.2959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee4e3e3e3e3e3f%3A0x1!2sOskaloosa%2C+IA+52577!5e0!3m2!1sen!2sus!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
+
     <div>
-      <div class="ps-section-tag ps-reveal" style="background:var(--sun);">📍 Where to Find Us</div>
+      <div class="ps-section-tag ps-reveal" style="background:var(--lav-light);color:var(--lav-dark);border-color:var(--lav-dark);">📍 Where to Find Us</div>
       <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Proudly <em>Local.</em><br>Shipped <em>Everywhere!</em></h2>
-      <div class="ps-local-detail ps-reveal ps-rd2"><div class="ps-l-icon">🏡</div><div class="ps-l-text"><h4>Made in Oskaloosa</h4><p>Every product is handcrafted in small batches right in our community.</p></div></div>
-      <div class="ps-local-detail ps-reveal ps-rd3"><div class="ps-l-icon">🚚</div><div class="ps-l-text"><h4>Free Shipping on $55+</h4><p>Orders over $55 ship free nationwide. Plus 4 free samples with your order!</p></div></div>
-      <div class="ps-local-detail ps-reveal ps-rd4"><div class="ps-l-icon">🇺🇸</div><div class="ps-l-text"><h4>Veteran-Owned &amp; Operated</h4><p>Established 2019. Same dedication as service — in every batch.</p></div></div>
-      <a href="{{ shop.url }}/collections/all" class="ps-btn-primary ps-reveal" style="margin-top:1.5rem;display:inline-block;">Shop Now 🛒</a>
+
+      <div class="ps-local-detail ps-reveal ps-rd2">
+        <div class="ps-l-icon">🏠</div>
+        <div class="ps-l-text">
+          <h4>{{ shop.address.address1 | default: 'Oskaloosa, Iowa' }}</h4>
+          <p>{{ shop.address.city | default: 'Oskaloosa' }}, {{ shop.address.province_code | default: 'IA' }} {{ shop.address.zip | default: '52577' }}<br>{{ shop.address.country | default: 'United States' }}</p>
+        </div>
+      </div>
+
+      <div class="ps-local-detail ps-reveal ps-rd2">
+        <div class="ps-l-icon">📞</div>
+        <div class="ps-l-text">
+          <h4><a href="tel:{{ shop.phone | default: '6416701573' }}" style="color:var(--butter);text-decoration:none;">{{ shop.phone | default: '641.670.1573' }}</a></h4>
+          <p><a href="mailto:{{ shop.email }}" style="color:rgba(255,255,255,.65);text-decoration:none;">{{ shop.email }}</a></p>
+        </div>
+      </div>
+
+      <div class="ps-local-detail ps-reveal ps-rd3">
+        <div class="ps-l-icon">🚚</div>
+        <div class="ps-l-text">
+          <h4>Free Shipping on $55+</h4>
+          <p>Orders over $55 ship free nationwide. Plus 4 free samples with every order!</p>
+        </div>
+      </div>
+
+      <div class="ps-local-detail ps-reveal ps-rd4">
+        <div class="ps-l-icon">🇺🇸</div>
+        <div class="ps-l-text">
+          <h4>Veteran-Owned &amp; Operated</h4>
+          <p>Established 2019. We bring the same dedication from service to every batch we make.</p>
+        </div>
+      </div>
+
+      <div class="ps-local-btns ps-reveal">
+        <a href="https://maps.google.com/?q=Oskaloosa,+IA+52577" target="_blank" class="ps-btn-secondary" style="margin-top:1.5rem;display:inline-block;margin-right:.8rem;">Get Directions 🗺️</a>
+        <a href="{{ shop.url }}/collections/all" class="ps-btn-primary" style="margin-top:1.5rem;display:inline-block;">Shop Now 🛒</a>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -287,19 +322,10 @@
       <li><a href="#ps-find-us">Find Us</a></li>
     </ul></div>
     <div class="ps-footer-col"><h5>Help</h5><ul>
-      {%- if shop.shipping_policy.body != blank -%}
-        <li><a href="{{ shop.shipping_policy.url }}">Shipping Info</a></li>
-      {%- else -%}
-        <li><a href="{{ shop.url }}/pages/contact">Shipping Info</a></li>
-      {%- endif -%}
-      {%- if shop.refund_policy.body != blank -%}
-        <li><a href="{{ shop.refund_policy.url }}">Returns</a></li>
-      {%- else -%}
-        <li><a href="{{ shop.url }}/pages/contact">Returns</a></li>
-      {%- endif -%}
-      {%- if shop.privacy_policy.body != blank -%}
-        <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
-      {%- endif -%}
+      <li><a href="{{ shop.shipping_policy.url }}">Shipping Info</a></li>
+      <li><a href="{{ shop.refund_policy.url }}">Returns &amp; Refunds</a></li>
+      <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
+      <li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>
       <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
       <li><a href="{{ shop.url }}/cart">View Cart</a></li>
     </ul></div>
