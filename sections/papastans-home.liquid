@@ -11,11 +11,7 @@
 <!-- NAV -->
 <nav class="ps-nav" id="psNav">
   <a href="{{ shop.url }}" class="ps-nav-logo">
-    <span class="ps-nav-logo-icon">🧼</span>
-    <span class="ps-nav-logo-text">
-      <span class="ps-nav-logo-main">Papa Stan's</span>
-      <span class="ps-nav-logo-sub">Oskaloosa, Iowa</span>
-    </span>
+    <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
   <ul class="ps-nav-links">
     <li><a href="#ps-products">Shop</a></li>
@@ -40,6 +36,7 @@
   <div class="ps-bubble ps-bubble-4"></div>
   <div class="ps-hero-art" id="psHeroArt">🪣</div>
   <div class="ps-hero-content">
+    <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-hero-logo">
     <div class="ps-hero-eyebrow">🌿 Handcrafted · Small Batch · All Natural</div>
     <h1 class="ps-hero-h1"><span>Soaps, Lotions</span><br>&amp; Candles!</h1>
     <p class="ps-hero-sub">Made with love right here in<br>Oskaloosa, Iowa since 2019 🇺🇸</p>
@@ -296,7 +293,9 @@
 <footer class="ps-footer">
   <div class="ps-footer-top">
     <div>
-      <a href="{{ shop.url }}" class="ps-f-logo">🧼 Papa Stan's</a>
+      <a href="{{ shop.url }}" class="ps-f-logo">
+        <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-f-logo-img">
+      </a>
       <p class="ps-f-sub">of Iowa · Est. 2019 · Veteran-Owned</p>
       <p class="ps-f-desc">"The cleanest body products that money can buy" — handcrafted with love in Oskaloosa, Iowa.</p>
       <div class="ps-f-contact">📞 <a href="tel:6416701573">641.670.1573</a></div>
