@@ -117,6 +117,9 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-bubble-2 { width:80px;height:80px;  top:55%;right:20%; background:radial-gradient(circle at 35% 35%,rgba(200,160,230,.8),rgba(140,90,190,.4));  border:3px solid rgba(255,255,255,.3); animation:psBobble 8s ease-in-out infinite 2s; }
 .ps-bubble-3 { width:100px;height:100px;bottom:15%;right:8%;background:radial-gradient(circle at 35% 35%,rgba(188,140,190,.8),rgba(120,80,130,.4));  border:3px solid rgba(255,255,255,.3); animation:psBobble 7s ease-in-out infinite 1s; }
 .ps-bubble-4 { width:60px;height:60px;  top:30%;right:32%;background:radial-gradient(circle at 35% 35%,rgba(180,130,220,.8),rgba(120,70,170,.4)); border:3px solid rgba(255,255,255,.3); animation:psBobble 9s ease-in-out infinite 3s; }
+.ps-bubble-5 { width:45px;height:45px;  top:18%;right:52%; background:radial-gradient(circle at 38% 32%,rgba(210,170,240,.9),rgba(150,100,200,.5)); border:2px solid rgba(255,255,255,.25); animation:psBobble 7.5s ease-in-out infinite 0.5s; }
+.ps-bubble-6 { width:90px;height:90px;  top:65%;right:44%; background:radial-gradient(circle at 35% 35%,rgba(170,120,210,.75),rgba(110,65,160,.4)); border:3px solid rgba(255,255,255,.2); animation:psBobble 10s ease-in-out infinite 4s; }
+.ps-bubble-7 { width:35px;height:35px;  top:42%;right:58%; background:radial-gradient(circle at 40% 30%,rgba(220,190,250,.9),rgba(160,120,210,.5)); border:2px solid rgba(255,255,255,.3); animation:psBobble 6.5s ease-in-out infinite 1.5s; }
 @keyframes psBobble { 0%,100%{transform:translateY(0) rotate(0deg)} 33%{transform:translateY(-18px) rotate(5deg)} 66%{transform:translateY(10px) rotate(-3deg)} }
 .ps-hero-art { position:absolute;right:3%;bottom:0;z-index:2;font-size:12rem;line-height:1;opacity:.22;transform:scaleX(-1);pointer-events:none;will-change:transform; }
 .ps-hero-content { position:relative;z-index:5;padding:0 4rem 0 5rem;max-width:680px; }
