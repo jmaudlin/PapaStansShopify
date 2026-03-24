@@ -461,8 +461,19 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* Landscape mobile / tablet: show links normally, hide hamburger */
 @media (max-width: 680px) and (orientation: landscape) {
-  .ps-hamburger { display: none; }
-  .ps-nav-links { display: flex !important; }
+  .ps-hamburger { display: none !important; }
+  .ps-nav-links {
+    display: flex !important;
+    flex-direction: row !important;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
 }
 @media (min-width: 681px) {
   .ps-hamburger { display: none !important; }
