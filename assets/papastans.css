@@ -529,3 +529,74 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   .ps-policy-grid { grid-template-columns: 1fr; }
   .ps-policy-sidebar { position: static; }
 }
+
+/* ═══════════════════════════════════════
+   Papa Stan's — Customer Account Styles
+   ═══════════════════════════════════════ */
+
+/* Nav account link */
+.ps-nav-account-link {
+  font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+  text-decoration: none; color: rgba(255,255,255,.9); transition: color .3s; padding: .4rem .7rem;
+  border-radius: 20px; border: 2px solid rgba(255,255,255,.3);
+}
+.ps-nav.scrolled .ps-nav-account-link { color: var(--lav); border-color: var(--lav-light); }
+.ps-nav-account-link:hover { background: rgba(255,255,255,.15); color: #fff !important; }
+.ps-nav.scrolled .ps-nav-account-link:hover { background: var(--lav-light); color: var(--lav-dark) !important; }
+
+/* Account page wrapper — centers the card */
+.ps-account-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 3rem; padding-bottom: 4rem; }
+.ps-account-card { width: 100%; max-width: 480px; background: var(--white); border: 3px solid var(--border); border-radius: 16px; padding: 2.5rem; box-shadow: 6px 6px 0 var(--border); }
+.ps-account-title { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .3rem; text-align: center; }
+.ps-account-sub { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--brown); text-align: center; margin-bottom: 1.8rem; }
+.ps-account-section-h { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .5rem; }
+.ps-account-forgot { text-align: right; margin-bottom: .4rem; }
+.ps-account-link-btn { background: none; border: none; cursor: pointer; color: var(--lav); font-family: 'Nunito', sans-serif; font-size: .82rem; font-weight: 800; text-decoration: underline; padding: 0; }
+.ps-account-link-btn:hover { color: var(--lav-dark); }
+.ps-account-divider { text-align: center; margin: 1.5rem 0; position: relative; }
+.ps-account-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
+.ps-account-divider span { position: relative; background: var(--white); padding: 0 1rem; font-size: .78rem; font-weight: 700; color: var(--brown); text-transform: uppercase; letter-spacing: .1em; }
+
+/* Form errors */
+.ps-form-error { background: #fdecea; border: 2px solid #e53e3e; border-radius: 8px; padding: .8rem 1rem; font-size: .85rem; font-weight: 700; color: #c53030; margin-bottom: 1.2rem; }
+
+/* Account dashboard */
+.ps-account-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+.ps-account-logout { font-size: .78rem; font-weight: 800; color: var(--lav); text-decoration: none; letter-spacing: .06em; text-transform: uppercase; border-bottom: 2px solid var(--lav); padding-bottom: .1rem; }
+.ps-account-logout:hover { color: var(--lav-dark); border-color: var(--lav-dark); }
+.ps-account-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start; }
+.ps-account-sidebar { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 100px; }
+.ps-account-section-card { background: var(--lav-xlight); border: 3px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: 3px 3px 0 var(--border); }
+.ps-account-section-title { font-family: 'Luckiest Guy', cursive; font-size: 1.05rem; color: var(--lav); letter-spacing: .04em; margin-bottom: 1rem; }
+.ps-account-name { font-family: 'Luckiest Guy', cursive; font-size: 1.1rem; color: var(--lav-ink); letter-spacing: .03em; margin-bottom: .2rem; }
+.ps-account-email { font-size: .82rem; font-weight: 600; color: var(--brown); margin-bottom: .8rem; }
+.ps-account-address { font-size: .85rem; font-weight: 600; color: var(--lav-ink); line-height: 1.7; padding: .8rem; background: var(--white); border: 2px solid var(--border); border-radius: 8px; margin-bottom: .5rem; }
+.ps-account-links { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .3rem; }
+.ps-account-links a { display: block; padding: .5rem .8rem; font-size: .85rem; font-weight: 700; color: var(--lav-ink); text-decoration: none; border-radius: 6px; transition: all .2s; }
+.ps-account-links a:hover { background: var(--lav-light); color: var(--lav-dark); }
+.ps-account-empty { text-align: center; padding: 2.5rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--brown); }
+
+/* Order table */
+.ps-order-table-wrap { overflow-x: auto; }
+.ps-order-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.ps-order-table th { font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--brown); padding: .6rem .8rem; border-bottom: 3px solid var(--border); text-align: left; white-space: nowrap; }
+.ps-order-table td { padding: .75rem .8rem; border-bottom: 1px dashed var(--border); vertical-align: middle; font-weight: 600; color: var(--lav-ink); }
+.ps-order-table tr:last-child td { border-bottom: none; }
+.ps-order-table tr:hover td { background: var(--lav-xlight); }
+.ps-order-link { font-family: 'Luckiest Guy', cursive; font-size: .95rem; color: var(--lav); text-decoration: none; letter-spacing: .04em; }
+.ps-order-link:hover { color: var(--lav-dark); }
+.ps-order-badge { display: inline-block; padding: .2rem .6rem; border-radius: 20px; font-size: .65rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; background: var(--lav-light); color: var(--lav-dark); }
+.ps-badge-paid, .ps-badge-fulfilled { background: #dcfce7; color: #166534; }
+.ps-badge-pending, .ps-badge-unfulfilled { background: #fef9c3; color: #854d0e; }
+.ps-badge-refunded, .ps-badge-partially_refunded { background: #fee2e2; color: #991b1b; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .ps-account-grid { grid-template-columns: 1fr; }
+  .ps-account-sidebar { position: static; }
+  .ps-order-table thead { display: none; }
+  .ps-order-table td { display: flex; justify-content: space-between; padding: .5rem .8rem; }
+  .ps-order-table td::before { content: attr(data-label); font-weight: 800; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--brown); }
+  .ps-order-table tr { display: block; border: 2px solid var(--border); border-radius: 8px; margin-bottom: .8rem; }
+  .ps-order-table tr:hover td { background: var(--white); }
+}

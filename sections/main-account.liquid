@@ -1,183 +1,121 @@
-{{ 'customer.css' | asset_url | stylesheet_tag }}
+{% render 'ps-account-nav' %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+<div class="ps-page-wrap">
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<div class="customer account section-{{ section.id }}-padding">
-  <div>
-    <h1 class="customer__title">{{ 'customer.account.title' | t }}</h1>
-    <a href="{{ routes.account_logout_url }}">
-      <span class="svg-wrapper">
-        {{- 'icon-account.svg' | inline_asset_content -}}
-      </span>
-      {{ 'customer.log_out' | t }}
-    </a>
+  <!-- Account header -->
+  <div class="ps-account-header">
+    <div>
+      <div class="ps-section-tag" style="margin-bottom:.5rem">👤 My Account</div>
+      <h1 class="ps-section-h2">Hello, <em>{{ customer.first_name }}!</em></h1>
+    </div>
+    <a href="{{ routes.account_logout_url }}" class="ps-account-logout">Sign Out →</a>
   </div>
 
-  <div>
-    <div>
-      <h2>{{ 'customer.orders.title' | t }}</h2>
+  <div class="ps-account-grid">
 
-      {% paginate customer.orders by 20 %}
-        {%- if customer.orders.size > 0 -%}
-          <table role="table" class="order-history">
-            <caption class="visually-hidden">
-              {{ 'customer.orders.title' | t }}
-            </caption>
-            <thead role="rowgroup">
-              <tr role="row">
-                <th id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
-                <th id="ColumnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
-                <th id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
-                <th id="ColumnFulfillment" scope="col" role="columnheader">
-                  {{ 'customer.orders.fulfillment_status' | t }}
-                </th>
-                <th id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
-              </tr>
-            </thead>
-            <tbody role="rowgroup">
-              {%- for order in customer.orders -%}
-                <tr role="row">
-                  <td
-                    id="RowOrder"
-                    role="cell"
-                    headers="ColumnOrder"
-                    data-label="{{ 'customer.orders.order_number' | t }}"
-                  >
-                    <a
-                      href="{{ order.customer_url }}"
-                      aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}"
-                    >
-                      {{ order.name }}
-                    </a>
-                  </td>
-                  <td headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
-                    {{ order.created_at | time_tag: format: 'date' }}
-                  </td>
-                  <td
-                    headers="RowOrder ColumnPayment"
-                    role="cell"
-                    data-label="{{ 'customer.orders.payment_status' | t }}"
-                  >
-                    {{ order.financial_status_label }}
-                  </td>
-                  <td
-                    headers="RowOrder ColumnFulfillment"
-                    role="cell"
-                    data-label="{{ 'customer.orders.fulfillment_status' | t }}"
-                  >
-                    {{ order.fulfillment_status_label }}
-                  </td>
-                  <td headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
-                    {{ order.total_net_amount | money_with_currency }}
-                  </td>
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
-        {%- else -%}
-          <p>{{ 'customer.orders.none' | t }}</p>
-        {%- endif -%}
+    <!-- Order History -->
+    <div class="ps-account-main">
+      <div class="ps-account-section-card">
+        <h2 class="ps-account-section-title">📦 Order History</h2>
 
-        {%- if paginate.pages > 1 -%}
-          {%- if paginate.parts.size > 0 -%}
-            <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
-              <ul role="list">
-                {%- if paginate.previous -%}
-                  <li>
-                    <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
-                      <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
-                      </span>
-                    </a>
-                  </li>
-                {%- endif -%}
-
-                {%- for part in paginate.parts -%}
-                  <li>
-                    {%- if part.is_link -%}
-                      <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
-                        {{- part.title -}}
-                      </a>
-                    {%- else -%}
-                      {%- if part.title == paginate.current_page -%}
-                        <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
-                          {{- part.title -}}
+        {%- paginate customer.orders by 10 -%}
+          {%- if customer.orders.size > 0 -%}
+            <div class="ps-order-table-wrap">
+              <table class="ps-order-table">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Payment</th>
+                    <th>Fulfillment</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td data-label="Order">
+                        <a href="{{ order.customer_url }}" class="ps-order-link">{{ order.name }}</a>
+                      </td>
+                      <td data-label="Date">{{ order.created_at | time_tag: format: 'date' }}</td>
+                      <td data-label="Payment">
+                        <span class="ps-order-badge ps-badge-{{ order.financial_status }}">
+                          {{ order.financial_status_label }}
                         </span>
-                      {%- else -%}
-                        <span>{{ part.title }}</span>
-                      {%- endif -%}
-                    {%- endif -%}
-                  </li>
-                {%- endfor -%}
+                      </td>
+                      <td data-label="Fulfillment">
+                        <span class="ps-order-badge ps-badge-{{ order.fulfillment_status }}">
+                          {{ order.fulfillment_status_label }}
+                        </span>
+                      </td>
+                      <td data-label="Total">{{ order.total_net_amount | money_with_currency }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
 
-                {%- if paginate.next -%}
-                  <li>
-                    <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
-                      <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
-                      </span>
-                    </a>
-                  </li>
+            {%- if paginate.pages > 1 -%}
+              <div class="ps-pagination" style="margin-top:1.5rem">
+                {%- if paginate.previous -%}
+                  <a href="{{ paginate.previous.url }}" class="ps-btn-secondary" style="padding:.5rem 1.2rem">← Previous</a>
                 {%- endif -%}
-              </ul>
-            </nav>
+                <span class="ps-page-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+                {%- if paginate.next -%}
+                  <a href="{{ paginate.next.url }}" class="ps-btn-primary" style="padding:.5rem 1.2rem">Next →</a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+          {%- else -%}
+            <div class="ps-account-empty">
+              <div style="font-size:3rem;margin-bottom:.8rem">🛒</div>
+              <p>You haven't placed any orders yet.</p>
+              <a href="{{ shop.url }}/collections/all" class="ps-btn-primary" style="margin-top:1rem;display:inline-block">Start Shopping 🌿</a>
+            </div>
           {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+
+    <!-- Sidebar: Account Details -->
+    <div class="ps-account-sidebar">
+      <div class="ps-account-section-card">
+        <h2 class="ps-account-section-title">📋 Account Details</h2>
+        <p class="ps-account-name">{{ customer.name }}</p>
+        <p class="ps-account-email">{{ customer.email }}</p>
+
+        {%- if customer.default_address -%}
+          <div class="ps-account-address">
+            {{ customer.default_address | format_address }}
+          </div>
         {%- endif -%}
-      {% endpaginate %}
+
+        <a href="{{ routes.account_addresses_url }}" class="ps-btn-secondary" style="display:block;text-align:center;margin-top:1rem">
+          Manage Addresses
+          {%- if customer.addresses_count > 0 -%}
+            ({{ customer.addresses_count }})
+          {%- endif -%}
+        </a>
+      </div>
+
+      <div class="ps-account-section-card">
+        <h2 class="ps-account-section-title">🌿 Quick Links</h2>
+        <ul class="ps-account-links">
+          <li><a href="{{ shop.url }}/collections/all">Shop All Products</a></li>
+          <li><a href="{{ routes.account_addresses_url }}">My Addresses</a></li>
+          <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
+          <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
+          <li><a href="{{ routes.account_logout_url }}">Sign Out</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div>
-      <h2>{{ 'customer.account.details' | t }}</h2>
-
-      {{ customer.default_address | format_address }}
-
-      <a href="{{ routes.account_addresses_url }}">
-        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
-      </a>
-    </div>
   </div>
 </div>
 
-{% schema %}
-{
-  "name": "t:sections.main-account.name",
-  "settings": [
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    }
-  ]
-}
-{% endschema %}
+<script>
+window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+</script>
+
+{% schema %}{"name":"Account","settings":[]}{% endschema %}

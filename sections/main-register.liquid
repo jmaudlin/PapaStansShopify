@@ -1,166 +1,52 @@
-{{ 'customer.css' | asset_url | stylesheet_tag }}
+{% render 'ps-account-nav' %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+<div class="ps-page-wrap ps-account-wrap">
+  <div class="ps-account-card">
+    <div class="ps-section-tag" style="margin:0 auto .8rem;width:fit-content">🌿 Join the Family</div>
+    <h1 class="ps-account-title">Create an Account</h1>
+    <p class="ps-account-sub">Sign up to track orders, save addresses, and get early access to new scents!</p>
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
+    {%- form 'create_customer', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}<div class="ps-form-error">{{ form.errors | default_errors }}</div>{%- endif -%}
 
-<div class="customer register section-{{ section.id }}-padding">
-  <h1>
-    {{ 'customer.register.title' | t }}
-  </h1>
-  {%- form 'create_customer', novalidate: 'novalidate' -%}
-    {%- if form.errors -%}
-      <h2 class="form__message" tabindex="-1" autofocus>
-        <span class="svg-wrapper">
-          {{- 'icon-error.svg' | inline_asset_content -}}
-        </span>
-        {{ 'templates.contact.form.error_heading' | t }}
-      </h2>
-      <ul>
-        {%- for field in form.errors -%}
-          <li>
-            {%- if field == 'form' -%}
-              {{ form.errors.messages[field] }}
-            {%- else -%}
-              <a href="#RegisterForm-{{ field }}">
-                {{ form.errors.translated_fields[field] | capitalize }}
-                {{ form.errors.messages[field] }}
-              </a>
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-    <div class="field">
-      <input
-        type="text"
-        name="customer[first_name]"
-        id="RegisterForm-FirstName"
-        {% if form.first_name %}
-          value="{{ form.first_name }}"
-        {% endif %}
-        autocomplete="given-name"
-        placeholder="{{ 'customer.register.first_name' | t }}"
-      >
-      <label for="RegisterForm-FirstName">
-        {{ 'customer.register.first_name' | t }}
-      </label>
-    </div>
-    <div class="field">
-      <input
-        type="text"
-        name="customer[last_name]"
-        id="RegisterForm-LastName"
-        {% if form.last_name %}
-          value="{{ form.last_name }}"
-        {% endif %}
-        autocomplete="family-name"
-        placeholder="{{ 'customer.register.last_name' | t }}"
-      >
-      <label for="RegisterForm-LastName">
-        {{ 'customer.register.last_name' | t }}
-      </label>
-    </div>
-    <div class="field">
-      <input
-        type="email"
-        name="customer[email]"
-        id="RegisterForm-email"
-        {% if form.email %}
-          value="{{ form.email }}"
-        {% endif %}
-        spellcheck="false"
-        autocapitalize="off"
-        autocomplete="email"
-        aria-required="true"
-        {% if form.errors contains 'email' %}
-          aria-invalid="true"
-          aria-describedby="RegisterForm-email-error"
-        {% endif %}
-        placeholder="{{ 'customer.register.email' | t }}"
-      >
-      <label for="RegisterForm-email">
-        {{ 'customer.register.email' | t }}
-      </label>
-    </div>
-    {%- if form.errors contains 'email' -%}
-      <span id="RegisterForm-email-error" class="form__message">
-        <span class="svg-wrapper">
-          {{- 'icon-error.svg' | inline_asset_content -}}
-        </span>
-        {{ form.errors.translated_fields.email | capitalize }}
-        {{ form.errors.messages.email }}.
-      </span>
-    {%- endif -%}
-    <div class="field">
-      <input
-        type="password"
-        name="customer[password]"
-        id="RegisterForm-password"
-        aria-required="true"
-        {% if form.errors contains 'password' %}
-          aria-invalid="true"
-          aria-describedby="RegisterForm-password-error"
-        {% endif %}
-        placeholder="{{ 'customer.register.password' | t }}"
-      >
-      <label for="RegisterForm-password">
-        {{ 'customer.register.password' | t }}
-      </label>
-    </div>
-    {%- if form.errors contains 'password' -%}
-      <span id="RegisterForm-password-error" class="form__message">
-        <span class="svg-wrapper">
-          {{- 'icon-error.svg' | inline_asset_content -}}
-        </span>
-        {{ form.errors.translated_fields.password | capitalize }}
-        {{ form.errors.messages.password }}.
-      </span>
-    {%- endif -%}
-    <button>
-      {{ 'customer.register.submit' | t }}
-    </button>
-  {%- endform -%}
+      <div class="ps-form-row">
+        <div class="ps-form-group">
+          <label class="ps-form-label" for="FirstName">First Name</label>
+          <input type="text" id="FirstName" name="customer[first_name]" class="ps-form-input"
+            placeholder="Jane" value="{{ form.first_name }}" autocomplete="given-name"
+            {% if form.errors contains 'first_name' %}autofocus{% endif %}>
+        </div>
+        <div class="ps-form-group">
+          <label class="ps-form-label" for="LastName">Last Name</label>
+          <input type="text" id="LastName" name="customer[last_name]" class="ps-form-input"
+            placeholder="Smith" value="{{ form.last_name }}" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="ps-form-group">
+        <label class="ps-form-label" for="RegisterEmail">Email Address <span class="ps-required">*</span></label>
+        <input type="email" id="RegisterEmail" name="customer[email]" class="ps-form-input"
+          placeholder="you@example.com" value="{{ form.email }}" autocomplete="email" required
+          {% if form.errors contains 'email' %}autofocus{% endif %}>
+      </div>
+
+      <div class="ps-form-group">
+        <label class="ps-form-label" for="RegisterPassword">Password <span class="ps-required">*</span></label>
+        <input type="password" id="RegisterPassword" name="customer[password]" class="ps-form-input"
+          placeholder="Min. 6 characters" autocomplete="new-password" required
+          {% if form.errors contains 'password' %}autofocus{% endif %}>
+      </div>
+
+      <button type="submit" class="ps-btn-primary" style="width:100%;text-align:center;margin-top:.5rem;">Create Account 🌿</button>
+    {%- endform -%}
+
+    <div class="ps-account-divider"><span>Already have an account?</span></div>
+    <a href="{{ routes.account_login_url }}" class="ps-btn-secondary" style="display:block;text-align:center;">Sign In 🔐</a>
+  </div>
 </div>
 
-{% schema %}
-{
-  "name": "t:sections.main-register.name",
-  "settings": [
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    }
-  ]
-}
-{% endschema %}
+<script>
+window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+</script>
+
+{% schema %}{"name":"Register","settings":[]}{% endschema %}
