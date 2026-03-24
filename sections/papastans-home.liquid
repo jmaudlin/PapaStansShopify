@@ -21,7 +21,7 @@
     <li><a href="#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
-    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
     {%- if customer -%}
       <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
     {%- else -%}

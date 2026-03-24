@@ -16,7 +16,7 @@
     <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
-    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
     <button class="ps-cart-btn" onclick="psOpenCart()">
       🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>

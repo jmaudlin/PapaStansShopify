@@ -6,7 +6,7 @@
   </a>
   <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li></ul>
   <div class="ps-nav-actions">
-    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
 </nav>
 
 {% render 'ps-search-bar' %}
