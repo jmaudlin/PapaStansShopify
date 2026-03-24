@@ -17,6 +17,11 @@
   </ul>
   <div class="ps-nav-actions">
     <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
+    {%- if customer -%}
+      <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
+    {%- else -%}
+      <a href="{{ routes.account_login_url }}" class="ps-nav-account-link">👤 Sign In</a>
+    {%- endif -%}
     <button class="ps-cart-btn" onclick="psOpenCart()">
       🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>

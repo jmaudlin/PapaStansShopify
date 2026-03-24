@@ -1,9 +1,33 @@
 <div class="ps-rainbow-bar"></div>
+<div class="ps-announce">
+  🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
+  🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+  📞 <a href="tel:6416701573">641.670.1573</a>
+</div>
 <nav class="ps-nav ps-nav-solid" id="psNav">
   <a href="{{ shop.url }}" class="ps-nav-logo">
     <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
+  <ul class="ps-nav-links">
+    <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
+    <li><a href="{{ shop.url }}/#ps-scents">Scents</a></li>
+    <li><a href="{{ shop.url }}/blogs/news">Blog</a></li>
+    <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
+    <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
+    {%- if customer -%}
+      <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
+    {%- else -%}
+      <a href="{{ routes.account_login_url }}" class="ps-nav-account-link">👤 Sign In</a>
+    {%- endif -%}
+    <button class="ps-cart-btn" onclick="window.location='{{ routes.cart_url }}'">
+      🛒 Cart
+    </button>
+  </div>
 </nav>
+{% render 'ps-search-bar' %}
 <div class="ps-page-wrap" style="text-align:center;padding:8rem 2rem">
   <div style="font-size:5rem;margin-bottom:1rem">🪣</div>
   <h1 class="ps-section-h2" style="margin-bottom:1rem">Oops! <em>Page Not Found</em></h1>
