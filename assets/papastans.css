@@ -335,13 +335,13 @@ body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(-
 }
 
 /* ── Solid nav (for inner pages) ── */
-.ps-nav-solid { background: rgba(253,248,238,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(92,61,30,.1); margin-top: 36px; }
+.ps-nav-solid { background: rgba(253,248,238,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(92,61,30,.1); margin-top: 0 !important; position: sticky !important; }
 .ps-nav-solid .ps-nav-logo-main { color: var(--barn) !important; text-shadow: 2px 2px 0 rgba(92,61,30,.15) !important; }
 .ps-nav-solid .ps-nav-logo-sub { color: var(--brown) !important; }
 .ps-nav-solid .ps-nav-links a { color: var(--bark) !important; }
 
 /* ── Page wrapper ── */
-.ps-page-wrap { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem 5rem; }
+.ps-page-wrap { max-width: 1200px; margin: 0 auto; padding: 4rem 4rem 5rem; }
 
 /* ── Breadcrumb ── */
 .ps-breadcrumb { font-size: .8rem; font-weight: 600; color: var(--brown); margin-bottom: 2rem; }

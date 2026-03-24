@@ -1,4 +1,3 @@
-<!-- Shared nav from snippets -->
 <div class="ps-rainbow-bar"></div>
 <div class="ps-announce">
   🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
@@ -26,55 +25,56 @@
   </div>
 </nav>
 
+{%- paginate collection.products by 24 -%}
+
 <div class="ps-page-wrap">
 
-  <!-- Page header -->
   <div class="ps-coll-header">
-    <div class="ps-section-tag">🛒 {{ collection.title | default: 'All Products' }}</div>
+    <div class="ps-section-tag">🛒 Shop</div>
     <h1 class="ps-section-h2">{{ collection.title | default: 'All Products' }} <em>({{ collection.products_count }})</em></h1>
     {%- if collection.description != blank -%}
       <p class="ps-coll-desc">{{ collection.description }}</p>
     {%- endif -%}
   </div>
 
-  <!-- Sort & filter bar -->
   <div class="ps-coll-toolbar">
     <div class="ps-cat-tabs" id="psCatTabs">
-      <a href="{{ shop.url }}/collections/all" class="ps-cat-tab {% if collection.handle == 'all' %}active{% endif %}">🌟 All</a>
+      <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
       <button class="ps-cat-tab" data-cat="soap">🧼 Soaps</button>
       <button class="ps-cat-tab" data-cat="lotion">🧴 Lotions</button>
       <button class="ps-cat-tab" data-cat="candle">🕯️ Candles</button>
       <button class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</button>
     </div>
-    <div class="ps-coll-sort">
-      <form method="get">
-        <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
-          <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
-          <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
-          <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A–Z</option>
-          <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
-          <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
-          <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
-        </select>
-      </form>
-    </div>
+    <form method="get" class="ps-sort-form">
+      <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
+        <option value="manual"             {% if collection.sort_by == 'manual'             %}selected{% endif %}>Featured</option>
+        <option value="best-selling"       {% if collection.sort_by == 'best-selling'       %}selected{% endif %}>Best Selling</option>
+        <option value="title-ascending"    {% if collection.sort_by == 'title-ascending'    %}selected{% endif %}>A–Z</option>
+        <option value="price-ascending"    {% if collection.sort_by == 'price-ascending'    %}selected{% endif %}>Price: Low–High</option>
+        <option value="price-descending"   {% if collection.sort_by == 'price-descending'   %}selected{% endif %}>Price: High–Low</option>
+        <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+      </select>
+    </form>
   </div>
 
-  <!-- Product grid -->
   <div class="ps-pgrid" id="psProductGrid">
     {%- for product in collection.products -%}
-      {%- assign product_type_lower = product.type | downcase -%}
-      {%- assign product_tags_lower = product.tags | join: ' ' | downcase -%}
-      {%- assign product_title_lower = product.title | downcase -%}
-      {%- assign combined = product_type_lower | append: ' ' | append: product_tags_lower | append: ' ' | append: product_title_lower -%}
-      {%- if combined contains 'candle' -%}{%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
-      {%- elsif combined contains 'lotion' or combined contains 'butter' or combined contains 'cream' -%}{%- assign ps_cat = 'lotion' -%}{%- assign ps_emoji = '🧴' -%}
-      {%- elsif combined contains 'scrub' -%}{%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
-      {%- else -%}{%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+      {%- assign combined = product.type | downcase | append: ' ' | append: product.title | downcase -%}
+      {%- for tag in product.tags -%}{%- assign combined = combined | append: ' ' | append: tag | downcase -%}{%- endfor -%}
+
+      {%- if combined contains 'candle' -%}
+        {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
+      {%- elsif combined contains 'lotion' or combined contains 'butter' or combined contains 'cream' -%}
+        {%- assign ps_cat = 'lotion' -%}{%- assign ps_emoji = '🧴' -%}
+      {%- elsif combined contains 'scrub' -%}
+        {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
+      {%- else -%}
+        {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
       {%- endif -%}
+
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
 
-      <div class="ps-pc" data-cat="{{ ps_cat }}">
+      <div class="ps-pc ps-reveal" data-cat="{{ ps_cat }}">
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <a href="{{ product.url }}">
@@ -85,7 +85,9 @@
           {%- else -%}
             <a href="{{ product.url }}"><div class="ps-pc-img-fallback">{{ ps_emoji }}</div></a>
           {%- endif -%}
-          {%- unless product.available -%}<span class="ps-pc-badge ps-sold">Sold Out</span>{%- endunless -%}
+          {%- unless product.available -%}
+            <span class="ps-pc-badge ps-sold">Sold Out</span>
+          {%- endunless -%}
           <div class="ps-pc-overlay">
             {%- if product.available -%}
               <button class="ps-pc-quick" onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">Quick Add! 🛒</button>
@@ -109,11 +111,10 @@
         </div>
       </div>
     {%- else -%}
-      <p style="grid-column:1/-1;text-align:center;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--brown);padding:3rem">No products found! 🌿</p>
+      <p style="grid-column:1/-1;text-align:center;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--brown);padding:3rem">No products here yet! 🌿</p>
     {%- endfor -%}
   </div>
 
-  <!-- Pagination -->
   {%- if paginate.pages > 1 -%}
     <div class="ps-pagination">
       {%- if paginate.previous -%}
@@ -128,11 +129,13 @@
 
 </div>
 
-<!-- Cart drawer -->
+{%- endpaginate -%}
+
 {% render 'ps-cart-drawer' %}
 
 <script>
 const PS_FREE_SHIP_CENTS = 5500;
+
 async function psAddToCart(variantId, title) {
   psShowToast('Adding to cart… 🛒');
   try {
@@ -141,48 +144,71 @@ async function psAddToCart(variantId, title) {
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ id: variantId, quantity: 1 })
     });
-    if (!r.ok) throw new Error('Add failed');
+    if (!r.ok) throw new Error('Failed');
     await psRefreshCart();
     psShowToast('✅ ' + title + ' added!');
-    document.querySelector('.ps-cart-pill').classList.remove('ps-bump');
-    void document.querySelector('.ps-cart-pill').offsetWidth;
-    document.querySelector('.ps-cart-pill').classList.add('ps-bump');
+    const pill = document.querySelector('.ps-cart-pill');
+    pill.classList.remove('ps-bump'); void pill.offsetWidth; pill.classList.add('ps-bump');
     psOpenCart();
-  } catch(e) { psShowToast('Something went wrong, try again.'); }
+  } catch(e) { psShowToast('Something went wrong, please try again.'); }
 }
+
 async function psUpdateQty(key, qty) {
-  const updates = {}; updates[key] = qty;
-  await fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ updates }) });
+  const u = {}; u[key] = qty;
+  await fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ updates: u }) });
   await psRefreshCart();
 }
 async function psRemoveLine(key) { await psUpdateQty(key, 0); }
+
 async function psRefreshCart() {
   const r = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
   const cart = await r.json();
   psRenderCart(cart);
   document.getElementById('psCartCount').textContent = cart.item_count || 0;
 }
-function psMoney(cents) { return '$' + (cents / 100).toFixed(2); }
+
+function psMoney(c) { return '$' + (c / 100).toFixed(2); }
+
 function psRenderCart(cart) {
   const el = document.getElementById('psCartItems');
   const ft = document.getElementById('psCartFoot');
-  if (!cart.items || !cart.items.length) { el.innerHTML = '<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>'; ft.style.display = 'none'; return; }
+  if (!cart.items || !cart.items.length) {
+    el.innerHTML = '<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';
+    ft.style.display = 'none'; return;
+  }
   ft.style.display = 'block';
-  el.innerHTML = cart.items.map(item => `<div class="ps-cart-item"><img class="ps-ci-img" src="${item.image ? item.image.replace('http:','https:') : ''}" alt="${item.title}" onerror="this.style.visibility='hidden'"><div><div class="ps-ci-name">${item.product_title}</div><div class="ps-ci-price">${psMoney(item.price)}</div><div class="ps-ci-qty"><button onclick="psUpdateQty('${item.key}',${item.quantity-1})">−</button><span>${item.quantity}</span><button onclick="psUpdateQty('${item.key}',${item.quantity+1})">+</button></div></div><button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button></div>`).join('');
+  el.innerHTML = cart.items.map(item => `
+    <div class="ps-cart-item">
+      <img class="ps-ci-img" src="${item.image ? item.image.replace('http:','https:') : ''}" alt="${item.title}" onerror="this.style.visibility='hidden'">
+      <div>
+        <div class="ps-ci-name">${item.product_title}</div>
+        <div class="ps-ci-price">${psMoney(item.price)}</div>
+        <div class="ps-ci-qty">
+          <button onclick="psUpdateQty('${item.key}',${item.quantity-1})">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="psUpdateQty('${item.key}',${item.quantity+1})">+</button>
+        </div>
+      </div>
+      <button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button>
+    </div>`).join('');
   document.getElementById('psCartTotal').textContent = psMoney(cart.total_price);
   const pct = Math.min((cart.total_price / PS_FREE_SHIP_CENTS) * 100, 100);
   document.getElementById('psShipFill').style.width = pct + '%';
   const rem = psMoney(Math.max(PS_FREE_SHIP_CENTS - cart.total_price, 0));
-  document.getElementById('psShipMsg').innerHTML = cart.total_price >= PS_FREE_SHIP_CENTS ? '<strong>🎉 Free shipping unlocked!</strong>' : `Add <strong>${rem} more</strong> for free shipping 🚚`;
+  document.getElementById('psShipMsg').innerHTML = cart.total_price >= PS_FREE_SHIP_CENTS
+    ? '<strong>🎉 Free shipping unlocked!</strong>'
+    : `Add <strong>${rem} more</strong> for free shipping 🚚`;
 }
+
 function psOpenCart() { psRefreshCart(); document.getElementById('psCartDrawer').classList.add('open'); document.getElementById('psCartOverlay').classList.add('open'); }
 function psCloseCart() { document.getElementById('psCartDrawer').classList.remove('open'); document.getElementById('psCartOverlay').classList.remove('open'); }
+
 let psToastTimer;
 function psShowToast(msg) { const t = document.getElementById('psToast'); t.textContent = msg; t.classList.add('show'); clearTimeout(psToastTimer); psToastTimer = setTimeout(() => t.classList.remove('show'), 2800); }
-// Category filter
+
 document.getElementById('psCatTabs').addEventListener('click', e => {
   const tab = e.target.closest('.ps-cat-tab');
-  if (!tab || tab.tagName === 'A') return;
+  if (!tab) return;
   document.querySelectorAll('.ps-cat-tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
   const cat = tab.dataset.cat;
@@ -190,11 +216,19 @@ document.getElementById('psCatTabs').addEventListener('click', e => {
     card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
   });
 });
-// Nav scroll
+
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }});
+}, { threshold: 0.05 });
+document.querySelectorAll('.ps-reveal').forEach(el => revObs.observe(el));
+
 window.addEventListener('scroll', () => {
   document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10);
 }, { passive: true });
+
 psRefreshCart();
 </script>
 
-{% schema %}{ "name": "Collection", "settings": [], "presets": [{ "name": "Collection" }] }{% endschema %}
+{% schema %}
+{ "name": "Collection", "settings": [], "presets": [{ "name": "Collection" }] }
+{% endschema %}
