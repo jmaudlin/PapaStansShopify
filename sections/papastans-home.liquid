@@ -1,0 +1,552 @@
+<!-- Rainbow stripe -->
+<div class="ps-rainbow-bar"></div>
+
+<!-- ANNOUNCE -->
+<div class="ps-announce">
+  🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
+  🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+  📞 <a href="tel:6416701573">641.670.1573</a>
+</div>
+
+<!-- NAV -->
+<nav class="ps-nav" id="psNav">
+  <a href="{{ shop.url }}" class="ps-nav-logo">
+    <span class="ps-nav-logo-icon">🧼</span>
+    <span class="ps-nav-logo-text">
+      <span class="ps-nav-logo-main">Papa Stan's</span>
+      <span class="ps-nav-logo-sub">Oskaloosa, Iowa</span>
+    </span>
+  </a>
+  <ul class="ps-nav-links">
+    <li><a href="#ps-products">Shop</a></li>
+    <li><a href="#ps-scents">Scents</a></li>
+    <li><a href="#ps-about">Our Story</a></li>
+    <li><a href="#ps-find-us">Find Us</a></li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="ps-hero">
+  <div class="ps-hero-bg" id="psHeroBg"></div>
+  <div class="ps-hero-pattern"></div>
+  <div class="ps-bubble ps-bubble-1"></div>
+  <div class="ps-bubble ps-bubble-2"></div>
+  <div class="ps-bubble ps-bubble-3"></div>
+  <div class="ps-bubble ps-bubble-4"></div>
+  <div class="ps-hero-art" id="psHeroArt">🪣</div>
+  <div class="ps-hero-content">
+    <div class="ps-hero-eyebrow">🌿 Handcrafted · Small Batch · All Natural</div>
+    <h1 class="ps-hero-h1"><span>Soaps, Lotions</span><br>&amp; Candles!</h1>
+    <p class="ps-hero-sub">Made with love right here in<br>Oskaloosa, Iowa since 2019 🇺🇸</p>
+    <div class="ps-hero-btns">
+      <a href="#ps-products" class="ps-btn-primary">Shop Now 🛒</a>
+      <a href="#ps-about" class="ps-btn-secondary">Our Story 🏡</a>
+    </div>
+  </div>
+  <div class="ps-hero-offer">
+    <div class="ps-offer-icon">🎁</div>
+    <div class="ps-offer-title">Free Samples!</div>
+    <div class="ps-offer-body">Try 4 free samples + free shipping on $55+</div>
+  </div>
+  <div class="ps-hero-phone">
+    <span>📞</span>
+    <a href="tel:6416701573">641.670.1573</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="ps-marquee">
+  <div class="ps-marquee-inner">
+    {%- assign marquee_items = "🧼 Soaps,🧴 Lotions,🕯️ Candles,🧖 Face Scrubs,🌿 All Natural,🇺🇸 Veteran Owned,📍 Oskaloosa Iowa,⭐ 190+ Products,🎁 Free Samples" | split: "," -%}
+    {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
+    {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="ps-about" id="ps-about">
+  <div class="ps-about-visual">
+    <div class="ps-about-vis-inner" id="psAboutBg">
+      <div class="ps-about-planks"></div>
+      <div class="ps-about-center">
+        <div class="ps-about-barrel">🪣</div>
+        <div class="ps-about-soap-row">
+          <div class="ps-about-soap-item" style="background:#c8a0d4;">Lavender 🌸</div>
+          <div class="ps-about-soap-item" style="background:#f0e080;">Citrus 🍋</div>
+          <div class="ps-about-soap-item" style="background:#90c878;">Bamboo 🌿</div>
+        </div>
+      </div>
+    </div>
+    <div class="ps-badge-est"><span>Est.</span><span>2019</span></div>
+  </div>
+  <div class="ps-about-text">
+    <div class="ps-section-tag ps-reveal">🏡 Our Story</div>
+    <h2 class="ps-section-h2 ps-reveal ps-rd1">Made with <em>heart,</em><br>right here at <em>home!</em></h2>
+    <p class="ps-about-body ps-reveal ps-rd2">Papa Stan's started right in our own kitchen — a passion for clean, natural ingredients and a desire to share something truly special with our community. Every bar of soap and bottle of lotion is handcrafted in small batches in Oskaloosa, Iowa. No shortcuts, no mystery chemicals — just good honest ingredients and good honest work.</p>
+    <div class="ps-vet-banner ps-reveal ps-rd3">
+      <div class="ps-vet-icon">🇺🇸</div>
+      <div><h4>Veteran-Owned &amp; Operated</h4><p>We bring the same dedication from service to every batch we make.</p></div>
+    </div>
+    <div class="ps-about-stats ps-reveal ps-rd4">
+      <div class="ps-a-stat"><div class="ps-stat-n">190+</div><div class="ps-stat-l">Products</div></div>
+      <div class="ps-a-stat"><div class="ps-stat-n">100%</div><div class="ps-stat-l">Natural</div></div>
+      <div class="ps-a-stat"><div class="ps-stat-n">2019</div><div class="ps-stat-l">Est. Iowa</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS — rendered server-side via Liquid -->
+<section class="ps-products" id="ps-products">
+  <div class="ps-products-top">
+    <div>
+      <div class="ps-section-tag ps-reveal">🛒 Shop Now</div>
+      <h2 class="ps-section-h2 ps-reveal ps-rd1">Pick Your <em>Favorites!</em></h2>
+    </div>
+    <a href="{{ shop.url }}/collections/all" class="ps-view-all ps-reveal">See All {{ collections.all.products_count }} Products →</a>
+  </div>
+
+  <!-- Category filter tabs -->
+  <div class="ps-cat-tabs ps-reveal" id="psCatTabs">
+    <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
+    <button class="ps-cat-tab" data-cat="soap">🧼 Soaps</button>
+    <button class="ps-cat-tab" data-cat="lotion">🧴 Lotions</button>
+    <button class="ps-cat-tab" data-cat="candle">🕯️ Candles</button>
+    <button class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</button>
+  </div>
+
+  <div class="ps-pgrid" id="psProductGrid">
+    {%- assign product_limit = 24 -%}
+    {%- for product in collections.all.products limit: product_limit -%}
+      {%- assign product_type_lower = product.type | downcase -%}
+      {%- assign product_tags_lower = product.tags | join: ' ' | downcase -%}
+      {%- assign product_title_lower = product.title | downcase -%}
+      {%- assign combined = product_type_lower | append: ' ' | append: product_tags_lower | append: ' ' | append: product_title_lower -%}
+
+      {%- if combined contains 'candle' -%}
+        {%- assign ps_cat = 'candle' -%}
+        {%- assign ps_emoji = '🕯️' -%}
+      {%- elsif combined contains 'lotion' or combined contains 'butter' or combined contains 'cream' -%}
+        {%- assign ps_cat = 'lotion' -%}
+        {%- assign ps_emoji = '🧴' -%}
+      {%- elsif combined contains 'scrub' -%}
+        {%- assign ps_cat = 'scrub' -%}
+        {%- assign ps_emoji = '🌸' -%}
+      {%- else -%}
+        {%- assign ps_cat = 'soap' -%}
+        {%- assign ps_emoji = '🧼' -%}
+      {%- endif -%}
+
+      {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+      {%- assign is_available = product.available -%}
+
+      <div class="ps-pc ps-reveal" data-cat="{{ ps_cat }}">
+        <div class="ps-pc-img">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}"
+              alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+              loading="lazy"
+              width="400" height="400"
+            >
+          {%- else -%}
+            <div class="ps-pc-img-fallback">{{ ps_emoji }}</div>
+          {%- endif -%}
+
+          {%- unless is_available -%}
+            <span class="ps-pc-badge ps-sold">Sold Out</span>
+          {%- endunless -%}
+
+          <div class="ps-pc-overlay">
+            {%- if is_available -%}
+              <button class="ps-pc-quick"
+                data-variant-id="{{ first_variant.id }}"
+                data-product-title="{{ product.title | escape }}"
+                onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
+                Quick Add! 🛒
+              </button>
+            {%- else -%}
+              <button class="ps-pc-quick" disabled>Out of Stock</button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="ps-pc-body">
+          <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_cat | capitalize }}</p>
+          <h3 class="ps-pc-name">
+            <a href="{{ product.url }}" style="text-decoration:none;color:inherit;">{{ product.title }}</a>
+          </h3>
+          <div class="ps-pc-foot">
+            {%- if is_available -%}
+              <span class="ps-pc-price">{{ first_variant.price | money }}</span>
+              <button class="ps-atc"
+                data-variant-id="{{ first_variant.id }}"
+                data-product-title="{{ product.title | escape }}"
+                onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
+                Add to Cart
+              </button>
+            {%- else -%}
+              <span class="ps-pc-price ps-sold-out">{{ product.price | money }}</span>
+              <button class="ps-atc" disabled>Sold Out</button>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="ps-load-more-wrap">
+    <a href="{{ shop.url }}/collections/all" class="ps-btn-primary">See All Products 👉</a>
+  </div>
+</section>
+
+<!-- SCENTS PARALLAX -->
+<section class="ps-scents" id="ps-scents">
+  <div class="ps-scents-bg" id="psScentsBg"></div>
+  <div class="ps-scents-pattern"></div>
+  <div class="ps-scents-inner">
+    <div class="ps-scents-text">
+      <div class="ps-section-tag ps-reveal" style="background:var(--sun);border-color:rgba(255,255,255,.4);">🌺 Scent Library</div>
+      <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">A Scent for <em>Everyone!</em></h2>
+      <p class="ps-reveal ps-rd2">With {{ collections.all.products_count }}+ products and dozens of amazing scents, we've got something for everybody! From sweet and fruity to fresh and woodsy — all handcrafted in Oskaloosa, Iowa.</p>
+      <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary ps-reveal ps-rd3">Browse All Scents 🌸</a>
+    </div>
+    <div class="ps-scents-grid">
+      <div class="ps-scent-chip ps-reveal"><div class="ps-scent-name">🍊 Citrus &amp; Seagrass</div><div class="ps-scent-type">Candle · Soap</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🍬 Vanilla Caramel</div><div class="ps-scent-type">Soap · Lotion</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🍎 Apple Cinnamon</div><div class="ps-scent-type">Soap</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🥥 Bamboo Coconut</div><div class="ps-scent-type">Soap · Lotion</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🌸 Aloe White Lilac</div><div class="ps-scent-type">Lotion</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd3"><div class="ps-scent-name">🍌 Banana Orange Smoothie</div><div class="ps-scent-type">Soap</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🍩 Sweet Sugar Donut</div><div class="ps-scent-type">Soap</div></div>
+      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🍓 Raspberry Delight</div><div class="ps-scent-type">Soap · Sample</div></div>
+      <div class="ps-scent-more ps-reveal ps-rd3">…and {{ collections.all.products_count | minus: 9 }}+ more amazing scents in the shop! ✨</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="ps-testi">
+  <div class="ps-testi-header">
+    <div class="ps-section-tag ps-reveal" style="margin:0 auto 1rem;">⭐ Happy Customers</div>
+    <h2 class="ps-section-h2 ps-reveal ps-rd1">People <em>Love</em> Papa Stan's!</h2>
+  </div>
+  <div class="ps-testi-grid">
+    <div class="ps-tc ps-reveal ps-pop">
+      <div class="ps-tc-quote">"</div>
+      <div class="ps-tc-stars">★★★★★</div>
+      <p class="ps-tc-text">The Bamboo Coconut soap is absolutely incredible! I've never felt so clean and my skin feels so soft. I order a new batch every month!</p>
+      <p class="ps-tc-author">— Sarah M., Oskaloosa</p>
+    </div>
+    <div class="ps-tc ps-reveal ps-pop ps-rd1">
+      <div class="ps-tc-quote">"</div>
+      <div class="ps-tc-stars">★★★★★</div>
+      <p class="ps-tc-text">Bought the Citrus &amp; Seagrass candle for my mom's birthday and now she's obsessed! It fills the whole house with the most wonderful scent.</p>
+      <p class="ps-tc-author">— James R., Iowa City</p>
+    </div>
+    <div class="ps-tc ps-reveal ps-pop ps-rd2">
+      <div class="ps-tc-quote">"</div>
+      <div class="ps-tc-stars">★★★★★</div>
+      <p class="ps-tc-text">Love supporting a local veteran-owned business! The Aloe Lilac lotion is genuinely the best I've ever used. My whole family is hooked now!</p>
+      <p class="ps-tc-author">— Emily T., Des Moines</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIND US -->
+<section class="ps-local" id="ps-find-us">
+  <div class="ps-local-inner">
+    <div class="ps-local-card ps-reveal ps-from-left">
+      <div class="ps-local-card-icon">📍</div>
+      <h3>Oskaloosa, Iowa</h3>
+      <p>Mahaska County · Since 2019</p>
+      <a href="tel:6416701573" class="ps-phone-link">641.670.1573</a>
+      <div style="margin-top:.8rem;font-family:'Caveat',cursive;font-size:.9rem;color:var(--brown);">papastanssoapsandcandles.com</div>
+    </div>
+    <div>
+      <div class="ps-section-tag ps-reveal" style="background:var(--sun);">📍 Where to Find Us</div>
+      <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Proudly <em>Local.</em><br>Shipped <em>Everywhere!</em></h2>
+      <div class="ps-local-detail ps-reveal ps-rd2"><div class="ps-l-icon">🏡</div><div class="ps-l-text"><h4>Made in Oskaloosa</h4><p>Every product is handcrafted in small batches right in our community.</p></div></div>
+      <div class="ps-local-detail ps-reveal ps-rd3"><div class="ps-l-icon">🚚</div><div class="ps-l-text"><h4>Free Shipping on $55+</h4><p>Orders over $55 ship free nationwide. Plus 4 free samples with your order!</p></div></div>
+      <div class="ps-local-detail ps-reveal ps-rd4"><div class="ps-l-icon">🇺🇸</div><div class="ps-l-text"><h4>Veteran-Owned &amp; Operated</h4><p>Established 2019. Same dedication as service — in every batch.</p></div></div>
+      <a href="{{ shop.url }}/collections/all" class="ps-btn-primary ps-reveal" style="margin-top:1.5rem;display:inline-block;">Shop Now 🛒</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="ps-newsletter">
+  <div class="ps-section-tag ps-reveal" style="margin:0 auto 1rem;background:var(--white);">📬 Stay Connected</div>
+  <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1" style="margin-bottom:.8rem">Get the <em>Good Stuff</em> First!</h2>
+  <p class="ps-nl-sub ps-reveal ps-rd2">New scents, seasonal specials, local pop-up events, and exclusive deals!</p>
+  {%- form 'customer', id: 'ps-newsletter-form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <div class="ps-nl-form ps-reveal ps-rd3">
+      <input type="email" name="contact[email]" class="ps-nl-input" placeholder="your@email.com" required>
+      <button type="submit" class="ps-nl-btn">Subscribe! 🌿</button>
+    </div>
+  {%- endform -%}
+</section>
+
+<!-- FOOTER -->
+<footer class="ps-footer">
+  <div class="ps-footer-top">
+    <div>
+      <a href="{{ shop.url }}" class="ps-f-logo">🧼 Papa Stan's</a>
+      <p class="ps-f-sub">of Iowa · Est. 2019 · Veteran-Owned</p>
+      <p class="ps-f-desc">"The cleanest body products that money can buy" — handcrafted with love in Oskaloosa, Iowa.</p>
+      <div class="ps-f-contact">📞 <a href="tel:6416701573">641.670.1573</a></div>
+      <div class="ps-f-soc">
+        <a href="https://facebook.com/PapaStansSoaps" target="_blank" class="ps-soc-a">f</a>
+        <a href="https://instagram.com/PapaStansSoaps" target="_blank" class="ps-soc-a">ig</a>
+        <a href="https://tiktok.com" target="_blank" class="ps-soc-a">tt</a>
+      </div>
+    </div>
+    <div class="ps-footer-col"><h5>Shop</h5><ul>
+      <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
+      <li><a href="{{ shop.url }}/collections/all?sort_by=best-selling">Best Sellers</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Soaps</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Lotions</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Candles</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>About</h5><ul>
+      <li><a href="#ps-about">Our Story</a></li>
+      <li><a href="#ps-about">Veteran Owned</a></li>
+      <li><a href="#ps-scents">Scent Library</a></li>
+      <li><a href="#ps-find-us">Find Us</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>Help</h5><ul>
+      <li><a href="{{ shop.url }}/policies/shipping-policy">Shipping</a></li>
+      <li><a href="{{ shop.url }}/policies/refund-policy">Returns</a></li>
+      <li><a href="{{ shop.url }}/pages/contact">Contact</a></li>
+      <li><a href="{{ shop.url }}/cart">View Cart</a></li>
+    </ul></div>
+  </div>
+  <div class="ps-footer-btm">
+    <p>© {{ 'now' | date: "%Y" }} Papa Stan's of Iowa. All rights reserved. Made with ❤️ in Oskaloosa.</p>
+    <p>Powered by Shopify</p>
+  </div>
+</footer>
+
+<!-- CART DRAWER — uses Shopify AJAX Cart API (same-origin, no CORS) -->
+<div class="ps-cart-overlay" id="psCartOverlay" onclick="psCloseCart()"></div>
+<div class="ps-cart-drawer" id="psCartDrawer">
+  <div class="ps-cart-head">
+    <h3>🛒 Your Cart</h3>
+    <button class="ps-cart-close" onclick="psCloseCart()">✕</button>
+  </div>
+  <div class="ps-cart-items" id="psCartItems">
+    <p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>
+  </div>
+  <div class="ps-cart-foot" id="psCartFoot" style="display:none">
+    <div class="ps-ship-bar-wrap">
+      <div class="ps-ship-bar-msg" id="psShipMsg"></div>
+      <div class="ps-ship-bar-bg"><div class="ps-ship-bar-fill" id="psShipFill"></div></div>
+    </div>
+    <div class="ps-cart-subtotal">
+      <span>Subtotal</span>
+      <span id="psCartTotal">$0.00</span>
+    </div>
+    <a href="/checkout" class="ps-cart-checkout" id="psCheckoutBtn">Checkout Now! →</a>
+    <p class="ps-cart-note">Secure checkout powered by <strong>Shopify</strong> 🔒</p>
+  </div>
+</div>
+
+<div id="psToast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  Papa Stan's — Shopify AJAX Cart API (same-origin, no CORS)
+//  Docs: https://shopify.dev/docs/api/ajax/reference/cart
+// ═══════════════════════════════════════════════════════════
+
+const PS_FREE_SHIP_CENTS = 5500; // $55.00 in cents
+
+// ── Add to cart ──
+async function psAddToCart(variantId, title) {
+  psShowToast('Adding to cart… 🛒');
+  try {
+    const r = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    });
+    if (!r.ok) throw new Error('Add failed');
+    await psRefreshCart();
+    psShowToast('✅ ' + title + ' added!');
+    psBumpPill();
+    psOpenCart();
+  } catch(e) {
+    psShowToast('Something went wrong, please try again.');
+    console.error(e);
+  }
+}
+
+// ── Update quantity ──
+async function psUpdateQty(lineIndex, qty) {
+  try {
+    const updates = {};
+    updates[lineIndex] = qty;
+    await fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ updates })
+    });
+    await psRefreshCart();
+  } catch(e) { console.error(e); }
+}
+
+// ── Remove line ──
+async function psRemoveLine(lineIndex) {
+  await psUpdateQty(lineIndex, 0);
+}
+
+// ── Fetch and render cart ──
+async function psRefreshCart() {
+  try {
+    const r = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+    const cart = await r.json();
+    psRenderCart(cart);
+    psUpdateCount(cart.item_count);
+  } catch(e) { console.error(e); }
+}
+
+function psRenderCart(cart) {
+  const itemsEl = document.getElementById('psCartItems');
+  const footEl  = document.getElementById('psCartFoot');
+
+  if (!cart.items || cart.items.length === 0) {
+    itemsEl.innerHTML = '<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';
+    footEl.style.display = 'none';
+    return;
+  }
+
+  footEl.style.display = 'block';
+  itemsEl.innerHTML = cart.items.map((item, i) => `
+    <div class="ps-cart-item">
+      <img class="ps-ci-img"
+        src="${item.image ? item.image.replace('http:', 'https:') : ''}"
+        alt="${item.title}"
+        onerror="this.style.visibility='hidden'">
+      <div>
+        <div class="ps-ci-name">${item.product_title}</div>
+        <div class="ps-ci-price">${psMoney(item.price)}</div>
+        <div class="ps-ci-qty">
+          <button onclick="psUpdateQty(${item.key ? "'" + item.key + "'" : i+1}, ${item.quantity - 1})">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="psUpdateQty(${item.key ? "'" + item.key + "'" : i+1}, ${item.quantity + 1})">+</button>
+        </div>
+      </div>
+      <button class="ps-ci-remove" onclick="psRemoveLine(${item.key ? "'" + item.key + "'" : i+1})">✕</button>
+    </div>`).join('');
+
+  // Subtotal
+  document.getElementById('psCartTotal').textContent = psMoney(cart.total_price);
+
+  // Free shipping bar
+  const pct = Math.min((cart.total_price / PS_FREE_SHIP_CENTS) * 100, 100);
+  document.getElementById('psShipFill').style.width = pct + '%';
+  const remaining = psMoney(Math.max(PS_FREE_SHIP_CENTS - cart.total_price, 0));
+  document.getElementById('psShipMsg').innerHTML = cart.total_price >= PS_FREE_SHIP_CENTS
+    ? '<strong>🎉 You unlocked FREE shipping!</strong>'
+    : `Add <strong>${remaining} more</strong> for free shipping 🚚`;
+}
+
+function psMoney(cents) {
+  return '$' + (cents / 100).toFixed(2);
+}
+
+function psUpdateCount(count) {
+  document.getElementById('psCartCount').textContent = count || 0;
+}
+
+function psBumpPill() {
+  const p = document.querySelector('.ps-cart-pill');
+  p.classList.remove('ps-bump'); void p.offsetWidth; p.classList.add('ps-bump');
+}
+
+function psOpenCart() {
+  psRefreshCart();
+  document.getElementById('psCartDrawer').classList.add('open');
+  document.getElementById('psCartOverlay').classList.add('open');
+}
+
+function psCloseCart() {
+  document.getElementById('psCartDrawer').classList.remove('open');
+  document.getElementById('psCartOverlay').classList.remove('open');
+}
+
+// ── Parallax ──
+const psHeroBgEl   = document.getElementById('psHeroBg');
+const psAboutBgEl  = document.getElementById('psAboutBg');
+const psScentsBgEl = document.getElementById('psScentsBg');
+const psHeroArtEl  = document.getElementById('psHeroArt');
+
+function psRatio(el) {
+  const r = el.getBoundingClientRect();
+  return (window.innerHeight - r.top) / (window.innerHeight + r.height);
+}
+
+function psOnScroll() {
+  const sy = window.scrollY;
+  if (psHeroBgEl)   psHeroBgEl.style.transform   = `translateY(${sy * 0.45}px)`;
+  if (psHeroArtEl)  psHeroArtEl.style.transform   = `translateY(${sy * 0.25}px) scaleX(-1)`;
+  if (psAboutBgEl)  psAboutBgEl.style.transform   = `translateY(${(psRatio(psAboutBgEl.parentElement)  - .5) * -60}px)`;
+  if (psScentsBgEl) psScentsBgEl.style.transform  = `translateY(${(psRatio(psScentsBgEl.parentElement) - .5) * -80}px)`;
+  document.getElementById('psNav').classList.toggle('scrolled', sy > 50);
+}
+window.addEventListener('scroll', psOnScroll, { passive: true });
+psOnScroll();
+
+// ── Reveal on scroll ──
+const psRevObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); psRevObs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.ps-reveal').forEach(el => psRevObs.observe(el));
+
+// ── Category filter (client-side, products already rendered) ──
+document.getElementById('psCatTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.ps-cat-tab');
+  if (!tab) return;
+  document.querySelectorAll('.ps-cat-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const cat = tab.dataset.cat;
+  document.querySelectorAll('.ps-pc').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+  });
+});
+
+// ── Toast ──
+let psToastTimer;
+function psShowToast(msg) {
+  const t = document.getElementById('psToast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(psToastTimer);
+  psToastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── Smooth anchors ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const el = document.querySelector(a.getAttribute('href'));
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+// ── Load cart count on page load ──
+psRefreshCart();
+</script>
+
+{% schema %}
+{
+  "name": "Papa Stan's Home",
+  "settings": [],
+  "presets": [{ "name": "Papa Stan's Home" }]
+}
+{% endschema %}

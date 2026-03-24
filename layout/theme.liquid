@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#c0392b">
+  <title>
+    {%- if template == 'index' -%}Papa Stan's — Handcrafted Soaps, Lotions &amp; Candles · Oskaloosa, Iowa
+    {%- elsif page_title -%}{{ page_title }} — {{ shop.name }}
+    {%- else -%}{{ shop.name }}{%- endif -%}
+  </title>
+  <meta name="description" content="{%- if page_description -%}{{ page_description | escape }}{%- else -%}Handcrafted soaps, lotions and candles made in small batches in Oskaloosa, Iowa. Veteran-owned since 2019. 641.670.1573{%- endif -%}">
+  {{ content_for_header }}
+  {{ 'papastans.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  {{ content_for_layout }}
+</body>
+</html>
