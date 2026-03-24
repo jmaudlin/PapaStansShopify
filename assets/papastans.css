@@ -74,8 +74,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: .6rem 3rem; transition: all .4s; }
 .ps-nav.scrolled { background: rgba(253,250,255,.97); backdrop-filter: blur(12px); top: 0; padding: .5rem 3rem; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); }
 .ps-nav-logo { text-decoration: none; display: flex; align-items: center; }
-.ps-nav-logo-img { height: 60px; width: auto; object-fit: contain; mix-blend-mode: multiply; transition: all .3s; }
-.ps-nav.scrolled .ps-nav-logo-img { height: 52px; mix-blend-mode: multiply; }
+.ps-nav-logo-img { height: 60px; width: auto; object-fit: contain; filter: drop-shadow(1px 1px 3px rgba(0,0,0,.25)); transition: all .3s; }
+.ps-nav.scrolled .ps-nav-logo-img { height: 52px; filter: none; }
 .ps-nav-links { display: flex; gap: 0; list-style: none; }
 .ps-nav-links a {
   font-size: .75rem;
@@ -373,7 +373,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* ── Solid nav (for inner pages) ── */
 .ps-nav-solid { background: rgba(253,250,255,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); margin-top: 0 !important; position: sticky !important; }
-.ps-nav-solid .ps-nav-logo-img { mix-blend-mode: multiply; }
+.ps-nav-solid .ps-nav-logo-img { filter: none; }
 
 /* ── Page wrapper ── */
 .ps-page-wrap { max-width: 1200px; margin: 0 auto; padding: 4rem 4rem 5rem; }
