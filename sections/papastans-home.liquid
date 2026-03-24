@@ -507,6 +507,13 @@ function psRatio(el) {
   return (window.innerHeight - r.top) / (window.innerHeight + r.height);
 }
 
+function psSetNavTop() {
+  const rainbow  = document.querySelector('.ps-rainbow-bar');
+  const announce = document.querySelector('.ps-announce');
+  const h = (rainbow  ? rainbow.offsetHeight  : 8)
+          + (announce ? announce.offsetHeight : 36);
+  document.documentElement.style.setProperty('--nav-top', h + 'px');
+}
 function psOnScroll() {
   const sy = window.scrollY;
   if (psHeroBgEl)   psHeroBgEl.style.transform   = `translateY(${sy * 0.45}px)`;
@@ -515,6 +522,8 @@ function psOnScroll() {
   document.getElementById('psNav').classList.toggle('scrolled', sy > 50);
 }
 window.addEventListener('scroll', psOnScroll, { passive: true });
+window.addEventListener('resize', psSetNavTop, { passive: true });
+psSetNavTop();
 psOnScroll();
 
 // ── Reveal on scroll ──

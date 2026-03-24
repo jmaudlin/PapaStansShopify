@@ -71,8 +71,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-announce strong { color: var(--sun); }
 
 /* ── Nav ── */
-.ps-nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: .6rem 3rem; transition: all .4s; }
-.ps-nav.scrolled { background: rgba(253,250,255,.97); backdrop-filter: blur(12px); top: 0; padding: .5rem 3rem; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); }
+.ps-nav { position: fixed; top: var(--nav-top, 44px); left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: .6rem 3rem; transition: top .2s, padding .4s, background .4s, box-shadow .4s; }
+.ps-nav.scrolled { background: rgba(253,250,255,.97); backdrop-filter: blur(12px); top: 0 !important; padding: .5rem 3rem; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); }
 .ps-nav-logo { text-decoration: none; display: flex; align-items: center; }
 .ps-nav-logo-img { height: 64px; width: auto; object-fit: contain; transition: height .4s; }
 .ps-nav.scrolled .ps-nav-logo-img { height: 54px; }
@@ -104,7 +104,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 @keyframes psBump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
 /* ── Hero ── */
-.ps-hero { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; overflow: hidden; }
+.ps-hero { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; overflow: hidden; padding-top: var(--nav-top, 44px); }
 .ps-hero-bg { position: absolute; inset: -15%; will-change: transform;
   background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(164,112,200,.35) 0%, transparent 55%),
               radial-gradient(ellipse 50% 70% at 20% 70%, rgba(122,158,110,.30) 0%, transparent 50%),
@@ -351,7 +351,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* ── Responsive ── */
 @media (max-width: 960px) {
-  .ps-nav { padding:1rem 1.5rem; }
+  .ps-nav { padding:.8rem 1.2rem; }
+  .ps-announce { font-size: .68rem; padding: .4rem .8rem; }
   .ps-nav.scrolled { padding:.7rem 1.5rem; }
   .ps-hero-content { padding:0 2rem; }
   .ps-hero-offer { display:none; }
