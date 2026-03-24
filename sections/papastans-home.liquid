@@ -287,9 +287,20 @@
       <li><a href="#ps-find-us">Find Us</a></li>
     </ul></div>
     <div class="ps-footer-col"><h5>Help</h5><ul>
-      <li><a href="{{ shop.url }}/policies/shipping-policy">Shipping</a></li>
-      <li><a href="{{ shop.url }}/policies/refund-policy">Returns</a></li>
-      <li><a href="{{ shop.url }}/pages/contact">Contact</a></li>
+      {%- if shop.shipping_policy.body != blank -%}
+        <li><a href="{{ shop.shipping_policy.url }}">Shipping Info</a></li>
+      {%- else -%}
+        <li><a href="{{ shop.url }}/pages/contact">Shipping Info</a></li>
+      {%- endif -%}
+      {%- if shop.refund_policy.body != blank -%}
+        <li><a href="{{ shop.refund_policy.url }}">Returns</a></li>
+      {%- else -%}
+        <li><a href="{{ shop.url }}/pages/contact">Returns</a></li>
+      {%- endif -%}
+      {%- if shop.privacy_policy.body != blank -%}
+        <li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>
+      {%- endif -%}
+      <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
       <li><a href="{{ shop.url }}/cart">View Cart</a></li>
     </ul></div>
   </div>
