@@ -64,37 +64,6 @@
   </div>
 </div>
 
-<!-- ABOUT -->
-<section class="ps-about" id="ps-about">
-  <div class="ps-about-visual">
-    <div class="ps-about-vis-inner" id="psAboutBg">
-      <div class="ps-about-planks"></div>
-      <div class="ps-about-center">
-        <div class="ps-about-barrel">🪣</div>
-        <div class="ps-about-soap-row">
-          <div class="ps-about-soap-item" style="background:#c8a0d4;">Lavender 🌸</div>
-          <div class="ps-about-soap-item" style="background:#f0e080;">Citrus 🍋</div>
-          <div class="ps-about-soap-item" style="background:#90c878;">Bamboo 🌿</div>
-        </div>
-      </div>
-    </div>
-    <div class="ps-badge-est"><span>Est.</span><span>2019</span></div>
-  </div>
-  <div class="ps-about-text">
-    <div class="ps-section-tag ps-reveal">🏡 Our Story</div>
-    <h2 class="ps-section-h2 ps-reveal ps-rd1">Made with <em>heart,</em><br>right here at <em>home!</em></h2>
-    <p class="ps-about-body ps-reveal ps-rd2">Papa Stan's started right in our own kitchen — a passion for clean, natural ingredients and a desire to share something truly special with our community. Every bar of soap and bottle of lotion is handcrafted in small batches in Oskaloosa, Iowa. No shortcuts, no mystery chemicals — just good honest ingredients and good honest work.</p>
-    <div class="ps-vet-banner ps-reveal ps-rd3">
-      <div class="ps-vet-icon">🇺🇸</div>
-      <div><h4>Veteran-Owned &amp; Operated</h4><p>We bring the same dedication from service to every batch we make.</p></div>
-    </div>
-    <div class="ps-about-stats ps-reveal ps-rd4">
-      <div class="ps-a-stat"><div class="ps-stat-n">190+</div><div class="ps-stat-l">Products</div></div>
-      <div class="ps-a-stat"><div class="ps-stat-n">100%</div><div class="ps-stat-l">Natural</div></div>
-      <div class="ps-a-stat"><div class="ps-stat-n">2019</div><div class="ps-stat-l">Est. Iowa</div></div>
-    </div>
-  </div>
-</section>
 
 <!-- PRODUCTS — rendered server-side via Liquid -->
 <section class="ps-products" id="ps-products">
@@ -480,7 +449,6 @@ function psCloseCart() {
 
 // ── Parallax ──
 const psHeroBgEl   = document.getElementById('psHeroBg');
-const psAboutBgEl  = document.getElementById('psAboutBg');
 const psScentsBgEl = document.getElementById('psScentsBg');
 const psHeroArtEl  = document.getElementById('psHeroArt');
 
@@ -493,7 +461,6 @@ function psOnScroll() {
   const sy = window.scrollY;
   if (psHeroBgEl)   psHeroBgEl.style.transform   = `translateY(${sy * 0.45}px)`;
   if (psHeroArtEl)  psHeroArtEl.style.transform   = `translateY(${sy * 0.25}px) scaleX(-1)`;
-  if (psAboutBgEl)  psAboutBgEl.style.transform   = `translateY(${(psRatio(psAboutBgEl.parentElement)  - .5) * -60}px)`;
   if (psScentsBgEl) psScentsBgEl.style.transform  = `translateY(${(psRatio(psScentsBgEl.parentElement) - .5) * -80}px)`;
   document.getElementById('psNav').classList.toggle('scrolled', sy > 50);
 }
