@@ -202,3 +202,56 @@
   window.psOpenSearch = openBar;
 })();
 </script>
+
+<script>
+(function() {
+  function psToggleMenu(btn) {
+    const links = document.getElementById('psNavLinks');
+    if (!links) return;
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    links.classList.toggle('ps-menu-open', !open);
+    document.body.style.overflow = open ? '' : ''; // keep scroll free
+  }
+  // Close drawer on outside click
+  document.addEventListener('click', function(e) {
+    const hamburger = document.getElementById('psHamburger');
+    const links     = document.getElementById('psNavLinks');
+    if (!hamburger || !links) return;
+    if (!hamburger.contains(e.target) && !links.contains(e.target)) {
+      hamburger.setAttribute('aria-expanded', 'false');
+      links.classList.remove('ps-menu-open');
+    }
+  });
+  // Close drawer on link click
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#psNavLinks a')) {
+      const hamburger = document.getElementById('psHamburger');
+      const links     = document.getElementById('psNavLinks');
+      if (hamburger && links) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        links.classList.remove('ps-menu-open');
+      }
+    }
+  });
+  // Close on orientation change
+  window.addEventListener('orientationchange', function() {
+    const hamburger = document.getElementById('psHamburger');
+    const links     = document.getElementById('psNavLinks');
+    if (hamburger && links) {
+      hamburger.setAttribute('aria-expanded', 'false');
+      links.classList.remove('ps-menu-open');
+    }
+  });
+  // Expose globally for onclick attribute
+  window.psToggleMenu = psToggleMenu;
+
+  // Track nav height for drawer offset when scrolled
+  function psTrackNavHeight() {
+    const nav = document.getElementById('psNav');
+    if (nav) document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
+  }
+  window.addEventListener('resize', psTrackNavHeight, { passive: true });
+  psTrackNavHeight();
+})();
+</script>

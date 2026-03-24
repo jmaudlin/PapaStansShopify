@@ -13,7 +13,10 @@
   <a href="{{ shop.url }}" class="ps-nav-logo">
     <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
-  <ul class="ps-nav-links">
+  <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="ps-nav-links" id="psNavLinks">
     <li><a href="#ps-products">Shop</a></li>
     <li><a href="#ps-scents">Scents</a></li>
     <li><a href="{{ shop.url }}/blogs/news">Blog</a></li>

@@ -4,7 +4,10 @@
   <a href="{{ shop.url }}" class="ps-nav-logo">
     <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
-  <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li></ul>
+  <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="ps-nav-links" id="psNavLinks"><li><a href="{{ shop.url }}/collections/all">Shop</a></li></ul>
   <div class="ps-nav-actions">
     <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
     {%- if customer -%}
