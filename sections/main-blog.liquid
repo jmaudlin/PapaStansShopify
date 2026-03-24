@@ -1,143 +1,94 @@
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+{% render 'ps-account-nav' %}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+<div class="ps-page-wrap">
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-{%- paginate blog.articles by 6 -%}
-  <div class="main-blog page-width section-{{ section.id }}-padding">
-    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ blog.title | escape }}
-    </h1>
-
-    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
-      {%- for article in blog.articles -%}
-        <div
-          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {%- render 'article-card',
-            article: article,
-            media_height: section.settings.image_height,
-            media_aspect_ratio: article.image.aspect_ratio,
-            show_image: section.settings.show_image,
-            show_date: section.settings.show_date,
-            show_author: section.settings.show_author,
-            show_excerpt: true
-          -%}
-        </div>
-      {%- endfor -%}
-    </div>
-
-    {%- if paginate.pages > 1 -%}
-      {%- render 'pagination', paginate: paginate -%}
-    {%- endif -%}
+  <!-- Header -->
+  <div class="ps-blog-header">
+    <div class="ps-section-tag" style="margin-bottom:.7rem">📝 {{ blog.title }}</div>
+    <h1 class="ps-section-h2">The Papa Stan's <em>Blog!</em></h1>
+    <p class="ps-blog-header-sub">Tips, stories, and updates from our little corner of Oskaloosa, Iowa.</p>
   </div>
-{%- endpaginate -%}
+
+  <!-- Search bar -->
+  <form action="{{ routes.search_url }}" method="get" class="ps-blog-search" role="search">
+    <input type="hidden" name="type" value="article">
+    <input type="search" name="q" class="ps-form-input ps-blog-search-input"
+      placeholder="Search the blog…" value="{{ search.terms | escape }}"
+      aria-label="Search articles">
+    <button type="submit" class="ps-btn-primary ps-blog-search-btn">🔍 Search</button>
+  </form>
+
+  {%- paginate blog.articles by 9 -%}
+
+    {%- if blog.articles.size > 0 -%}
+      <div class="ps-blog-grid">
+        {%- for article in blog.articles -%}
+          <article class="ps-blog-card ps-reveal" style="transition-delay:{{ forloop.index0 | modulo: 3 | times: 80 }}ms">
+            <a href="{{ article.url }}" class="ps-blog-card-img-link">
+              {%- if article.image -%}
+                <img
+                  src="{{ article.image | image_url: width: 600, height: 400, crop: 'center' }}"
+                  alt="{{ article.image.alt | escape | default: article.title | escape }}"
+                  width="600" height="400" loading="lazy"
+                  class="ps-blog-card-img">
+              {%- else -%}
+                <div class="ps-blog-card-img-fallback">🧼</div>
+              {%- endif -%}
+            </a>
+            <div class="ps-blog-card-body">
+              <div class="ps-blog-card-meta">
+                {%- if article.tags.size > 0 -%}
+                  <span class="ps-blog-tag">{{ article.tags.first }}</span>
+                {%- endif -%}
+                <span class="ps-blog-date">{{ article.published_at | date: "%b %d, %Y" }}</span>
+              </div>
+              <h2 class="ps-blog-card-title">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h2>
+              {%- if article.excerpt.size > 0 -%}
+                <p class="ps-blog-card-excerpt">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+              {%- else -%}
+                <p class="ps-blog-card-excerpt">{{ article.content | strip_html | truncate: 120 }}</p>
+              {%- endif -%}
+              <a href="{{ article.url }}" class="ps-blog-read-more">Read More →</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <div class="ps-pagination">
+          {%- if paginate.previous -%}
+            <a href="{{ paginate.previous.url }}" class="ps-btn-secondary">← Previous</a>
+          {%- endif -%}
+          <span class="ps-page-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" class="ps-btn-primary">Next →</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    {%- else -%}
+      <div class="ps-blog-empty">
+        <div style="font-size:3rem;margin-bottom:1rem">📝</div>
+        <p>No posts yet — check back soon for updates from the Papa Stan's family!</p>
+        <a href="{{ shop.url }}/collections/all" class="ps-btn-primary" style="margin-top:1.2rem;display:inline-block">Shop Our Products 🌿</a>
+      </div>
+    {%- endif -%}
+
+  {%- endpaginate -%}
+</div>
+
+<script>
+window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+const revObs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){x.target.classList.add('visible');revObs.unobserve(x.target);}}),{threshold:.08});
+document.querySelectorAll('.ps-reveal').forEach(el => revObs.observe(el));
+</script>
 
 {% schema %}
 {
-  "name": "t:sections.main-blog.name",
-  "tag": "section",
-  "class": "section",
-  "settings": [
-    {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:sections.main-blog.settings.layout.options__1.label"
-        },
-        {
-          "value": "collage",
-          "label": "t:sections.main-blog.settings.layout.options__2.label"
-        }
-      ],
-      "default": "collage",
-      "label": "t:sections.main-blog.settings.layout.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_image",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_image.label"
-    },
-    {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-blog.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.main-blog.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-blog.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-blog.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.main-blog.settings.image_height.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_date",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_date.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_author",
-      "default": false,
-      "label": "t:sections.main-blog.settings.show_author.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    }
-  ]
+  "name": "Blog",
+  "settings": [],
+  "presets": [{ "name": "Blog" }]
 }
 {% endschema %}

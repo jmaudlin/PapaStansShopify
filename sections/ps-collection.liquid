@@ -11,10 +11,12 @@
   <ul class="ps-nav-links">
     <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
     <li><a href="{{ shop.url }}/#ps-scents">Scents</a></li>
+    <li><a href="{{ shop.url }}/blogs/news">Blog</a></li>
     <li><a href="{{ shop.url }}/#ps-about">Our Story</a></li>
     <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
+    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a>
     <button class="ps-cart-btn" onclick="psOpenCart()">
       🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>

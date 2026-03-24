@@ -16,10 +16,12 @@
   <ul class="ps-nav-links">
     <li><a href="#ps-products">Shop</a></li>
     <li><a href="#ps-scents">Scents</a></li>
+    <li><a href="{{ shop.url }}/blogs/news">Blog</a></li>
     <li><a href="#ps-about">Our Story</a></li>
     <li><a href="#ps-find-us">Find Us</a></li>
   </ul>
   <div class="ps-nav-actions">
+    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a>
     {%- if customer -%}
       <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
     {%- else -%}

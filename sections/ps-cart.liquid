@@ -5,7 +5,8 @@
     <img src="{{ 'logo.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-nav-logo-img">
   </a>
   <ul class="ps-nav-links"><li><a href="{{ shop.url }}/collections/all">Shop</a></li></ul>
-  <div class="ps-nav-actions"><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
+  <div class="ps-nav-actions">
+    <a href="{{ routes.search_url }}" class="ps-nav-search-btn" aria-label="Search">🔍</a><a href="{{ shop.url }}/collections/all" class="ps-cart-btn">🛍️ Continue Shopping</a></div>
 </nav>
 
 <div class="ps-page-wrap">

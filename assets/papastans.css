@@ -600,3 +600,109 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   .ps-order-table tr { display: block; border: 2px solid var(--border); border-radius: 8px; margin-bottom: .8rem; }
   .ps-order-table tr:hover td { background: var(--white); }
 }
+
+/* ═══════════════════════════════════════
+   Papa Stan's — Blog & Search Styles
+   ═══════════════════════════════════════ */
+
+/* Search icon in nav */
+.ps-nav-search-btn {
+  font-size: 1.1rem; line-height: 1; text-decoration: none;
+  padding: .35rem .5rem; border-radius: 8px; transition: background .2s;
+  color: rgba(255,255,255,.9);
+}
+.ps-nav.scrolled .ps-nav-search-btn { color: var(--lav); }
+.ps-nav-search-btn:hover { background: rgba(255,255,255,.15); }
+.ps-nav.scrolled .ps-nav-search-btn:hover { background: var(--lav-light); }
+
+/* Blog page header */
+.ps-blog-header { margin-bottom: 2rem; }
+.ps-blog-header-sub { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-top: .3rem; }
+
+/* Blog search bar */
+.ps-blog-search { display: flex; gap: .6rem; max-width: 540px; margin-bottom: 2.5rem; }
+.ps-blog-search-input { flex: 1; }
+.ps-blog-search-btn { white-space: nowrap; }
+
+/* Blog grid */
+.ps-blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+.ps-blog-card { background: var(--white); border: 3px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 4px 4px 0 var(--border); transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s; display: flex; flex-direction: column; }
+.ps-blog-card:hover { transform: translate(-3px,-4px); box-shadow: 7px 8px 0 var(--border); }
+.ps-blog-card-img-link { display: block; overflow: hidden; aspect-ratio: 3/2; background: var(--lav-xlight); }
+.ps-blog-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; display: block; }
+.ps-blog-card:hover .ps-blog-card-img { transform: scale(1.05); }
+.ps-blog-card-img-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: var(--lav-xlight); }
+.ps-blog-card-body { padding: 1.3rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.ps-blog-card-meta { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; flex-wrap: wrap; }
+.ps-blog-tag { display: inline-block; background: var(--lav-light); color: var(--lav-dark); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 10px; text-decoration: none; }
+.ps-blog-tag:hover { background: var(--lav); color: #fff; }
+.ps-blog-date { font-size: .72rem; font-weight: 600; color: var(--brown); }
+.ps-blog-card-title { font-family: 'Luckiest Guy', cursive; font-size: 1.15rem; line-height: 1.2; letter-spacing: .03em; color: var(--lav-ink); margin-bottom: .5rem; }
+.ps-blog-card-title a { text-decoration: none; color: inherit; }
+.ps-blog-card-title a:hover { color: var(--lav); }
+.ps-blog-card-excerpt { font-size: .85rem; font-weight: 600; color: var(--brown); line-height: 1.6; margin-bottom: .8rem; flex: 1; }
+.ps-blog-read-more { font-size: .75rem; font-weight: 800; color: var(--lav); text-decoration: none; letter-spacing: .06em; text-transform: uppercase; margin-top: auto; }
+.ps-blog-read-more:hover { color: var(--lav-dark); }
+.ps-blog-empty { text-align: center; padding: 4rem 1rem; font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--brown); }
+
+/* Article page */
+.ps-article-wrap { max-width: 1200px; }
+.ps-article-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+.ps-article-main {}
+.ps-article-hero { border-radius: 12px; overflow: hidden; margin-bottom: 2rem; border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--border); }
+.ps-article-hero-img { width: 100%; height: auto; display: block; }
+.ps-article-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 3px dashed var(--border); }
+.ps-article-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.ps-article-title { font-family: 'Luckiest Guy', cursive; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--lav); letter-spacing: .04em; line-height: 1.1; margin-bottom: .8rem; }
+.ps-article-meta { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: .78rem; font-weight: 600; color: var(--brown); }
+.ps-article-content.rte { font-size: 1rem; line-height: 1.85; color: var(--lav-ink); font-weight: 500; }
+.ps-article-content.rte h1,.ps-article-content.rte h2 { font-family: 'Luckiest Guy', cursive; color: var(--lav); letter-spacing: .04em; margin: 2rem 0 .8rem; }
+.ps-article-content.rte h2 { font-size: 1.4rem; }
+.ps-article-content.rte h3 { font-size: 1rem; font-weight: 800; color: var(--lav-dark); text-transform: uppercase; letter-spacing: .08em; margin: 1.5rem 0 .5rem; }
+.ps-article-content.rte p { margin-bottom: 1.2rem; }
+.ps-article-content.rte img { max-width: 100%; border-radius: 8px; border: 2px solid var(--border); margin: 1rem 0; }
+.ps-article-content.rte a { color: var(--lav); font-weight: 700; }
+.ps-article-content.rte blockquote { border-left: 4px solid var(--lav); padding: .8rem 1.2rem; background: var(--lav-xlight); border-radius: 0 8px 8px 0; margin: 1.5rem 0; font-style: italic; }
+.ps-article-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 3px dashed var(--border); }
+.ps-article-nav-link { display: flex; flex-direction: column; gap: .25rem; text-decoration: none; padding: 1rem 1.2rem; border: 3px solid var(--border); border-radius: 10px; background: var(--lav-xlight); box-shadow: 3px 3px 0 var(--border); transition: all .2s; max-width: 48%; }
+.ps-article-nav-link:hover { background: var(--lav-light); border-color: var(--lav); transform: translateY(-2px); }
+.ps-article-nav-next { text-align: right; margin-left: auto; }
+.ps-article-nav-label { font-size: .62rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--lav); }
+.ps-article-nav-title { font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 700; color: var(--lav-ink); }
+.ps-article-sidebar { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 100px; }
+.ps-article-share { display: flex; flex-direction: column; gap: .5rem; }
+
+/* Search page */
+.ps-search-form { max-width: 640px; margin-bottom: 2rem; }
+.ps-search-input-wrap { display: flex; gap: .6rem; margin-bottom: .8rem; }
+.ps-search-input { flex: 1; }
+.ps-search-btn { white-space: nowrap; }
+.ps-search-type-tabs { display: flex; gap: .5rem; }
+.ps-search-type-tab { display: flex; align-items: center; gap: .4rem; padding: .4rem .9rem; border: 2px solid var(--border); border-radius: 20px; font-size: .72rem; font-weight: 800; cursor: pointer; transition: all .2s; color: var(--brown); }
+.ps-search-type-tab:hover,.ps-search-type-active { background: var(--lav); border-color: var(--lav-dark); color: #fff; }
+.ps-search-type-tab input { display: none; }
+.ps-search-summary { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--brown); margin-bottom: 1.5rem; }
+.ps-search-results { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+.ps-search-result-card { display: flex; gap: 1.2rem; align-items: flex-start; background: var(--white); border: 3px solid var(--border); border-radius: 12px; padding: 1.2rem; box-shadow: 3px 3px 0 var(--border); transition: transform .2s; }
+.ps-search-result-card:hover { transform: translateY(-2px); }
+.ps-search-result-card img { width: 120px; height: 90px; object-fit: cover; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; }
+.ps-search-result-img-link img { transition: transform .3s; }
+.ps-search-result-img-link:hover img { transform: scale(1.04); }
+.ps-search-result-body { flex: 1; }
+.ps-search-result-title { font-family: 'Luckiest Guy', cursive; font-size: 1.05rem; letter-spacing: .03em; color: var(--lav-ink); margin-bottom: .3rem; }
+.ps-search-result-title a { text-decoration: none; color: inherit; }
+.ps-search-result-title a:hover { color: var(--lav); }
+.ps-search-result-excerpt { font-size: .85rem; font-weight: 600; color: var(--brown); line-height: 1.6; }
+.ps-search-product-img { width: 90px; height: 90px; overflow: hidden; border-radius: 8px; border: 2px solid var(--border); flex-shrink: 0; }
+.ps-search-product-img img { width: 100%; height: 100%; object-fit: cover; }
+.ps-search-suggestions { margin-top: 1rem; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .ps-article-grid { grid-template-columns: 1fr; }
+  .ps-article-sidebar { position: static; }
+  .ps-blog-grid { grid-template-columns: 1fr; }
+  .ps-article-nav { flex-direction: column; }
+  .ps-article-nav-link { max-width: 100%; }
+  .ps-article-nav-next { text-align: left; margin-left: 0; }
+}
