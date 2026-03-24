@@ -408,6 +408,10 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 /* Portrait-only: hide links, show hamburger */
 @media (max-width: 680px) and (orientation: portrait) {
   .ps-hamburger { display: flex; }
+  /* Hide account link from the top bar — it lives in the drawer instead */
+  .ps-nav-actions .ps-nav-account-link { display: none; }
+  /* Show the drawer account item */
+  .ps-nav-drawer-account { display: block; }
 
   .ps-nav-links {
     /* Hidden by default - full width drawer sliding down */
@@ -462,6 +466,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 /* Landscape mobile / tablet: show links normally, hide hamburger */
 @media (max-width: 680px) and (orientation: landscape) {
   .ps-hamburger { display: none !important; }
+  .ps-nav-drawer-account { display: none !important; }
   .ps-nav-links {
     display: flex !important;
     flex-direction: row !important;
@@ -478,6 +483,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 @media (min-width: 681px) {
   .ps-hamburger { display: none !important; }
   .ps-nav-links { display: flex !important; transform: none !important; opacity: 1 !important; position: static !important; pointer-events: all !important; }
+  .ps-nav-drawer-account { display: none !important; }
 }
 @media (max-width: 600px) {
   .ps-hero-h1 { font-size:2.5rem; }

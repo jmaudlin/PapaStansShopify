@@ -17,6 +17,13 @@
     <li><a href="{{ shop.url }}/blogs/news">Blog</a></li>
     <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
     <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+    <li class="ps-nav-drawer-account">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">👤 {{ customer.first_name }}</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">👤 Sign In</a>
+      {%- endif -%}
+    </li>
   </ul>
   <div class="ps-nav-actions">
     <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="psOpenSearch()">🔍</button>
