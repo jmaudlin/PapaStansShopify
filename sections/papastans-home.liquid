@@ -203,11 +203,12 @@
 <section class="ps-local" id="ps-find-us">
   <div class="ps-local-inner">
 
-    <!-- Embedded Google Map -->
+    <!-- Embedded Google Map — address pulled from Shopify admin (Settings → Store details) -->
+    {%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
     <div class="ps-map-wrap ps-reveal ps-from-left">
       <iframe
         class="ps-map-iframe"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3066.5!2d-92.6438!3d41.2959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee4e3e3e3e3e3f%3A0x1!2sOskaloosa%2C+IA+52577!5e0!3m2!1sen!2sus!4v1"
+        src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
         allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
@@ -251,7 +252,7 @@
       </div>
 
       <div class="ps-local-btns ps-reveal">
-        <a href="https://maps.google.com/?q=Oskaloosa,+IA+52577" target="_blank" class="ps-btn-secondary" style="margin-top:1.5rem;display:inline-block;margin-right:.8rem;">Get Directions 🗺️</a>
+        <a href="https://maps.google.com/?q={{ map_addr }}" target="_blank" class="ps-btn-secondary" style="margin-top:1.5rem;display:inline-block;margin-right:.8rem;">Get Directions 🗺️</a>
         <a href="{{ shop.url }}/collections/all" class="ps-btn-primary" style="margin-top:1.5rem;display:inline-block;">Shop Now 🛒</a>
       </div>
     </div>
