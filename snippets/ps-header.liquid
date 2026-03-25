@@ -1,0 +1,73 @@
+{%- comment -%}
+  ps-header.liquid — Site header: rainbow bar, announcement bar, main nav, search bar.
+
+  Usage (inner pages):  {% render 'ps-header', nav_solid: true %}
+  Usage (homepage):     {% render 'ps-header' %}
+
+  Shopify admin wiring (Content > Navigation):
+  ┌─────────────────────────────────────────────────────────────┐
+  │ Menu: "Main Menu"          handle: main-menu                │
+  │   Add/remove/reorder nav links here.                        │
+  │                                                             │
+  │ Menu: "Announcement Bar"   handle: announcement-bar         │
+  │   Each menu item = one announcement segment.                │
+  │   • Title = the text shown (emoji OK, e.g. "🎁 Free Samples"│
+  │   • URL   = set to / for plain text, or a real URL to link  │
+  └─────────────────────────────────────────────────────────────┘
+{%- endcomment -%}
+
+<div class="ps-rainbow-bar"></div>
+
+<div class="ps-announce">
+  {%- assign ann_links = linklists['announcement-bar'].links -%}
+  {%- if ann_links.size > 0 -%}
+    {%- for link in ann_links -%}
+      {%- unless forloop.first -%} &nbsp;·&nbsp; {%- endunless -%}
+      {%- if link.url != blank and link.url != '/' -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        {{ link.title }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
+    🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+    📞 <a href="tel:6416701573">641.670.1573</a>
+  {%- endif -%}
+</div>
+
+<nav class="ps-nav{% if nav_solid %} ps-nav-solid{% endif %}" id="psNav">
+  <a href="{{ shop.url }}" class="ps-nav-logo">
+    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img">
+  </a>
+  <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="ps-nav-links" id="psNavLinks">
+    {%- for link in linklists['main-menu'].links -%}
+      <li><a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a></li>
+    {%- else -%}
+      <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
+    {%- endfor -%}
+    <li class="ps-nav-drawer-account">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">👤 {{ customer.first_name }}</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">👤 Sign In</a>
+      {%- endif -%}
+    </li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
+    {%- if customer -%}
+      <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
+    {%- else -%}
+      <a href="{{ routes.account_login_url }}" class="ps-nav-account-link">👤 Sign In</a>
+    {%- endif -%}
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+{% render 'ps-search-bar' %}

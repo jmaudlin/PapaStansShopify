@@ -1,4 +1,4 @@
-{% render 'ps-account-nav' %}
+{% render 'ps-header', nav_solid: true %}
 
 <div class="ps-page-wrap ps-article-wrap">
 
@@ -121,9 +121,7 @@
   </div>
 </div>
 
-<script>
-window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
-</script>
+{% render 'ps-footer' %}
 
 {% schema %}
 {

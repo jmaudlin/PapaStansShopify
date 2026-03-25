@@ -1,4 +1,4 @@
-{% render 'ps-account-nav' %}
+{% render 'ps-header', nav_solid: true %}
 
 <div class="ps-page-wrap">
 
@@ -79,11 +79,7 @@
   {%- endpaginate -%}
 </div>
 
-<script>
-window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
-const revObs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){x.target.classList.add('visible');revObs.unobserve(x.target);}}),{threshold:.08});
-document.querySelectorAll('.ps-reveal').forEach(el => revObs.observe(el));
-</script>
+{% render 'ps-footer' %}
 
 {% schema %}
 {
