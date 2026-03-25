@@ -42,6 +42,7 @@
         {%- else -%}🧼 Soap{%- endif -%}
       </div>
       <h1 class="ps-product-title">{{ product.title }}</h1>
+      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
 
       {%- form 'product', product, id: 'psProductForm' -%}
         <!-- Variants -->
@@ -96,6 +97,20 @@
         <div class="ps-product-desc">{{ product.description }}</div>
       {%- endif -%}
     </div>
+  </div>
+
+  <!-- Judge.me Review Widget -->
+  <div class="ps-reviews-wrap">
+    <div class="ps-section-tag" style="margin-bottom:1rem">⭐ Customer Reviews</div>
+    {% assign has_legacy = false %}
+    {% if product.metafields.judgeme.widget %}
+      {% assign has_legacy = true %}
+    {% endif %}
+    {% if has_legacy %}
+      {{ product.metafields.judgeme.widget }}
+    {% else %}
+      <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+    {% endif %}
   </div>
 
   <!-- Back to shop -->

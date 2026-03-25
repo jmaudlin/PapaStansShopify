@@ -1018,3 +1018,16 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 }
 .ps-sd-view-all:hover { background: var(--lav-xlight); }
 .ps-sd-view-all strong { color: var(--lav-dark); }
+
+/* ── Judge.me Review Widget Integration ──────────────────────────── */
+.ps-reviews-wrap { max-width: 860px; margin: 0 auto 2rem; padding: 2.5rem 0; border-top: 2px solid var(--border); }
+.jdgm-widget { font-family: 'Nunito', sans-serif !important; }
+.jdgm-rev-widg { padding: 0 !important; }
+.jdgm-rev-widg__title { font-family: 'Luckiest Guy', cursive !important; font-size: 1.6rem !important; letter-spacing: .04em !important; color: var(--lav-ink) !important; margin-bottom: 1rem !important; }
+.jdgm-write-rev-link, .jdgm-form__submit-btn { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 30px !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
+.jdgm-write-rev-link:hover, .jdgm-form__submit-btn:hover { background: var(--lav-dark) !important; border-color: var(--lav-dark) !important; }
+.jdgm-rev__rating .jdgm-star { color: #F5A623 !important; }
+.jdgm-rev { border-bottom: 1px solid var(--border) !important; padding: 1.25rem 0 !important; }
+.jdgm-rev__author { font-weight: 800 !important; color: var(--lav-ink) !important; }
+.jdgm-rev__body { color: var(--lav-ink) !important; font-size: .92rem !important; line-height: 1.6 !important; }
+.jdgm-preview-badge { margin: .3rem 0 .8rem !important; }
