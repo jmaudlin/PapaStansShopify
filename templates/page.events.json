@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ps-events-page",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

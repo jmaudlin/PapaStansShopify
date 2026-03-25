@@ -1,0 +1,223 @@
+{%- comment -%}
+  ps-events.liquid — Upcoming events feed for Papa Stan's of Iowa.
+
+  Powered by Shopify Metaobjects. To manage events, go to:
+    Shopify Admin → Content → Metaobjects → Events
+
+  Each Event metaobject has these fields (set up in admin):
+    name         (single_line_text)   — Event name
+    date         (date_time)          — Start date & time
+    end_date     (date_time)          — End date & time (optional)
+    location     (single_line_text)   — Venue/fair name
+    address      (single_line_text)   — Full street address for directions
+    city_state   (single_line_text)   — City, State (e.g. "Oskaloosa, IA")
+    description  (multi_line_text)    — Short description (optional)
+    url          (url)                — Event website URL (optional)
+
+  Add-to-calendar links are generated client-side from the date fields —
+  no API keys or third-party services required.
+{%- endcomment -%}
+
+{%- assign today_stamp = 'now' | date: '%s' | plus: 0 -%}
+{%- assign events = shop.metaobjects.event.values -%}
+
+{%- comment -%} Collect and sort upcoming events {%- endcomment -%}
+{%- assign upcoming = '' -%}
+{%- assign upcoming_count = 0 -%}
+{%- for event in events -%}
+  {%- assign event_stamp = event.date.value | date: '%s' | plus: 0 -%}
+  {%- if event_stamp >= today_stamp -%}
+    {%- assign upcoming_count = upcoming_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<section class="ps-events" id="ps-events">
+  <div class="ps-events-inner">
+
+    <div class="ps-events-header">
+      <div class="ps-section-tag ps-reveal">📍 On the Road</div>
+      <h2 class="ps-section-h2 ps-reveal ps-rd1">Find Us at <em>Events!</em></h2>
+      <p class="ps-events-sub ps-reveal ps-rd2">Papa Stan's travels across Iowa and beyond. Come say hi, smell everything, and take home something wonderful.</p>
+    </div>
+
+    {%- if upcoming_count == 0 -%}
+      <div class="ps-events-empty ps-reveal">
+        <div class="ps-events-empty-icon">🗓️</div>
+        <p>No upcoming events scheduled right now.</p>
+        <p style="font-size:.85rem;margin-top:.4rem">Check back soon — we're always on the move!</p>
+      </div>
+
+    {%- else -%}
+      <div class="ps-events-grid" id="psEventsGrid">
+        {%- for event in events -%}
+          {%- assign event_stamp = event.date.value | date: '%s' | plus: 0 -%}
+          {%- if event_stamp >= today_stamp -%}
+            {%- assign ev_name     = event.name.value -%}
+            {%- assign ev_date     = event.date.value -%}
+            {%- assign ev_end      = event.end_date.value -%}
+            {%- assign ev_location = event.location.value -%}
+            {%- assign ev_address  = event.address.value -%}
+            {%- assign ev_city     = event.city_state.value -%}
+            {%- assign ev_desc     = event.description.value -%}
+            {%- assign ev_url      = event.url.value -%}
+
+            {%- assign ev_month    = ev_date | date: '%b' | upcase -%}
+            {%- assign ev_day      = ev_date | date: '%-d' -%}
+            {%- assign ev_weekday  = ev_date | date: '%A' -%}
+            {%- assign ev_fulldate = ev_date | date: '%B %-d, %Y' -%}
+            {%- assign ev_time     = ev_date | date: '%-I:%M %p' -%}
+
+            {%- comment -%} Build calendar date strings — format: YYYYMMDDTHHmmss {%- endcomment -%}
+            {%- assign cal_start = ev_date | date: '%Y%m%dT%H%M%S' -%}
+            {%- if ev_end != blank -%}
+              {%- assign cal_end = ev_end | date: '%Y%m%dT%H%M%S' -%}
+            {%- else -%}
+              {%- comment -%} Default end = start + 8 hours {%- endcomment -%}
+              {%- assign cal_end = ev_date | date: '%Y%m%d' -%}
+              {%- assign cal_end = cal_end | append: 'T230000' -%}
+            {%- endif -%}
+
+            {%- assign cal_title   = ev_name | url_encode -%}
+            {%- assign cal_loc     = ev_address | append: ', ' | append: ev_city | url_encode -%}
+            {%- assign cal_details = ev_desc | default: 'Visit Papa Stan%27s of Iowa at this event!' | url_encode -%}
+
+            {%- comment -%} Google Calendar link {%- endcomment -%}
+            {%- assign google_url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' | append: cal_title | append: '&dates=' | append: cal_start | append: '/' | append: cal_end | append: '&location=' | append: cal_loc | append: '&details=' | append: cal_details -%}
+
+            {%- comment -%} Outlook Web link {%- endcomment -%}
+            {%- assign outlook_url = 'https://outlook.live.com/calendar/0/deeplink/compose?subject=' | append: cal_title | append: '&startdt=' | append: ev_date | date: '%Y-%m-%dT%H:%M:%S' | append: '&enddt=' | append: ev_end | default: ev_date | date: '%Y-%m-%dT%H:%M:%S' | append: '&location=' | append: cal_loc -%}
+
+            <div class="ps-event-card ps-reveal" data-start="{{ cal_start }}" data-end="{{ cal_end }}" data-title="{{ ev_name | escape }}" data-loc="{{ ev_address }}, {{ ev_city }}" data-desc="{{ ev_desc | default: 'Visit Papa Stan\'s of Iowa at this event!' | escape }}">
+
+              <div class="ps-event-date-block">
+                <div class="ps-event-month">{{ ev_month }}</div>
+                <div class="ps-event-day">{{ ev_day }}</div>
+              </div>
+
+              <div class="ps-event-info">
+                <div class="ps-event-weekday">{{ ev_weekday }}, {{ ev_fulldate }}</div>
+                <h3 class="ps-event-name">
+                  {%- if ev_url != blank -%}
+                    <a href="{{ ev_url }}" target="_blank" rel="noopener">{{ ev_name }}</a>
+                  {%- else -%}
+                    {{ ev_name }}
+                  {%- endif -%}
+                </h3>
+
+                {%- if ev_location != blank -%}
+                  <div class="ps-event-venue">📍 {{ ev_location }}{%- if ev_city != blank -%} · {{ ev_city }}{%- endif -%}</div>
+                {%- endif -%}
+
+                {%- if ev_time != '12:00 AM' and ev_time != blank -%}
+                  <div class="ps-event-time">🕐 {{ ev_time }}{%- if ev_end != blank -%} – {{ ev_end | date: '%-I:%M %p' }}{%- endif -%}</div>
+                {%- endif -%}
+
+                {%- if ev_desc != blank -%}
+                  <p class="ps-event-desc">{{ ev_desc }}</p>
+                {%- endif -%}
+
+                <div class="ps-event-actions">
+                  {%- if ev_address != blank -%}
+                    <a href="https://maps.google.com/?q={{ ev_address | append: ', ' | append: ev_city | url_encode }}" target="_blank" class="ps-event-action-link">🗺️ Directions</a>
+                  {%- endif -%}
+                  {%- if ev_url != blank -%}
+                    <a href="{{ ev_url }}" target="_blank" class="ps-event-action-link">🌐 Event info</a>
+                  {%- endif -%}
+                </div>
+
+                <div class="ps-cal-btns">
+                  <span class="ps-cal-label">Add to calendar:</span>
+                  <a href="{{ google_url }}" target="_blank" rel="noopener" class="ps-cal-btn ps-cal-google">Google</a>
+                  <button class="ps-cal-btn ps-cal-apple" onclick="psDownloadIcs(this)" data-card="true">Apple</button>
+                  <a href="{{ outlook_url }}" target="_blank" rel="noopener" class="ps-cal-btn ps-cal-outlook">Outlook</a>
+                </div>
+
+              </div>
+            </div>
+
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+.ps-events { background: var(--cream); padding: 6rem 2rem 5rem; }
+.ps-events-inner { max-width: 860px; margin: 0 auto; }
+.ps-events-header { text-align: center; margin-bottom: 3rem; }
+.ps-events-sub { font-family: 'Caveat', cursive; font-size: 1.25rem; color: var(--lav-ink); max-width: 520px; margin: .75rem auto 0; line-height: 1.5; }
+.ps-events-empty { text-align: center; padding: 3rem 1rem; color: var(--lav-ink); font-family: 'Caveat', cursive; font-size: 1.2rem; }
+.ps-events-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.ps-events-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.ps-event-card { background: #fff; border: 2px solid var(--border); border-radius: 16px; display: flex; gap: 0; overflow: hidden; transition: box-shadow .2s, border-color .2s; }
+.ps-event-card:hover { border-color: var(--lav); box-shadow: 0 4px 20px rgba(164,112,200,.15); }
+
+.ps-event-date-block { background: var(--lav); color: #fff; min-width: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem .75rem; flex-shrink: 0; }
+.ps-event-month { font-size: .65rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; opacity: .85; }
+.ps-event-day { font-family: 'Luckiest Guy', cursive; font-size: 2.2rem; line-height: 1; letter-spacing: .03em; }
+
+.ps-event-info { padding: 1.1rem 1.4rem; flex: 1; min-width: 0; }
+.ps-event-weekday { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lav); margin-bottom: .2rem; }
+.ps-event-name { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; letter-spacing: .04em; color: var(--ink); margin-bottom: .4rem; line-height: 1.2; }
+.ps-event-name a { color: inherit; text-decoration: none; }
+.ps-event-name a:hover { color: var(--lav); }
+.ps-event-venue, .ps-event-time { font-size: .82rem; font-weight: 600; color: var(--lav-ink); margin-bottom: .2rem; }
+.ps-event-desc { font-size: .82rem; color: var(--lav-ink); margin: .5rem 0 .75rem; line-height: 1.5; }
+
+.ps-event-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .9rem; }
+.ps-event-action-link { font-size: .75rem; font-weight: 700; color: var(--lav); text-decoration: none; padding: .2rem .55rem; border: 1.5px solid var(--border); border-radius: 20px; transition: background .15s, border-color .15s; }
+.ps-event-action-link:hover { background: var(--lav-light); border-color: var(--lav); }
+
+.ps-cal-btns { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; padding-top: .6rem; border-top: 1px solid var(--border); }
+.ps-cal-label { font-size: .72rem; font-weight: 700; letter-spacing: .04em; color: var(--lav-ink); margin-right: .1rem; }
+.ps-cal-btn { font-size: .72rem; font-weight: 700; padding: .25rem .65rem; border-radius: 20px; text-decoration: none; cursor: pointer; border: 1.5px solid; transition: opacity .15s; display: inline-block; }
+.ps-cal-btn:hover { opacity: .8; }
+.ps-cal-google  { background: #fff8e1; border-color: #f4b400; color: #7a5900; }
+.ps-cal-apple   { background: #f0f0f0; border-color: #bbb; color: #333; }
+.ps-cal-outlook { background: #e8f0fe; border-color: #0078d4; color: #004578; }
+
+@media (max-width: 520px) {
+  .ps-event-card { flex-direction: column; }
+  .ps-event-date-block { flex-direction: row; gap: .5rem; padding: .75rem 1rem; min-width: unset; }
+  .ps-event-day { font-size: 1.6rem; }
+  .ps-event-info { padding: .9rem 1rem; }
+}
+</style>
+
+<script>
+function psDownloadIcs(btn) {
+  const card = btn.closest('.ps-event-card');
+  const title   = card.dataset.title;
+  const start   = card.dataset.start;
+  const end     = card.dataset.end;
+  const loc     = card.dataset.loc;
+  const desc    = card.dataset.desc;
+  const uid     = 'papastans-' + start + '@papastans.store';
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Papa Stan\'s of Iowa//Events//EN',
+    'BEGIN:VEVENT',
+    'UID:' + uid,
+    'DTSTAMP:' + start,
+    'DTSTART:' + start,
+    'DTEND:' + end,
+    'SUMMARY:' + title,
+    'LOCATION:' + loc,
+    'DESCRIPTION:' + desc,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = title.replace(/[^a-z0-9]/gi, '-').toLowerCase() + '.ics';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
