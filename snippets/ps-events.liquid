@@ -220,5 +220,13 @@ function psDownloadIcs(btn) {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+const psEvRevObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); psEvRevObs.unobserve(e.target); }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.ps-events .ps-reveal').forEach(el => psEvRevObs.observe(el));
+
 </script>
 
