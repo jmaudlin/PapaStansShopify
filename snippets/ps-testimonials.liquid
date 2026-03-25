@@ -1,17 +1,17 @@
 {%- comment -%}
-  ps-testimonials.liquid — Customer testimonials feed.
-  Powered by Shopify Metaobjects (type: testimonial).
-  Stan approves each testimonial by creating a Metaobject entry.
+  ps-testimonials.liquid — Customer reviews display powered by Judge.me.
 
-  Fields on the "Testimonial" metaobject:
-    customer_name   (single_line_text)  — First name + last initial, e.g. "Sarah M."
-    quote           (multi_line_text)   — The testimonial text
-    rating          (number_integer)    — Stars: 1–5
-    product         (single_line_text)  — Product they're reviewing (optional)
-    location        (single_line_text)  — City, State (optional, e.g. "Des Moines, IA")
+  Reviews are managed entirely through the Judge.me app:
+    Admin → Apps → Judge.me Reviews → Reviews (pending/published)
+
+  Stan's workflow:
+    1. Customer submits a review (post-purchase email or Write a Review button)
+    2. Review appears in Judge.me → Reviews → Pending
+    3. Stan approves it → it immediately shows on the product page AND here
+    4. No manual copying. One approval = everywhere.
+
+  The jdgm-all-reviews-widget pulls ALL published reviews across all products.
 {%- endcomment -%}
-
-{%- assign testimonials = shop.metaobjects.testimonial.values -%}
 
 <section class="ps-testimonials" id="ps-testimonials">
   <div class="ps-testimonials-inner">
@@ -22,48 +22,9 @@
       <p class="ps-testimonials-sub ps-reveal ps-rd2">Real words from real people who've brought a little Iowa into their homes.</p>
     </div>
 
-    {%- if testimonials.size > 0 -%}
-      <div class="ps-tgrid">
-        {%- for t in testimonials -%}
-          {%- assign rating = t.rating.value | plus: 0 -%}
-          <div class="ps-tcard ps-reveal">
-
-            <div class="ps-tcard-stars">
-              {%- for i in (1..5) -%}
-                {%- if i <= rating -%}
-                  <span class="ps-star ps-star-filled">★</span>
-                {%- else -%}
-                  <span class="ps-star ps-star-empty">★</span>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-
-            <blockquote class="ps-tcard-quote">"{{ t.quote.value }}"</blockquote>
-
-            <div class="ps-tcard-footer">
-              <div class="ps-tcard-name">— {{ t.customer_name.value }}</div>
-              {%- if t.location.value != blank -%}
-                <div class="ps-tcard-loc">📍 {{ t.location.value }}</div>
-              {%- endif -%}
-              {%- if t.product.value != blank -%}
-                <div class="ps-tcard-product">🧼 {{ t.product.value }}</div>
-              {%- endif -%}
-            </div>
-
-          </div>
-        {%- endfor -%}
-      </div>
-
-      <div class="ps-testimonials-cta ps-reveal">
-        <a href="{{ shop.url }}/pages/share-your-experience" class="ps-btn-secondary">Share Your Experience ✍️</a>
-      </div>
-
-    {%- else -%}
-      <div class="ps-testimonials-empty ps-reveal">
-        <p>Be the first to share your experience!</p>
-        <a href="{{ shop.url }}/pages/share-your-experience" class="ps-btn-primary" style="margin-top:1.2rem;display:inline-block;">Share Your Experience ✍️</a>
-      </div>
-    {%- endif -%}
+    <div class="ps-jdgm-wrap ps-reveal ps-rd2">
+      <div id="judgeme_all_reviews" class="jdgm-widget jdgm-all-reviews-widget" data-per-page="6"></div>
+    </div>
 
   </div>
 </section>
@@ -73,36 +34,16 @@
 .ps-testimonials-inner { max-width: 1100px; margin: 0 auto; }
 .ps-testimonials-header { text-align: center; margin-bottom: 3rem; }
 .ps-testimonials-sub { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--lav-ink); max-width: 480px; margin: .75rem auto 0; line-height: 1.5; }
-.ps-testimonials-empty { text-align: center; padding: 2rem 1rem; color: var(--lav-ink); font-family: 'Caveat', cursive; font-size: 1.2rem; }
+.ps-jdgm-wrap { max-width: 960px; margin: 0 auto; }
 
-.ps-tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
-
-.ps-tcard { background: #fff; border: 2px solid var(--border); border-radius: 16px; padding: 1.4rem; display: flex; flex-direction: column; gap: .75rem; transition: box-shadow .2s, border-color .2s; }
-.ps-tcard:hover { border-color: var(--lav); box-shadow: 0 4px 20px rgba(124,77,158,.12); }
-
-.ps-tcard-stars { display: flex; gap: 2px; }
-.ps-star { font-size: 1.1rem; line-height: 1; }
-.ps-star-filled { color: #F5A623; }
-.ps-star-empty  { color: var(--border); }
-
-.ps-tcard-quote { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-ink); line-height: 1.55; flex: 1; font-style: normal; }
-
-.ps-tcard-footer { border-top: 1px solid var(--border); padding-top: .65rem; display: flex; flex-direction: column; gap: .2rem; }
-.ps-tcard-name { font-size: .85rem; font-weight: 800; color: var(--lav); }
-.ps-tcard-loc, .ps-tcard-product { font-size: .75rem; font-weight: 600; color: var(--lav-ink); opacity: .7; }
-
-.ps-testimonials-cta { text-align: center; margin-top: 2.5rem; }
-
-@media (max-width: 600px) {
-  .ps-tgrid { grid-template-columns: 1fr; }
-}
+/* Judge.me widget overrides to match Papa Stan's theme */
+.ps-testimonials .jdgm-widget { font-family: 'Nunito', sans-serif !important; }
+.ps-testimonials .jdgm-rev-widg__title { font-family: 'Luckiest Guy', cursive !important; font-size: 1.4rem !important; letter-spacing: .04em !important; color: var(--lav-ink) !important; }
+.ps-testimonials .jdgm-write-rev-link { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 30px !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
+.ps-testimonials .jdgm-write-rev-link:hover { background: var(--lav-dark) !important; }
+.ps-testimonials .jdgm-rev__rating .jdgm-star { color: #F5A623 !important; }
+.ps-testimonials .jdgm-rev { border-bottom: 1px solid var(--border) !important; }
+.ps-testimonials .jdgm-rev__author { font-weight: 800 !important; color: var(--lav-ink) !important; }
+.ps-testimonials .jdgm-rev__body { color: var(--lav-ink) !important; line-height: 1.6 !important; }
+.ps-testimonials .jdgm-all-reviews-text-summary { color: var(--lav) !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .04em !important; }
 </style>
-
-<script>
-const psTRevObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); psTRevObs.unobserve(e.target); }
-  });
-}, { threshold: 0.05 });
-document.querySelectorAll('.ps-testimonials .ps-reveal').forEach(el => psTRevObs.observe(el));
-</script>
