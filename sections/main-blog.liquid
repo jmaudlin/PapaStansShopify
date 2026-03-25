@@ -81,6 +81,13 @@
 
 {% render 'ps-footer' %}
 
+<script>
+const revObs = new IntersectionObserver(e => e.forEach(x => {
+  if (x.isIntersecting) { x.target.classList.add('visible'); revObs.unobserve(x.target); }
+}), { threshold: 0.08 });
+document.querySelectorAll('.ps-reveal').forEach(el => revObs.observe(el));
+</script>
+
 {% schema %}
 {
   "name": "Blog",
