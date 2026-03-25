@@ -79,7 +79,8 @@
 
             {%- assign cal_title   = ev_name | url_encode -%}
             {%- assign cal_loc     = ev_address | append: ', ' | append: ev_city | url_encode -%}
-            {%- assign cal_details = ev_desc | default: 'Visit Papa Stan%27s of Iowa at this event!' | url_encode -%}
+            {%- assign ev_desc_safe = ev_desc | default: 'Come visit Papa Stans of Iowa at this event!' -%}
+            {%- assign cal_details = ev_desc_safe | url_encode -%}
 
             {%- comment -%} Google Calendar link {%- endcomment -%}
             {%- assign google_url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' | append: cal_title | append: '&dates=' | append: cal_start | append: '/' | append: cal_end | append: '&location=' | append: cal_loc | append: '&details=' | append: cal_details -%}
@@ -87,7 +88,7 @@
             {%- comment -%} Outlook Web link {%- endcomment -%}
             {%- assign outlook_url = 'https://outlook.live.com/calendar/0/deeplink/compose?subject=' | append: cal_title | append: '&startdt=' | append: ev_date | date: '%Y-%m-%dT%H:%M:%S' | append: '&enddt=' | append: ev_end | default: ev_date | date: '%Y-%m-%dT%H:%M:%S' | append: '&location=' | append: cal_loc -%}
 
-            <div class="ps-event-card ps-reveal" data-start="{{ cal_start }}" data-end="{{ cal_end }}" data-title="{{ ev_name | escape }}" data-loc="{{ ev_address }}, {{ ev_city }}" data-desc="{{ ev_desc | default: 'Visit Papa Stan\'s of Iowa at this event!' | escape }}">
+            <div class="ps-event-card ps-reveal" data-start="{{ cal_start }}" data-end="{{ cal_end }}" data-title="{{ ev_name | escape }}" data-loc="{{ ev_address }}, {{ ev_city }}" data-desc="{{ ev_desc_safe | escape }}">
 
               <div class="ps-event-date-block">
                 <div class="ps-event-month">{{ ev_month }}</div>
