@@ -218,6 +218,49 @@
 
 </div>
 
+<footer class="ps-footer">
+  <div class="ps-footer-top">
+    <div>
+      <a href="{{ shop.url }}" class="ps-f-logo">
+        <img src="{{ 'logo-transparent.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-f-logo-img">
+      </a>
+      <p class="ps-f-sub">of Iowa · Est. 2019 · Veteran-Owned</p>
+      <p class="ps-f-desc">"The cleanest body products that money can buy" — handcrafted with love in Oskaloosa, Iowa.</p>
+      <div class="ps-f-contact">📞 <a href="tel:6416701573">641.670.1573</a></div>
+      <div class="ps-f-soc">
+        <a href="https://facebook.com/PapaStansSoaps" target="_blank" class="ps-soc-a">f</a>
+        <a href="https://instagram.com/PapaStansSoaps" target="_blank" class="ps-soc-a">ig</a>
+        <a href="https://tiktok.com" target="_blank" class="ps-soc-a">tt</a>
+      </div>
+    </div>
+    <div class="ps-footer-col"><h5>Shop</h5><ul>
+      <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
+      <li><a href="{{ shop.url }}/collections/all?sort_by=best-selling">Best Sellers</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Soaps</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Lotions</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Candles</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>About</h5><ul>
+      <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
+      <li><a href="{{ shop.url }}/pages/our-story">Veteran Owned</a></li>
+      <li><a href="{{ shop.url }}/#ps-scents">Scent Library</a></li>
+      <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>Help</h5><ul>
+      <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
+      <li><a href="{{ shop.url }}/pages/returns">Returns &amp; Refunds</a></li>
+      <li><a href="{{ shop.url }}/pages/privacy-policy">Privacy Policy</a></li>
+      <li><a href="{{ shop.url }}/pages/terms-of-service">Terms of Service</a></li>
+      <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
+      <li><a href="{{ shop.url }}/cart">View Cart</a></li>
+    </ul></div>
+  </div>
+  <div class="ps-footer-btm">
+    <p>© {{ 'now' | date: "%Y" }} Papa Stan's of Iowa. All rights reserved. Made with ❤️ in Oskaloosa.</p>
+    <p>Powered by Shopify</p>
+  </div>
+</footer>
+
 {% render 'ps-cart-drawer' %}
 
 <script>

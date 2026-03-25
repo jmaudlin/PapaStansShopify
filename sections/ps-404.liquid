@@ -32,8 +32,8 @@
     {%- else -%}
       <a href="{{ routes.account_login_url }}" class="ps-nav-account-link">👤 Sign In</a>
     {%- endif -%}
-    <button class="ps-cart-btn" onclick="window.location='{{ routes.cart_url }}'">
-      🛒 Cart
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
     </button>
   </div>
 </nav>
@@ -45,4 +45,63 @@
   <a href="{{ shop.url }}" class="ps-btn-primary" style="margin-right:1rem">← Back Home</a>
   <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary">Shop All Products</a>
 </div>
+<footer class="ps-footer">
+  <div class="ps-footer-top">
+    <div>
+      <a href="{{ shop.url }}" class="ps-f-logo">
+        <img src="{{ 'logo-transparent.png' | asset_url }}" alt="Papa Stan's of Iowa" class="ps-f-logo-img">
+      </a>
+      <p class="ps-f-sub">of Iowa · Est. 2019 · Veteran-Owned</p>
+      <p class="ps-f-desc">"The cleanest body products that money can buy" — handcrafted with love in Oskaloosa, Iowa.</p>
+      <div class="ps-f-contact">📞 <a href="tel:6416701573">641.670.1573</a></div>
+      <div class="ps-f-soc">
+        <a href="https://facebook.com/PapaStansSoaps" target="_blank" class="ps-soc-a">f</a>
+        <a href="https://instagram.com/PapaStansSoaps" target="_blank" class="ps-soc-a">ig</a>
+        <a href="https://tiktok.com" target="_blank" class="ps-soc-a">tt</a>
+      </div>
+    </div>
+    <div class="ps-footer-col"><h5>Shop</h5><ul>
+      <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
+      <li><a href="{{ shop.url }}/collections/all?sort_by=best-selling">Best Sellers</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Soaps</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Lotions</a></li>
+      <li><a href="{{ shop.url }}/collections/all">Candles</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>About</h5><ul>
+      <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
+      <li><a href="{{ shop.url }}/pages/our-story">Veteran Owned</a></li>
+      <li><a href="{{ shop.url }}/#ps-scents">Scent Library</a></li>
+      <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+    </ul></div>
+    <div class="ps-footer-col"><h5>Help</h5><ul>
+      <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
+      <li><a href="{{ shop.url }}/pages/returns">Returns &amp; Refunds</a></li>
+      <li><a href="{{ shop.url }}/pages/privacy-policy">Privacy Policy</a></li>
+      <li><a href="{{ shop.url }}/pages/terms-of-service">Terms of Service</a></li>
+      <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
+      <li><a href="{{ shop.url }}/cart">View Cart</a></li>
+    </ul></div>
+  </div>
+  <div class="ps-footer-btm">
+    <p>© {{ 'now' | date: "%Y" }} Papa Stan's of Iowa. All rights reserved. Made with ❤️ in Oskaloosa.</p>
+    <p>Powered by Shopify</p>
+  </div>
+</footer>
+
+{% render 'ps-cart-drawer' %}
+
+<script>
+const PS_FREE_SHIP_CENTS = 5500;
+function psMoney(c){return '$'+(c/100).toFixed(2);}
+async function psUpdateQty(key,qty){const u={};u[key]=qty;await fetch('/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({updates:u})});await psRefreshCart();}
+async function psRemoveLine(key){await psUpdateQty(key,0);}
+async function psRefreshCart(){const r=await fetch('/cart.js',{headers:{'Accept':'application/json'}});const cart=await r.json();psRenderCart(cart);document.getElementById('psCartCount').textContent=cart.item_count||0;}
+function psRenderCart(cart){const el=document.getElementById('psCartItems'),ft=document.getElementById('psCartFoot');if(!cart.items||!cart.items.length){el.innerHTML='<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';ft.style.display='none';return;}ft.style.display='block';el.innerHTML=cart.items.map(item=>`<div class="ps-cart-item"><img class="ps-ci-img" src="${item.image?item.image.replace('http:','https:'):''}" alt="${item.title}" onerror="this.style.visibility='hidden'"><div><div class="ps-ci-name">${item.product_title}</div><div class="ps-ci-price">${psMoney(item.price)}</div><div class="ps-ci-qty"><button onclick="psUpdateQty('${item.key}',${item.quantity-1})">−</button><span>${item.quantity}</span><button onclick="psUpdateQty('${item.key}',${item.quantity+1})">+</button></div></div><button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button></div>`).join('');document.getElementById('psCartTotal').textContent=psMoney(cart.total_price);const pct=Math.min((cart.total_price/PS_FREE_SHIP_CENTS)*100,100);document.getElementById('psShipFill').style.width=pct+'%';const rem=psMoney(Math.max(PS_FREE_SHIP_CENTS-cart.total_price,0));document.getElementById('psShipMsg').innerHTML=cart.total_price>=PS_FREE_SHIP_CENTS?'<strong>🎉 Free shipping unlocked!</strong>':`Add <strong>${rem} more</strong> for free shipping 🚚`;}
+function psOpenCart(){psRefreshCart();document.getElementById('psCartDrawer').classList.add('open');document.getElementById('psCartOverlay').classList.add('open');}
+function psCloseCart(){document.getElementById('psCartDrawer').classList.remove('open');document.getElementById('psCartOverlay').classList.remove('open');}
+let psToastTimer;
+function psShowToast(msg){const t=document.getElementById('psToast');t.textContent=msg;t.classList.add('show');clearTimeout(psToastTimer);psToastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+window.addEventListener('scroll',()=>document.getElementById('psNav').classList.toggle('scrolled',window.scrollY>10),{passive:true});
+psRefreshCart();
+</script>
 {% schema %}{ "name": "404", "settings": [], "presets": [{ "name": "404" }] }{% endschema %}
