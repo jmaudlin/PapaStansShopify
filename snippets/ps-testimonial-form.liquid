@@ -1,0 +1,153 @@
+{%- comment -%}
+  ps-testimonial-form.liquid — Customer testimonial submission form.
+  Uses Shopify's built-in contact form endpoint so submissions
+  arrive in the store's email inbox for Stan to review.
+  Stan then manually creates a Testimonial Metaobject entry for
+  any submissions he wants to publish — that's the moderation step.
+{%- endcomment -%}
+
+<section class="ps-tform-section">
+  <div class="ps-tform-inner">
+
+    <div class="ps-tform-header">
+      <div class="ps-section-tag ps-reveal">✍️ Share Your Story</div>
+      <h1 class="ps-section-h2 ps-reveal ps-rd1">Tell Us What You <em>Think!</em></h1>
+      <p class="ps-tform-sub ps-reveal ps-rd2">We read every single one. Your words mean the world to our small family business.</p>
+    </div>
+
+    {%- form 'contact', id: 'psTestimonialForm' -%}
+
+      {%- if form.posted_successfully? -%}
+        <div class="ps-tform-success ps-reveal">
+          <div class="ps-tform-success-icon">🎉</div>
+          <h3>Thank you so much!</h3>
+          <p>We got your review and we're so grateful. It may take a little while for it to appear on the site — Papa Stan reviews everything personally.</p>
+          <a href="{{ shop.url }}" class="ps-btn-primary" style="margin-top:1.5rem;display:inline-block;">Back to the Shop 🛒</a>
+        </div>
+
+      {%- else -%}
+
+        {%- if form.errors -%}
+          <div class="ps-tform-error">
+            Oops — something went wrong. Please check the fields below and try again.
+          </div>
+        {%- endif -%}
+
+        <div class="ps-tform-card ps-reveal">
+
+          <input type="hidden" name="contact[tags]" value="testimonial-submission">
+          <input type="hidden" name="contact[subject]" value="New Testimonial Submission">
+
+          <div class="ps-tform-row ps-tform-row-2">
+            <div class="ps-tform-field">
+              <label for="tform-name" class="ps-tform-label">Your name <span class="ps-tform-req">*</span></label>
+              <input type="text" id="tform-name" name="contact[name]" class="ps-tform-input" placeholder="Sarah M." required>
+            </div>
+            <div class="ps-tform-field">
+              <label for="tform-email" class="ps-tform-label">Email <span class="ps-tform-req">*</span></label>
+              <input type="email" id="tform-email" name="contact[email]" class="ps-tform-input" placeholder="sarah@email.com" required>
+              <p class="ps-tform-hint">We won't publish your email. Just in case we have questions!</p>
+            </div>
+          </div>
+
+          <div class="ps-tform-field">
+            <label class="ps-tform-label">Star rating <span class="ps-tform-req">*</span></label>
+            <div class="ps-star-picker" id="psStarPicker">
+              {%- for i in (1..5) -%}
+                <button type="button" class="ps-star-pick" data-val="{{ i }}" aria-label="{{ i }} star{%- if i != 1 %}s{% endif %}">★</button>
+              {%- endfor -%}
+            </div>
+            <input type="hidden" id="psRatingInput" name="contact[body-rating]" value="">
+          </div>
+
+          <div class="ps-tform-field">
+            <label for="tform-product" class="ps-tform-label">Which product?</label>
+            <input type="text" id="tform-product" name="contact[body-product]" class="ps-tform-input" placeholder="e.g. Lavender Goat Milk Soap">
+            <p class="ps-tform-hint">Optional — tell us what you loved!</p>
+          </div>
+
+          <div class="ps-tform-field">
+            <label for="tform-location" class="ps-tform-label">Your city / state</label>
+            <input type="text" id="tform-location" name="contact[body-location]" class="ps-tform-input" placeholder="e.g. Des Moines, IA">
+            <p class="ps-tform-hint">Optional — it's fun to see where our customers are from!</p>
+          </div>
+
+          <div class="ps-tform-field">
+            <label for="tform-review" class="ps-tform-label">Your review <span class="ps-tform-req">*</span></label>
+            <textarea id="tform-review" name="contact[body]" class="ps-tform-textarea" rows="5" placeholder="Tell us what you loved about your order…" required></textarea>
+          </div>
+
+          <div class="ps-tform-field ps-tform-consent">
+            <label class="ps-tform-check-label">
+              <input type="checkbox" name="contact[body-consent]" required class="ps-tform-check">
+              <span>I'm happy for my review (first name + last initial) to be shared on the Papa Stan's website.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="ps-btn-primary ps-tform-submit" id="psTFormBtn">
+            Send My Review 💌
+          </button>
+
+        </div>
+      {%- endif -%}
+
+    {%- endform -%}
+
+  </div>
+</section>
+
+<style>
+.ps-tform-section { background: var(--cream); padding: 5rem 2rem 6rem; }
+.ps-tform-inner { max-width: 680px; margin: 0 auto; }
+.ps-tform-header { text-align: center; margin-bottom: 2.5rem; }
+.ps-tform-sub { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--lav-ink); max-width: 480px; margin: .75rem auto 0; line-height: 1.5; }
+
+.ps-tform-success { text-align: center; background: var(--lav-xlight); border: 2px solid var(--lav); border-radius: 16px; padding: 3rem 2rem; }
+.ps-tform-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.ps-tform-success h3 { font-family: 'Luckiest Guy', cursive; font-size: 1.6rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .5rem; }
+.ps-tform-success p { font-size: .9rem; color: var(--lav-ink); line-height: 1.6; max-width: 380px; margin: 0 auto; }
+.ps-tform-error { background: #FEF2F2; border: 1.5px solid #F87171; border-radius: 8px; padding: .75rem 1rem; font-size: .85rem; color: #991B1B; margin-bottom: 1.2rem; }
+
+.ps-tform-card { background: #fff; border: 2px solid var(--border); border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+.ps-tform-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 520px) { .ps-tform-row-2 { grid-template-columns: 1fr; } }
+
+.ps-tform-label { display: block; font-size: .8rem; font-weight: 800; color: var(--lav-ink); letter-spacing: .04em; text-transform: uppercase; margin-bottom: .4rem; }
+.ps-tform-req { color: var(--lav); }
+.ps-tform-input { width: 100%; padding: .65rem .9rem; border: 2px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: .9rem; color: var(--lav-ink); background: var(--lav-xlight); transition: border-color .2s; outline: none; }
+.ps-tform-input:focus { border-color: var(--lav); }
+.ps-tform-textarea { width: 100%; padding: .65rem .9rem; border: 2px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: .9rem; color: var(--lav-ink); background: var(--lav-xlight); resize: vertical; transition: border-color .2s; outline: none; line-height: 1.6; }
+.ps-tform-textarea:focus { border-color: var(--lav); }
+.ps-tform-hint { font-size: .72rem; color: var(--lav-ink); opacity: .6; margin-top: .3rem; font-weight: 600; }
+
+.ps-star-picker { display: flex; gap: .3rem; margin-top: .2rem; }
+.ps-star-pick { font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--border); transition: color .15s, transform .1s; padding: 0 .1rem; line-height: 1; }
+.ps-star-pick:hover, .ps-star-pick.active { color: #F5A623; transform: scale(1.15); }
+
+.ps-tform-consent { display: flex; align-items: flex-start; }
+.ps-tform-check-label { display: flex; gap: .75rem; align-items: flex-start; font-size: .82rem; color: var(--lav-ink); line-height: 1.5; cursor: pointer; font-weight: 600; }
+.ps-tform-check { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--lav); cursor: pointer; }
+
+.ps-tform-submit { width: 100%; padding: .9rem; font-size: 1rem; justify-content: center; }
+</style>
+
+<script>
+(function() {
+  const picker = document.getElementById('psStarPicker');
+  const input  = document.getElementById('psRatingInput');
+  if (!picker) return;
+  const stars = picker.querySelectorAll('.ps-star-pick');
+  let selected = 0;
+  function setStars(val) {
+    selected = val;
+    input.value = val;
+    stars.forEach((s, i) => s.classList.toggle('active', i < val));
+  }
+  stars.forEach((s, i) => {
+    s.addEventListener('click', () => setStars(i + 1));
+    s.addEventListener('mouseenter', () => stars.forEach((x, j) => x.style.color = j <= i ? '#F5A623' : ''));
+  });
+  picker.addEventListener('mouseleave', () => stars.forEach((s, i) => s.style.color = i < selected ? '#F5A623' : ''));
+})();
+</script>

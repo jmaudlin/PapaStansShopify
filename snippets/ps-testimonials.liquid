@@ -1,0 +1,108 @@
+{%- comment -%}
+  ps-testimonials.liquid — Customer testimonials feed.
+  Powered by Shopify Metaobjects (type: testimonial).
+  Stan approves each testimonial by creating a Metaobject entry.
+
+  Fields on the "Testimonial" metaobject:
+    customer_name   (single_line_text)  — First name + last initial, e.g. "Sarah M."
+    quote           (multi_line_text)   — The testimonial text
+    rating          (number_integer)    — Stars: 1–5
+    product         (single_line_text)  — Product they're reviewing (optional)
+    location        (single_line_text)  — City, State (optional, e.g. "Des Moines, IA")
+{%- endcomment -%}
+
+{%- assign testimonials = shop.metaobjects.testimonial.values -%}
+
+<section class="ps-testimonials" id="ps-testimonials">
+  <div class="ps-testimonials-inner">
+
+    <div class="ps-testimonials-header">
+      <div class="ps-section-tag ps-reveal">⭐ Customer Love</div>
+      <h2 class="ps-section-h2 ps-reveal ps-rd1">What Our <em>Customers Say!</em></h2>
+      <p class="ps-testimonials-sub ps-reveal ps-rd2">Real words from real people who've brought a little Iowa into their homes.</p>
+    </div>
+
+    {%- if testimonials.size > 0 -%}
+      <div class="ps-tgrid">
+        {%- for t in testimonials -%}
+          {%- assign rating = t.rating.value | plus: 0 -%}
+          <div class="ps-tcard ps-reveal">
+
+            <div class="ps-tcard-stars">
+              {%- for i in (1..5) -%}
+                {%- if i <= rating -%}
+                  <span class="ps-star ps-star-filled">★</span>
+                {%- else -%}
+                  <span class="ps-star ps-star-empty">★</span>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+
+            <blockquote class="ps-tcard-quote">"{{ t.quote.value }}"</blockquote>
+
+            <div class="ps-tcard-footer">
+              <div class="ps-tcard-name">— {{ t.customer_name.value }}</div>
+              {%- if t.location.value != blank -%}
+                <div class="ps-tcard-loc">📍 {{ t.location.value }}</div>
+              {%- endif -%}
+              {%- if t.product.value != blank -%}
+                <div class="ps-tcard-product">🧼 {{ t.product.value }}</div>
+              {%- endif -%}
+            </div>
+
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="ps-testimonials-cta ps-reveal">
+        <a href="{{ shop.url }}/pages/share-your-experience" class="ps-btn-secondary">Share Your Experience ✍️</a>
+      </div>
+
+    {%- else -%}
+      <div class="ps-testimonials-empty ps-reveal">
+        <p>Be the first to share your experience!</p>
+        <a href="{{ shop.url }}/pages/share-your-experience" class="ps-btn-primary" style="margin-top:1.2rem;display:inline-block;">Share Your Experience ✍️</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+.ps-testimonials { background: var(--lav-xlight); padding: 6rem 2rem 5rem; }
+.ps-testimonials-inner { max-width: 1100px; margin: 0 auto; }
+.ps-testimonials-header { text-align: center; margin-bottom: 3rem; }
+.ps-testimonials-sub { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--lav-ink); max-width: 480px; margin: .75rem auto 0; line-height: 1.5; }
+.ps-testimonials-empty { text-align: center; padding: 2rem 1rem; color: var(--lav-ink); font-family: 'Caveat', cursive; font-size: 1.2rem; }
+
+.ps-tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+
+.ps-tcard { background: #fff; border: 2px solid var(--border); border-radius: 16px; padding: 1.4rem; display: flex; flex-direction: column; gap: .75rem; transition: box-shadow .2s, border-color .2s; }
+.ps-tcard:hover { border-color: var(--lav); box-shadow: 0 4px 20px rgba(124,77,158,.12); }
+
+.ps-tcard-stars { display: flex; gap: 2px; }
+.ps-star { font-size: 1.1rem; line-height: 1; }
+.ps-star-filled { color: #F5A623; }
+.ps-star-empty  { color: var(--border); }
+
+.ps-tcard-quote { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-ink); line-height: 1.55; flex: 1; font-style: normal; }
+
+.ps-tcard-footer { border-top: 1px solid var(--border); padding-top: .65rem; display: flex; flex-direction: column; gap: .2rem; }
+.ps-tcard-name { font-size: .85rem; font-weight: 800; color: var(--lav); }
+.ps-tcard-loc, .ps-tcard-product { font-size: .75rem; font-weight: 600; color: var(--lav-ink); opacity: .7; }
+
+.ps-testimonials-cta { text-align: center; margin-top: 2.5rem; }
+
+@media (max-width: 600px) {
+  .ps-tgrid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+const psTRevObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); psTRevObs.unobserve(e.target); }
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('.ps-testimonials .ps-reveal').forEach(el => psTRevObs.observe(el));
+</script>

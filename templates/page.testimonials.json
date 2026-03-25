@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "ps-testimonials-page", "settings": {} }
+  },
+  "order": ["main"]
+}
