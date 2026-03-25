@@ -1,0 +1,137 @@
+{% render 'ps-header', nav_solid: true %}
+
+<div class="ps-page-wrap">
+
+  <div class="ps-share-wrap">
+
+    <div class="ps-share-header">
+      <div class="ps-section-tag" style="margin-bottom:.6rem">✍️ Share Your Story</div>
+      <h1 class="ps-section-h2">We'd Love to <em>Hear From You!</em></h1>
+      <p class="ps-share-sub">Your words mean the world to us. Tell us about your experience and we may feature your story on our site!</p>
+    </div>
+
+    {%- if form.posted_successfully? -%}
+      <div class="ps-share-success">
+        <div class="ps-share-success-icon">🎉</div>
+        <h2>Thank you so much!</h2>
+        <p>We loved reading your story. If we feature it on the site, you'll see it in our testimonials section soon.</p>
+        <a href="{{ shop.url }}" class="ps-btn-primary" style="margin-top:1.5rem;display:inline-block;">Back to Home 🏡</a>
+      </div>
+    {%- else -%}
+
+      {%- form 'contact' -%}
+
+        {%- if form.errors -%}
+          <div class="ps-share-errors">
+            Please check the form — {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="ps-share-form">
+
+          <div class="ps-form-row ps-form-row-2">
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="share-name">Your name <span class="ps-req">*</span></label>
+              <input type="text" id="share-name" name="contact[name]" class="ps-form-input" placeholder="Sarah M." required>
+            </div>
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="share-email">Email address <span class="ps-req">*</span></label>
+              <input type="email" id="share-email" name="contact[email]" class="ps-form-input" placeholder="you@email.com" required>
+              <span class="ps-form-hint">We'll never share your email. It's just so we can say thanks!</span>
+            </div>
+          </div>
+
+          <div class="ps-form-row ps-form-row-2">
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="share-product">Which product?</label>
+              <input type="text" id="share-product" name="contact[product]" class="ps-form-input" placeholder="e.g. Lavender Goat Milk Soap">
+            </div>
+            <div class="ps-form-group">
+              <label class="ps-form-label" for="share-rating">Star rating</label>
+              <div class="ps-star-picker" id="psStarPicker" role="radiogroup" aria-label="Star rating">
+                {%- for i in (1..5) -%}
+                  <button type="button" class="ps-star-pick" data-val="{{ i }}" aria-label="{{ i }} star{%- if i > 1 -%}s{%- endif -%}">★</button>
+                {%- endfor -%}
+              </div>
+              <input type="hidden" id="share-rating" name="contact[rating]" value="5">
+            </div>
+          </div>
+
+          <div class="ps-form-group">
+            <label class="ps-form-label" for="share-body">Your experience <span class="ps-req">*</span></label>
+            <textarea id="share-body" name="contact[body]" class="ps-form-input ps-form-textarea" placeholder="Tell us what you loved, how it made you feel, or how it became part of your routine…" required rows="5"></textarea>
+          </div>
+
+          <div class="ps-form-group">
+            <label class="ps-form-label" for="share-location">City &amp; State (optional)</label>
+            <input type="text" id="share-location" name="contact[location]" class="ps-form-input" placeholder="e.g. Des Moines, IA">
+          </div>
+
+          <button type="submit" class="ps-btn-primary ps-share-submit">Submit My Story ✍️</button>
+
+        </div>
+      {%- endform -%}
+
+    {%- endif -%}
+
+  </div>
+
+</div>
+
+{% render 'ps-footer' %}
+
+<style>
+.ps-share-wrap { max-width: 680px; margin: 0 auto; padding: 4rem 0 5rem; }
+.ps-share-header { text-align: center; margin-bottom: 2.5rem; }
+.ps-share-sub { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-ink); margin-top: .75rem; line-height: 1.5; }
+.ps-share-success { text-align: center; padding: 4rem 1rem; }
+.ps-share-success-icon { font-size: 4rem; margin-bottom: 1rem; }
+.ps-share-success h2 { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .75rem; }
+.ps-share-success p { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--lav-ink); }
+.ps-share-errors { background: #fff0f0; border: 2px solid #e44; border-radius: 10px; padding: .9rem 1.2rem; color: #a00; font-weight: 700; margin-bottom: 1.5rem; }
+.ps-share-form { display: flex; flex-direction: column; gap: 1.25rem; background: #fff; border: 2px solid var(--border); border-radius: 20px; padding: 2rem; }
+.ps-form-row { display: flex; gap: 1rem; }
+.ps-form-row-2 > * { flex: 1; min-width: 0; }
+.ps-form-group { display: flex; flex-direction: column; gap: .35rem; }
+.ps-form-label { font-size: .82rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--lav); }
+.ps-req { color: var(--lav); }
+.ps-form-hint { font-size: .72rem; color: var(--lav-ink); opacity: .6; }
+.ps-form-input { border: 2px solid var(--border); border-radius: 10px; padding: .65rem 1rem; font-family: 'Nunito', sans-serif; font-size: .95rem; color: var(--lav-ink); background: var(--cream); transition: border-color .2s; width: 100%; }
+.ps-form-input:focus { outline: none; border-color: var(--lav); }
+.ps-form-textarea { resize: vertical; min-height: 120px; }
+.ps-star-picker { display: flex; gap: 4px; margin-top: .2rem; }
+.ps-star-pick { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--border); transition: color .15s, transform .1s; padding: 0; line-height: 1; }
+.ps-star-pick:hover, .ps-star-pick.active { color: #F5A623; transform: scale(1.15); }
+.ps-share-submit { align-self: flex-start; font-size: 1rem; padding: .85rem 2rem; }
+@media (max-width: 560px) {
+  .ps-form-row-2 { flex-direction: column; }
+  .ps-share-wrap { padding: 3rem 0 4rem; }
+}
+</style>
+
+<script>
+(function() {
+  const stars = document.querySelectorAll('.ps-star-pick');
+  const input = document.getElementById('share-rating');
+  let current = 5;
+  function setRating(val) {
+    current = val;
+    if (input) input.value = val;
+    stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= val));
+  }
+  setRating(5);
+  stars.forEach(s => {
+    s.addEventListener('click', () => setRating(parseInt(s.dataset.val)));
+    s.addEventListener('mouseenter', () => stars.forEach(st => st.classList.toggle('active', parseInt(st.dataset.val) <= parseInt(s.dataset.val))));
+  });
+  document.getElementById('psStarPicker')?.addEventListener('mouseleave', () => setRating(current));
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Share your experience",
+  "settings": [],
+  "presets": [{ "name": "Share your experience" }]
+}
+{% endschema %}

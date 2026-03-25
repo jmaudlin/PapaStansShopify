@@ -1,6 +1,6 @@
 {
   "sections": {
-    "main": { "type": "ps-testimonial-form-page", "settings": {} }
+    "main": { "type": "ps-share-form", "settings": {} }
   },
   "order": ["main"]
 }
