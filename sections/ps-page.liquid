@@ -165,10 +165,11 @@
     <!-- Generic page template -->
     <h1 class="ps-section-h2" style="margin-bottom:2rem">{{ page.title }}</h1>
     <div class="ps-page-content">{{ page.content }}</div>
+    {% content_for 'blocks' %}
 
   {%- endif -%}
 
 </div>
 
 {% render 'ps-footer' %}
-{% schema %}{ "name": "Page", "settings": [], "presets": [{ "name": "Page" }] }{% endschema %}
+{% schema %}{ "name": "Page", "settings": [], "blocks": [{ "type": "@app" }], "presets": [{ "name": "Page" }] }{% endschema %}
