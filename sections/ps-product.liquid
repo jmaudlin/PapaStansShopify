@@ -42,7 +42,11 @@
         {%- else -%}🧼 Soap{%- endif -%}
       </div>
       <h1 class="ps-product-title">{{ product.title }}</h1>
-      <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
+      <!-- Start of Judge.me code -->
+      <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
+        {{ product.metafields.judgeme.badge }}
+      </div>
+      <!-- End of Judge.me code -->
 
       {%- form 'product', product, id: 'psProductForm' -%}
         <!-- Variants -->
