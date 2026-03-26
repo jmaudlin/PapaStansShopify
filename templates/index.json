@@ -51,10 +51,15 @@
         "judge_me_reviews_testimonials_carousel_cphxEr"
       ],
       "settings": {}
+    },
+    "ps_home_lower": {
+      "type": "ps-home-lower",
+      "settings": {}
     }
   },
   "order": [
     "papastans_home",
-    "17745172971b7650fe"
+    "17745172971b7650fe",
+    "ps_home_lower"
   ]
 }
