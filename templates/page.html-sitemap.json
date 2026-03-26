@@ -1,10 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "ps-page",
       "blocks": {
-        "exquisite_sitemap_sitemap_html_aNyKT8": {
-          "type": "shopify://apps/exquisite-sitemap/blocks/sitemap-html",
+        "exquisite_sitemap_sitemap_html_UAJgDR": {
+          "type": "shopify://apps/exquisite-sitemap/blocks/sitemap-html/36eb0672-066c-4b5f-84f9-865411ab2332",
           "settings": {
             "page_width_rems": 140,
             "enable_column_styling": true,
@@ -30,9 +39,18 @@
           }
         }
       },
-      "block_order": ["exquisite_sitemap_sitemap_html_aNyKT8"],
+      "block_order": [
+        "exquisite_sitemap_sitemap_html_UAJgDR"
+      ],
+      "settings": {}
+    },
+    "1774489437c8a9482b": {
+      "type": "apps",
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "1774489437c8a9482b"
+  ]
 }
