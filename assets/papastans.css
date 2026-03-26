@@ -1031,3 +1031,146 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .jdgm-rev__author { font-weight: 800 !important; color: var(--lav-ink) !important; }
 .jdgm-rev__body { color: var(--lav-ink) !important; font-size: .92rem !important; line-height: 1.6 !important; }
 .jdgm-preview-badge { margin: .3rem 0 .8rem !important; }
+
+/* ── Judge.me Testimonials Carousel — Papa Stan's Theme ──────────── */
+
+/* Section wrapper — lavender background to match site flow */
+.shopify-section:has(.jdgm-testimonials-carousel) {
+  background: var(--lav-xlight);
+  padding: 5rem 1.5rem;
+}
+
+/* Widget container */
+.jdgm-testimonials-carousel {
+  max-width: 860px !important;
+  margin: 0 auto !important;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+/* ── Header ── */
+.jdgm-testimonials-carousel .jdgm-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.jdgm-testimonials-carousel .jdgm-title {
+  font-family: 'Luckiest Guy', cursive !important;
+  font-size: 2.2rem !important;
+  letter-spacing: .05em !important;
+  color: var(--lav-ink) !important;
+  line-height: 1.15 !important;
+  display: block;
+  margin-bottom: .6rem !important;
+}
+.jdgm-testimonials-carousel .jdgm-header-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.jdgm-testimonials-carousel .jdgm-average-rating {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 800 !important;
+  color: var(--lav-ink) !important;
+  font-size: 1rem !important;
+}
+.jdgm-testimonials-carousel .jdgm-stars .jdgm-star { color: #F5A623 !important; }
+.jdgm-testimonials-carousel .jdgm-reviews-count {
+  color: var(--lav) !important;
+  font-weight: 700 !important;
+}
+.jdgm-testimonials-carousel .jdgm-verified-badge-header {
+  background: var(--lav-light) !important;
+  border-radius: 30px !important;
+  padding: .15rem .6rem !important;
+  font-size: .78rem !important;
+}
+.jdgm-testimonials-carousel .jdgm-verified-badge-header svg,
+.jdgm-testimonials-carousel .jdgm-verified-badge-header path { fill: var(--lav) !important; }
+.jdgm-testimonials-carousel .jdgm-verified-text { color: var(--lav-dark) !important; font-weight: 700 !important; }
+
+/* ── Cards ── */
+.jdgm-testimonials-carousel .jdgm-card {
+  background: #fff !important;
+  border-radius: 20px !important;
+  border: 2px solid var(--border) !important;
+  box-shadow: 0 6px 24px rgba(147,112,178,.13) !important;
+  padding: 2.5rem 2rem 2rem !important;
+  text-align: center !important;
+  transition: transform .25s ease, box-shadow .25s ease !important;
+}
+.jdgm-testimonials-carousel .jdgm-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 32px rgba(147,112,178,.22) !important;
+}
+
+/* Quote marks */
+.jdgm-testimonials-carousel .jdgm-quote-marks {
+  color: var(--lav) !important;
+  font-size: 3rem !important;
+  line-height: 1 !important;
+  opacity: .7;
+}
+
+/* Review text */
+.jdgm-testimonials-carousel .jdgm-text {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 1.05rem !important;
+  color: var(--lav-ink) !important;
+  line-height: 1.7 !important;
+  font-style: italic;
+  margin: .75rem 0 1.25rem !important;
+}
+
+/* Stars in card */
+.jdgm-testimonials-carousel .jdgm-rating-section .jdgm-star { color: #F5A623 !important; font-size: 1.2rem !important; }
+
+/* Reviewer name */
+.jdgm-testimonials-carousel .jdgm-reviewer-name {
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 900 !important;
+  color: var(--lav-dark) !important;
+  font-size: 1rem !important;
+  margin-top: .5rem !important;
+  display: block;
+}
+
+/* Product name link */
+.jdgm-testimonials-carousel .jdgm-product-name,
+.jdgm-testimonials-carousel .jdgm-product-name a {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: .82rem !important;
+  color: var(--lav) !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+}
+.jdgm-testimonials-carousel .jdgm-product-name a:hover { color: var(--lav-dark) !important; text-decoration: underline !important; }
+
+/* ── Navigation Arrows ── */
+.jdgm-testimonials-carousel .jdgm-arrows--bottom {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  margin-top: 2rem !important;
+}
+.jdgm-testimonials-carousel .jdgm-arrow {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: var(--lav) !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: 1.1rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background .2s ease, transform .15s ease !important;
+  box-shadow: 0 3px 10px rgba(147,112,178,.35) !important;
+}
+.jdgm-testimonials-carousel .jdgm-arrow:hover {
+  background: var(--lav-dark) !important;
+  transform: scale(1.08) !important;
+}
+.jdgm-testimonials-carousel .jdgm-arrow svg,
+.jdgm-testimonials-carousel .jdgm-arrow path { fill: #fff !important; stroke: #fff !important; }
