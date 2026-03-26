@@ -1,5 +1,5 @@
 {%- comment -%}
-  ps-testimonials.liquid — Customer reviews display powered by Judge.me.
+  ps-testimonials.liquid — Customer reviews carousel powered by Judge.me.
 
   Reviews are managed entirely through the Judge.me app:
     Admin → Apps → Judge.me Reviews → Reviews (pending/published)
@@ -10,7 +10,9 @@
     3. Stan approves it → it immediately shows on the product page AND here
     4. No manual copying. One approval = everywhere.
 
-  The jdgm-all-reviews-widget pulls ALL published reviews across all products.
+  The jdgm-carousel-widget renders Judge.me's testimonials carousel.
+  Carousel settings (# of cards, autoplay, etc.) are configured in:
+    Judge.me Admin → Widgets → Testimonials Carousel
 {%- endcomment -%}
 
 <section class="ps-testimonials" id="ps-testimonials">
@@ -23,7 +25,7 @@
     </div>
 
     <div class="ps-jdgm-wrap ps-reveal ps-rd2">
-      <div id="judgeme_all_reviews" class="jdgm-widget jdgm-all-reviews-widget" data-per-page="6"></div>
+      <div class="jdgm-widget jdgm-carousel-widget" data-id="jdgm-carousel"></div>
     </div>
 
   </div>
@@ -31,19 +33,43 @@
 
 <style>
 .ps-testimonials { background: var(--lav-xlight); padding: 6rem 2rem 5rem; }
-.ps-testimonials-inner { max-width: 1100px; margin: 0 auto; }
+.ps-testimonials-inner { max-width: 1200px; margin: 0 auto; }
 .ps-testimonials-header { text-align: center; margin-bottom: 3rem; }
 .ps-testimonials-sub { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--lav-ink); max-width: 480px; margin: .75rem auto 0; line-height: 1.5; }
-.ps-jdgm-wrap { max-width: 960px; margin: 0 auto; }
+.ps-jdgm-wrap { width: 100%; }
 
-/* Judge.me widget overrides to match Papa Stan's theme */
+/* Judge.me carousel overrides to match Papa Stan's theme */
 .ps-testimonials .jdgm-widget { font-family: 'Nunito', sans-serif !important; }
-.ps-testimonials .jdgm-rev-widg__title { font-family: 'Luckiest Guy', cursive !important; font-size: 1.4rem !important; letter-spacing: .04em !important; color: var(--lav-ink) !important; }
+
+/* Carousel card styling */
+.ps-testimonials .jdgm-carousel-card { background: var(--white) !important; border-radius: 16px !important; border: 1.5px solid var(--border) !important; box-shadow: 0 4px 18px rgba(147,112,178,.1) !important; }
+.ps-testimonials .jdgm-carousel-card:hover { box-shadow: 0 8px 28px rgba(147,112,178,.18) !important; transform: translateY(-3px); transition: all .25s ease; }
+
+/* Stars */
+.ps-testimonials .jdgm-star { color: #F5A623 !important; }
+
+/* Reviewer name */
+.ps-testimonials .jdgm-carousel-card__reviewer-name,
+.ps-testimonials .jdgm-carousel-card__author { font-weight: 800 !important; color: var(--lav-ink) !important; font-family: 'Nunito', sans-serif !important; }
+
+/* Review body */
+.ps-testimonials .jdgm-carousel-card__review-body,
+.ps-testimonials .jdgm-carousel-card__body { color: var(--lav-ink) !important; line-height: 1.65 !important; font-size: 1rem !important; }
+
+/* Navigation arrows */
+.ps-testimonials .jdgm-carousel__prev,
+.ps-testimonials .jdgm-carousel__next { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 50% !important; color: var(--white) !important; }
+.ps-testimonials .jdgm-carousel__prev:hover,
+.ps-testimonials .jdgm-carousel__next:hover { background: var(--lav-dark) !important; }
+
+/* Dots */
+.ps-testimonials .jdgm-carousel__dot { background: var(--lav-light) !important; }
+.ps-testimonials .jdgm-carousel__dot--active { background: var(--lav) !important; }
+
+/* "Write a review" button */
 .ps-testimonials .jdgm-write-rev-link { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 30px !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
 .ps-testimonials .jdgm-write-rev-link:hover { background: var(--lav-dark) !important; }
-.ps-testimonials .jdgm-rev__rating .jdgm-star { color: #F5A623 !important; }
-.ps-testimonials .jdgm-rev { border-bottom: 1px solid var(--border) !important; }
-.ps-testimonials .jdgm-rev__author { font-weight: 800 !important; color: var(--lav-ink) !important; }
-.ps-testimonials .jdgm-rev__body { color: var(--lav-ink) !important; line-height: 1.6 !important; }
+
+/* Summary badge */
 .ps-testimonials .jdgm-all-reviews-text-summary { color: var(--lav) !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .04em !important; }
 </style>
