@@ -511,6 +511,36 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-nav-solid { background: rgba(253,250,255,.97) !important; backdrop-filter: blur(12px); top: 0 !important; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); margin-top: 0 !important; position: sticky !important; }
 .ps-nav-solid .ps-nav-links a { color: var(--lav-ink); }
 .ps-nav-solid .ps-nav-links a:hover { color: #fff !important; background: var(--lav); }
+
+/* ── Nav dropdown ── */
+.ps-nav-has-dropdown { position: relative; }
+.ps-nav-caret { font-size: .65em; opacity: .7; }
+.ps-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid var(--lav-light);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+  list-style: none;
+  padding: .4rem 0;
+  z-index: 200;
+}
+.ps-nav-has-dropdown:hover .ps-nav-dropdown,
+.ps-nav-has-dropdown:focus-within .ps-nav-dropdown { display: block; }
+.ps-nav-dropdown li a {
+  display: block;
+  padding: .55rem 1.1rem;
+  font-size: .92rem;
+  color: var(--lav-ink);
+  white-space: nowrap;
+  border-radius: 0;
+  transition: background .15s;
+}
+.ps-nav-dropdown li a:hover { background: var(--lav-light); color: var(--lav); }
 .ps-nav-solid .ps-nav-account-link { color: var(--lav) !important; border-color: var(--lav-light) !important; }
 .ps-nav-solid .ps-nav-account-link:hover { background: var(--lav-light) !important; color: var(--lav-dark) !important; }
 .ps-nav-solid .ps-nav-search-btn { color: var(--lav) !important; }

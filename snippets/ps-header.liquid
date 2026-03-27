@@ -45,7 +45,18 @@
   </button>
   <ul class="ps-nav-links" id="psNavLinks">
     {%- for link in linklists['main-menu'].links -%}
-      <li><a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a></li>
+      {%- if link.links != blank -%}
+        <li class="ps-nav-has-dropdown">
+          <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }} <span class="ps-nav-caret">▾</span></a>
+          <ul class="ps-nav-dropdown">
+            {%- for child in link.links -%}
+              <li><a href="{{ child.url }}"{% if child.url == request.path %} class="active"{% endif %}>{{ child.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+      {%- else -%}
+        <li><a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a></li>
+      {%- endif -%}
     {%- else -%}
       <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
     {%- endfor -%}
