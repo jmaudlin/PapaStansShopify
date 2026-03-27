@@ -255,7 +255,7 @@
 .ps-hg-pair {
   display: flex;
   gap: 2rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 /* ══ PANEL BASE ══ */
@@ -282,11 +282,12 @@
 
 /* ══ PANEL INNER ══ */
 .ps-hg-panel-inner {
-  padding: 3.5rem 3rem 3rem;
+  padding: 2.75rem 2.5rem 2.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
+  box-sizing: border-box;
 }
 
 /* ══ LABEL TAG ══ */
@@ -510,18 +511,18 @@
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,.15);
-  aspect-ratio: 16/9;
+  height: 200px;
   flex-shrink: 0;
 }
 .ps-hg-map { width: 100%; height: 100%; border: none; display: block; }
-.ps-hg-local-details { display: flex; flex-direction: column; gap: .8rem; }
+.ps-hg-local-details { display: flex; flex-direction: column; gap: .55rem; }
 .ps-hg-local-row {
   display: flex;
-  gap: .8rem;
+  gap: .7rem;
   align-items: flex-start;
-  font-size: .88rem;
+  font-size: .82rem;
   color: rgba(255,255,255,.8);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 .ps-hg-local-row strong { color: #fff; display: block; }
 .ps-hg-local-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: .05rem; }
