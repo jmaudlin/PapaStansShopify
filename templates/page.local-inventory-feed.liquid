@@ -1,0 +1,56 @@
+{%- layout none -%}
+{%- comment -%}
+  Google Merchant Center Local Inventory Feed — Papa Stan's of Iowa
+  URL:       /pages/local-inventory-feed
+  Type:      Supplemental feed (Local Inventory Ads)
+  Links to:  Primary feed via matching g:id (Shopify variant IDs)
+  Store:     Papa Stan's of Iowa, Oskaloosa, Iowa
+  store_code MUST match your verified Google Business Profile store code.
+  Update PAPASTANS_STORE_CODE below once confirmed in Google Business Profile.
+{%- endcomment -%}
+
+{%- assign store_code = 'PAPASTANS_OSKALOOSA' -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">
+  {%- paginate collections.all.products by 250 -%}
+  {%- for product in collections.all.products -%}
+    {%- for variant in product.variants -%}
+
+      {%- comment -%} Price: divide cents → clean decimal, no commas {%- endcomment -%}
+      {%- assign price_whole = variant.price | divided_by: 100 -%}
+      {%- assign price_cents = variant.price | modulo: 100 -%}
+      {%- if price_cents < 10 -%}
+        {%- assign price_str = price_whole | append: '.0' | append: price_cents -%}
+      {%- else -%}
+        {%- assign price_str = price_whole | append: '.' | append: price_cents -%}
+      {%- endif -%}
+
+      {%- if variant.compare_at_price > variant.price -%}
+        {%- assign cap_whole = variant.compare_at_price | divided_by: 100 -%}
+        {%- assign cap_cents = variant.compare_at_price | modulo: 100 -%}
+        {%- if cap_cents < 10 -%}
+          {%- assign cap_str = cap_whole | append: '.0' | append: cap_cents -%}
+        {%- else -%}
+          {%- assign cap_str = cap_whole | append: '.' | append: cap_cents -%}
+        {%- endif -%}
+      {%- endif -%}
+
+  <entry>
+    {%- comment -%} id must exactly match g:id in primary feed {%- endcomment -%}
+    <g:id>{{ variant.id }}</g:id>
+    <g:store_code>{{ store_code }}</g:store_code>
+    <g:availability>{%- if variant.available -%}in_stock{%- else -%}out_of_stock{%- endif -%}</g:availability>
+    <g:quantity>{%- if variant.available -%}{{ variant.inventory_quantity | default: 1 }}{%- else -%}0{%- endif -%}</g:quantity>
+    <g:price>{{ price_str }} USD</g:price>
+    {%- if variant.compare_at_price > variant.price -%}
+    <g:sale_price>{{ price_str }} USD</g:sale_price>
+    <g:original_price>{{ cap_str }} USD</g:original_price>
+    {%- endif -%}
+    <g:pickup_method>buy</g:pickup_method>
+    <g:pickup_sla>same_day</g:pickup_sla>
+  </entry>
+    {%- endfor -%}
+  {%- endfor -%}
+  {%- endpaginate -%}
+</feed>
