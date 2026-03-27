@@ -64,7 +64,7 @@
 
   <div class="ps-pgrid" id="psProductGrid">
     {%- assign featured = collections['featured-products'] -%}
-    {%- assign source = featured.products | default: collections.all.products -%}
+    {%- assign source = featured.products -%}
     {%- for product in source limit: 24 -%}
       {%- assign ps_type = product.type | strip -%}
 
