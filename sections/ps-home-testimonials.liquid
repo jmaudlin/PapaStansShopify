@@ -10,10 +10,10 @@
 <section class="ps-htestimonials" id="ps-htestimonials">
   <div class="ps-htestimonials-inner">
 
-    <div class="ps-htestimonials-header ps-reveal">
+    <div class="ps-htestimonials-header">
       <div class="ps-section-tag">⭐ Customer Love</div>
-      <h2 class="ps-section-h2 ps-reveal ps-rd1">What Our <em>Customers Say!</em></h2>
-      <p class="ps-htestimonials-sub ps-reveal ps-rd2">Real words from real people who've brought a little Iowa into their homes.</p>
+      <h2 class="ps-section-h2">What Our <em>Customers Say!</em></h2>
+      <p class="ps-htestimonials-sub">Real words from real people who've brought a little Iowa into their homes.</p>
     </div>
 
     <div class="ps-htestimonials-track-wrap">
@@ -94,11 +94,13 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 .ps-htestimonials-viewport {
   overflow: hidden;
   flex: 1;
   min-width: 0;
+  width: 0; /* Force flex child to shrink properly */
 }
 .ps-htestimonials-track {
   display: flex;
