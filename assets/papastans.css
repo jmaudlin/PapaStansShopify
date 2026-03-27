@@ -193,11 +193,40 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-cat-tabs { display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap; }
 .ps-cat-tab { padding:.45rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;border:3px solid var(--border);color:var(--lav-mid);cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:3px 3px 0 var(--border); }
 .ps-cat-tab:hover, .ps-cat-tab.active { background:var(--lav);border-color:var(--lav-ink);color:#fff;box-shadow:3px 3px 0 var(--bark); }
-.ps-pgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem; }
+.ps-pgrid-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.ps-pgrid-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: var(--lav);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(74,40,112,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, opacity .2s;
+  flex-shrink: 0;
+}
+.ps-pgrid-arrow:hover { background: var(--lav-dark); }
+.ps-pgrid-prev { left: -24px; }
+.ps-pgrid-next { right: -24px; }
+.ps-pgrid { display:flex;flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.25rem;padding:1rem .5rem 1.5rem;flex:1;scrollbar-width:none;-ms-overflow-style:none; }
+.ps-pgrid::-webkit-scrollbar { display:none; }
 .ps-load-more-wrap { text-align:center;margin-top:2.5rem; }
 
 /* Product card */
-.ps-pc { background:#fff;border:3px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;display:flex;flex-direction:column;box-shadow:4px 4px 0 var(--border); }
+.ps-pc { flex:0 0 260px;scroll-snap-align:start;background:#fff;border:3px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;display:flex;flex-direction:column;box-shadow:4px 4px 0 var(--border); }
 .ps-pc:hover { transform:translate(-3px,-4px);box-shadow:7px 8px 0 var(--border); }
 .ps-pc-img { aspect-ratio:1;overflow:hidden;position:relative;background: var(--lav-xlight); }
 .ps-pc-img img { width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block; }
@@ -489,6 +518,11 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 
 /* ── Portrait mobile: limit homepage products to 6 ── */
 @media (max-width: 680px) and (orientation: portrait) {
+  /* Revert to grid on mobile */
+  .ps-pgrid { display:grid;grid-template-columns:repeat(2,1fr);overflow-x:visible;scroll-snap-type:none;padding:0; }
+  .ps-pc { flex:unset;scroll-snap-align:none; }
+  /* Hide arrow buttons on mobile */
+  .ps-pgrid-arrow { display:none !important; }
   /* Hide product cards beyond the 6th */
   .ps-pgrid .ps-pc:nth-child(n+7) { display: none !important; }
   /* Show the mobile-only "view all" nudge */
