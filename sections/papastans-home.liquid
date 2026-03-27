@@ -148,65 +148,9 @@
   </div>
 </section>
 
-<!-- BLOG / FROM THE SHOP -->
-<section class="ps-scents ps-blog-section" id="ps-blog">
-  <div class="ps-scents-bg" id="psScentsBg"></div>
-  <div class="ps-scents-pattern"></div>
-  <div class="ps-scents-inner ps-blog-inner">
-
-    {%- assign blog_posts = blogs.news.articles -%}
-
-    {%- if blog_posts.size > 0 -%}
-
-      <!-- ARTICLES STATE -->
-      <div class="ps-blog-header ps-reveal">
-        <div class="ps-section-tag" style="background:var(--sun);border-color:rgba(255,255,255,.4);">✍️ From the Shop</div>
-        <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Stories from <em>Oskaloosa.</em></h2>
-        <p class="ps-reveal ps-rd2">Tips, behind-the-scenes, and updates from our little corner of Iowa.</p>
-        <a href="{{ blogs.news.url }}" class="ps-btn-secondary ps-reveal ps-rd3">Visit the Blog ✍️</a>
-      </div>
-
-      <div class="ps-blog-cards">
-        {%- for article in blog_posts limit: 3 -%}
-          <a href="{{ article.url }}" class="ps-blog-card ps-reveal ps-rd{{ forloop.index }}">
-            {%- if article.image -%}
-              <div class="ps-blog-card-img">
-                <img src="{{ article.image | img_url: '600x400', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="600" height="400">
-              </div>
-            {%- else -%}
-              <div class="ps-blog-card-img ps-blog-card-img-fallback">✍️</div>
-            {%- endif -%}
-            <div class="ps-blog-card-body">
-              <p class="ps-blog-card-date">{{ article.published_at | date: "%B %d, %Y" }}</p>
-              <h3 class="ps-blog-card-title">{{ article.title }}</h3>
-              {%- if article.excerpt != blank -%}
-                <p class="ps-blog-card-excerpt">{{ article.excerpt | strip_html | truncate: 100 }}</p>
-              {%- endif -%}
-              <span class="ps-blog-card-read">Read More →</span>
-            </div>
-          </a>
-        {%- endfor -%}
-      </div>
-
-    {%- else -%}
-
-      <!-- COMING SOON STATE -->
-      <div class="ps-blog-coming-soon">
-        <div class="ps-section-tag ps-reveal" style="background:var(--sun);border-color:rgba(255,255,255,.4);">✍️ From the Shop</div>
-        <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Stories Coming <em>Soon.</em></h2>
-        <p class="ps-reveal ps-rd2">We're cooking up tips, behind-the-scenes stories, and updates from our little corner of Oskaloosa, Iowa. Check back soon!</p>
-        <a href="{{ blogs.news.url }}" class="ps-btn-secondary ps-reveal ps-rd3">Visit the Blog ✍️</a>
-      </div>
-
-    {%- endif -%}
-
-  </div>
-</section>
-
 <script>
 // ── Parallax ──
 const psHeroBgEl   = document.getElementById('psHeroBg');
-const psScentsBgEl = document.getElementById('psScentsBg');
 const psHeroArtEl  = document.getElementById('psHeroArt');
 
 function psRatio(el) {
@@ -224,7 +168,6 @@ function psOnScroll() {
   const sy = window.scrollY;
   if (psHeroBgEl)   psHeroBgEl.style.transform  = `translateY(${sy * 0.45}px)`;
   if (psHeroArtEl)  psHeroArtEl.style.transform  = `translateY(${sy * 0.25}px) scaleX(-1)`;
-  if (psScentsBgEl) psScentsBgEl.style.transform = `translateY(${(psRatio(psScentsBgEl.parentElement) - .5) * -80}px)`;
   document.getElementById('psNav').classList.toggle('scrolled', sy > 50);
 }
 window.addEventListener('scroll', psOnScroll, { passive: true });

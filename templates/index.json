@@ -1,20 +1,11 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "papastans_home": {
       "type": "papastans-home",
       "settings": {}
     },
-    "ps_home_testimonials": {
-      "type": "ps-home-testimonials",
+    "ps_home_grid": {
+      "type": "ps-home-grid",
       "settings": {
         "review_1_text": "I've tried a lot of handmade soaps and nothing compares. My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!",
         "review_1_name": "Sarah M.",
@@ -41,7 +32,7 @@
   },
   "order": [
     "papastans_home",
-    "ps_home_testimonials",
+    "ps_home_grid",
     "ps_home_lower"
   ]
 }

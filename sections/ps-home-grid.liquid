@@ -1,0 +1,661 @@
+{%- comment -%}
+  ps-home-grid.liquid
+  2×2 paired layout: Blog + Testimonials / Events + Find Us
+  Offset stagger + scroll parallax on large screens.
+{%- endcomment -%}
+
+{%- assign today_stamp = 'now' | date: '%s' | plus: 0 -%}
+{%- assign events = shop.metaobjects.event.values -%}
+{%- assign upcoming_count = 0 -%}
+{%- for event in events -%}
+  {%- assign event_stamp = event.date.value | date: '%s' | plus: 0 -%}
+  {%- if event_stamp >= today_stamp -%}{%- assign upcoming_count = upcoming_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
+{%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
+{%- assign blog_posts = blogs.news.articles -%}
+{%- assign total_reviews = 0 -%}
+{%- for i in (1..6) -%}
+  {%- assign _tk = 'review_' | append: i | append: '_text' -%}
+  {%- if section.settings[_tk] != blank -%}{%- assign total_reviews = total_reviews | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+
+<section class="ps-hg" id="ps-home-grid">
+
+  <!-- ── ROW 1 : Blog (dark, raised) + Testimonials (light, lowered) ── -->
+  <div class="ps-hg-pair ps-hg-pair-1">
+
+    <!-- BLOG PANEL -->
+    <div class="ps-hg-panel ps-hg-blog" data-parallax="-0.12" style="--ps-offset:-3.5rem;">
+      <div class="ps-hg-panel-inner">
+        <div class="ps-hg-label">✍️ From the Shop</div>
+        <h2 class="ps-hg-heading ps-hg-heading-light">Stories from <em>Oskaloosa.</em></h2>
+        <p class="ps-hg-sub ps-hg-sub-light">Tips, behind-the-scenes, and updates from our little corner of Iowa.</p>
+
+        {%- if blog_posts.size > 0 -%}
+          <div class="ps-hg-blog-cards">
+            {%- for article in blog_posts limit: 2 -%}
+              <a href="{{ article.url }}" class="ps-hg-blog-card">
+                {%- if article.image -%}
+                  <div class="ps-hg-blog-card-img">
+                    <img src="{{ article.image | img_url: '600x360', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="600" height="360">
+                  </div>
+                {%- else -%}
+                  <div class="ps-hg-blog-card-img ps-hg-blog-card-fallback">✍️</div>
+                {%- endif -%}
+                <div class="ps-hg-blog-card-body">
+                  <p class="ps-hg-blog-date">{{ article.published_at | date: "%b %-d, %Y" }}</p>
+                  <h3 class="ps-hg-blog-title">{{ article.title }}</h3>
+                  {%- if article.excerpt != blank -%}
+                    <p class="ps-hg-blog-excerpt">{{ article.excerpt | strip_html | truncate: 90 }}</p>
+                  {%- endif -%}
+                  <span class="ps-hg-blog-read">Read More →</span>
+                </div>
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="ps-hg-blog-empty">
+            <p class="ps-hg-sub-light">We're writing up some stories from Oskaloosa. Check back soon!</p>
+          </div>
+        {%- endif -%}
+
+        <a href="{{ blogs.news.url }}" class="ps-hg-cta-btn ps-hg-cta-outline">Visit the Blog ✍️</a>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS PANEL -->
+    <div class="ps-hg-panel ps-hg-testimonials" data-parallax="0.1" style="--ps-offset:3.5rem;">
+      <div class="ps-hg-panel-inner">
+        <div class="ps-hg-label ps-hg-label-dark">⭐ Customer Love</div>
+        <h2 class="ps-hg-heading">What Our <em>Customers Say!</em></h2>
+        <p class="ps-hg-sub">Real words from real people who've brought a little Iowa into their homes.</p>
+
+        {%- if total_reviews > 0 -%}
+          <div class="ps-hg-carousel">
+            <div class="ps-hg-carousel-wrap">
+              <button class="ps-hg-arrow ps-hg-prev" aria-label="Previous">&#8592;</button>
+              <div class="ps-hg-viewport">
+                <div class="ps-hg-track" id="psHgTrack">
+                  {%- for i in (1..6) -%}
+                    {%- assign tk = 'review_' | append: i | append: '_text' -%}
+                    {%- assign nk = 'review_' | append: i | append: '_name' -%}
+                    {%- assign sk = 'review_' | append: i | append: '_stars' -%}
+                    {%- assign pk = 'review_' | append: i | append: '_product' -%}
+                    {%- if section.settings[tk] != blank -%}
+                      <div class="ps-hg-review-card">
+                        <div class="ps-hg-review-flower">✿</div>
+                        <p class="ps-hg-review-text">{{ section.settings[tk] }}</p>
+                        <div class="ps-hg-stars">
+                          {%- assign sc = section.settings[sk] | default: 5 -%}
+                          {%- for s in (1..5) -%}
+                            {%- if s <= sc -%}<span class="ps-hgs ps-hgs-on">★</span>{%- else -%}<span class="ps-hgs">★</span>{%- endif -%}
+                          {%- endfor -%}
+                        </div>
+                        <div class="ps-hg-reviewer">
+                          <span class="ps-hg-reviewer-name">— {{ section.settings[nk] | default: 'Happy Customer' }}</span>
+                          {%- if section.settings[pk] != blank -%}
+                            <span class="ps-hg-reviewer-prod">{{ section.settings[pk] }}</span>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+              <button class="ps-hg-arrow ps-hg-next" aria-label="Next">&#8594;</button>
+            </div>
+            <div class="ps-hg-dots" id="psHgDots"></div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div><!-- /pair 1 -->
+
+  <!-- ── ROW 2 : Events (light, lowered) + Find Us (dark, raised) ── -->
+  <div class="ps-hg-pair ps-hg-pair-2">
+
+    <!-- EVENTS PANEL -->
+    <div class="ps-hg-panel ps-hg-events" data-parallax="0.1" style="--ps-offset:3.5rem;">
+      <div class="ps-hg-panel-inner">
+        <div class="ps-hg-label ps-hg-label-dark">📍 On the Road</div>
+        <h2 class="ps-hg-heading">Find Us at <em>Events!</em></h2>
+        <p class="ps-hg-sub">Papa Stan's travels across Iowa and beyond. Come say hi, smell everything, and take home something wonderful.</p>
+
+        {%- if upcoming_count == 0 -%}
+          <div class="ps-hg-events-empty">
+            <div class="ps-hg-events-empty-icon">🗓️</div>
+            <p>No upcoming events right now. Check back soon — we're always on the move!</p>
+          </div>
+        {%- else -%}
+          <div class="ps-hg-events-list">
+            {%- for event in events limit: 3 -%}
+              {%- assign event_stamp = event.date.value | date: '%s' | plus: 0 -%}
+              {%- if event_stamp >= today_stamp -%}
+                {%- assign ev_name     = event.name.value -%}
+                {%- assign ev_date     = event.date.value -%}
+                {%- assign ev_end      = event.end_date.value -%}
+                {%- assign ev_location = event.location.value -%}
+                {%- assign ev_address  = event.address.value -%}
+                {%- assign ev_city     = event.city_state.value -%}
+                {%- assign ev_desc     = event.description.value -%}
+                {%- assign ev_url      = event.url.value -%}
+                {%- assign ev_month    = ev_date | date: '%b' | upcase -%}
+                {%- assign ev_day      = ev_date | date: '%-d' -%}
+                {%- assign ev_weekday  = ev_date | date: '%A' -%}
+                {%- assign ev_fulldate = ev_date | date: '%B %-d, %Y' -%}
+                {%- assign ev_time     = ev_date | date: '%-I:%M %p' -%}
+                {%- assign cal_start   = ev_date | date: '%Y%m%dT%H%M%S' -%}
+                {%- if ev_end != blank -%}{%- assign cal_end = ev_end | date: '%Y%m%dT%H%M%S' -%}{%- else -%}{%- assign cal_end = ev_date | date: '%Y%m%d' | append: 'T230000' -%}{%- endif -%}
+                {%- assign cal_title   = ev_name | url_encode -%}
+                {%- assign cal_loc     = ev_address | append: ', ' | append: ev_city | url_encode -%}
+                {%- assign ev_desc_safe = ev_desc | default: 'Come visit Papa Stans of Iowa at this event!' -%}
+                {%- assign cal_details = ev_desc_safe | url_encode -%}
+                {%- assign google_url  = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' | append: cal_title | append: '&dates=' | append: cal_start | append: '/' | append: cal_end | append: '&location=' | append: cal_loc | append: '&details=' | append: cal_details -%}
+                {%- assign outlook_url = 'https://outlook.live.com/calendar/0/deeplink/compose?subject=' | append: cal_title | append: '&startdt=' | append: ev_date | date: '%Y-%m-%dT%H:%M:%S' | append: '&location=' | append: cal_loc -%}
+
+                <div class="ps-hg-event-card" data-start="{{ cal_start }}" data-end="{{ cal_end }}" data-title="{{ ev_name | escape }}" data-loc="{{ ev_address }}, {{ ev_city }}" data-desc="{{ ev_desc_safe | escape }}">
+                  <div class="ps-hg-event-date">
+                    <div class="ps-hg-event-month">{{ ev_month }}</div>
+                    <div class="ps-hg-event-day">{{ ev_day }}</div>
+                  </div>
+                  <div class="ps-hg-event-info">
+                    <div class="ps-hg-event-weekday">{{ ev_weekday }}, {{ ev_fulldate }}</div>
+                    <h3 class="ps-hg-event-name">
+                      {%- if ev_url != blank -%}<a href="{{ ev_url }}" target="_blank" rel="noopener">{{ ev_name }}</a>{%- else -%}{{ ev_name }}{%- endif -%}
+                    </h3>
+                    {%- if ev_location != blank -%}
+                      <div class="ps-hg-event-venue">📍 {{ ev_location }}{%- if ev_city != blank -%} · {{ ev_city }}{%- endif -%}</div>
+                    {%- endif -%}
+                    {%- if ev_time != '12:00 AM' -%}
+                      <div class="ps-hg-event-time">🕐 {{ ev_time }}{%- if ev_end != blank -%} – {{ ev_end | date: '%-I:%M %p' }}{%- endif -%}</div>
+                    {%- endif -%}
+                    {%- if ev_desc != blank -%}<p class="ps-hg-event-desc">{{ ev_desc }}</p>{%- endif -%}
+                    <div class="ps-hg-event-cal">
+                      Add to calendar:
+                      <a href="{{ google_url }}" target="_blank" rel="noopener" class="ps-hg-cal-btn">Google</a>
+                      <button class="ps-hg-cal-btn ps-hg-cal-apple" data-card="{{ forloop.index0 }}">Apple</button>
+                      <a href="{{ outlook_url }}" target="_blank" rel="noopener" class="ps-hg-cal-btn">Outlook</a>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <a href="/pages/events" class="ps-hg-cta-btn ps-hg-cta-lav">See All Events 📅</a>
+      </div>
+    </div>
+
+    <!-- FIND US PANEL -->
+    <div class="ps-hg-panel ps-hg-findus" data-parallax="-0.12" style="--ps-offset:-3.5rem;">
+      <div class="ps-hg-panel-inner">
+        <div class="ps-hg-label">📍 Where to Find Us</div>
+        <h2 class="ps-hg-heading ps-hg-heading-light">Proudly <em>Local.</em><br>Shipped <em>Everywhere!</em></h2>
+
+        <div class="ps-hg-map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
+            class="ps-hg-map"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <div class="ps-hg-local-details">
+          <div class="ps-hg-local-row">
+            <span class="ps-hg-local-icon">🏠</span>
+            <div>
+              <strong>{{ shop.address.address1 | default: 'Oskaloosa, Iowa' }}</strong><br>
+              {{ shop.address.city }}, {{ shop.address.province_code }} {{ shop.address.zip }}
+            </div>
+          </div>
+          <div class="ps-hg-local-row">
+            <span class="ps-hg-local-icon">📞</span>
+            <div>
+              <a href="tel:{{ shop.phone }}" class="ps-hg-local-link">{{ shop.phone | default: '641.670.1573' }}</a><br>
+              <a href="mailto:{{ shop.email }}" class="ps-hg-local-link ps-hg-local-link-dim">{{ shop.email }}</a>
+            </div>
+          </div>
+          <div class="ps-hg-local-row">
+            <span class="ps-hg-local-icon">🚚</span>
+            <div><strong>Free Shipping on $55+</strong><br>Plus 4 free samples with every order!</div>
+          </div>
+          <div class="ps-hg-local-row">
+            <span class="ps-hg-local-icon">⭐</span>
+            <div><strong>Veteran-Owned &amp; Operated</strong><br>Est. 2019 — Oskaloosa, Iowa</div>
+          </div>
+        </div>
+
+        <div class="ps-hg-local-btns">
+          <a href="https://maps.google.com/?q={{ map_addr }}" target="_blank" class="ps-hg-cta-btn ps-hg-cta-outline">Get Directions 🗺️</a>
+          <a href="{{ shop.url }}/collections/all" class="ps-hg-cta-btn ps-hg-cta-solid">Shop Now 🛒</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pair 2 -->
+
+</section>
+
+<style>
+/* ══ GRID WRAPPER ══ */
+.ps-hg {
+  padding: 6rem 2.5rem 8rem;
+  background: var(--offwhite);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ══ PAIR ROW ══ */
+.ps-hg-pair {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* ══ PANEL BASE ══ */
+.ps-hg-panel {
+  flex: 1;
+  border-radius: 28px;
+  overflow: hidden;
+  --ps-offset: 0px;
+  --ps-par: 0px;
+  transform: translateY(calc(var(--ps-offset) + var(--ps-par)));
+  will-change: transform;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 12px 40px rgba(74,40,112,.18);
+}
+.ps-hg-panel:hover {
+  box-shadow: 0 20px 60px rgba(74,40,112,.28);
+}
+
+/* ══ PANEL COLOURS ══ */
+.ps-hg-blog   { background: var(--lav-dark); }
+.ps-hg-findus { background: var(--lav-dark); }
+.ps-hg-testimonials { background: var(--lav-xlight); }
+.ps-hg-events { background: #fff; }
+
+/* ══ PANEL INNER ══ */
+.ps-hg-panel-inner {
+  padding: 3.5rem 3rem 3rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ══ LABEL TAG ══ */
+.ps-hg-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: .35rem .9rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.9);
+  width: fit-content;
+}
+.ps-hg-label-dark {
+  background: var(--lav-light);
+  border-color: var(--border);
+  color: var(--lav-dark);
+}
+
+/* ══ HEADINGS ══ */
+.ps-hg-heading {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  letter-spacing: .04em;
+  line-height: 1.1;
+  color: var(--lav-ink);
+  margin: 0;
+}
+.ps-hg-heading em { color: var(--lav-mid); font-style: normal; }
+.ps-hg-heading-light { color: #fff; }
+.ps-hg-heading-light em { color: var(--lav-light); }
+
+/* ══ SUBTEXT ══ */
+.ps-hg-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: var(--lav-ink);
+  line-height: 1.55;
+  margin: 0;
+}
+.ps-hg-sub-light { color: rgba(255,255,255,.8); font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 600; }
+
+/* ══ CTA BUTTONS ══ */
+.ps-hg-cta-btn {
+  display: inline-block;
+  padding: .65rem 1.6rem;
+  border-radius: 30px;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: .95rem;
+  letter-spacing: .06em;
+  text-decoration: none;
+  transition: all .2s;
+  cursor: pointer;
+  border: none;
+  width: fit-content;
+  margin-top: .5rem;
+}
+.ps-hg-cta-outline {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.5);
+  color: #fff;
+}
+.ps-hg-cta-outline:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+.ps-hg-cta-solid {
+  background: var(--lav-mid);
+  color: #fff;
+}
+.ps-hg-cta-solid:hover { background: var(--lav); }
+.ps-hg-cta-lav {
+  background: var(--lav);
+  color: #fff;
+}
+.ps-hg-cta-lav:hover { background: var(--lav-dark); }
+.ps-hg-local-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .25rem; }
+
+/* ══ BLOG CARDS ══ */
+.ps-hg-blog-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+.ps-hg-blog-card {
+  display: flex;
+  gap: 1rem;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(164,112,200,.25);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: background .2s, transform .2s;
+}
+.ps-hg-blog-card:hover { background: rgba(255,255,255,.13); transform: translateX(4px); }
+.ps-hg-blog-card-img {
+  width: 110px;
+  min-width: 110px;
+  overflow: hidden;
+}
+.ps-hg-blog-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.ps-hg-blog-card:hover .ps-hg-blog-card-img img { transform: scale(1.06); }
+.ps-hg-blog-card-fallback {
+  width: 110px; min-width: 110px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  background: rgba(188,140,190,.15);
+}
+.ps-hg-blog-card-body { padding: .9rem .9rem .9rem 0; display: flex; flex-direction: column; gap: .3rem; }
+.ps-hg-blog-date { font-size: .7rem; letter-spacing: .08em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+.ps-hg-blog-title { font-family: 'Luckiest Guy', cursive; font-size: .95rem; color: #fff; line-height: 1.25; }
+.ps-hg-blog-excerpt { font-size: .8rem; color: rgba(255,255,255,.65); line-height: 1.5; flex: 1; }
+.ps-hg-blog-read { font-size: .75rem; font-weight: 700; color: var(--lav-light); letter-spacing: .04em; }
+
+/* ══ TESTIMONIALS CAROUSEL ══ */
+.ps-hg-carousel { flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+.ps-hg-carousel-wrap { display: flex; align-items: center; gap: .75rem; }
+.ps-hg-viewport { overflow: hidden; flex: 1; min-width: 0; width: 0; }
+.ps-hg-track { display: flex; transition: transform .4s ease; }
+.ps-hg-review-card {
+  flex: 0 0 100%;
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  padding: 1.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(124,77,158,.08);
+}
+.ps-hg-review-flower { font-size: 1.6rem; color: var(--lav-mid); }
+.ps-hg-review-text { font-style: italic; font-size: .95rem; color: var(--lav-ink); line-height: 1.65; }
+.ps-hg-stars { display: flex; gap: .05rem; }
+.ps-hgs { font-size: 1.2rem; color: var(--border); }
+.ps-hgs-on { color: #F5A623; }
+.ps-hg-reviewer { display: flex; flex-direction: column; align-items: center; gap: .15rem; }
+.ps-hg-reviewer-name { font-weight: 800; font-size: .9rem; color: var(--lav); }
+.ps-hg-reviewer-prod { font-family: 'Caveat', cursive; font-size: .85rem; color: var(--lav-mid); }
+.ps-hg-arrow {
+  background: var(--lav);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .2s, transform .15s;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(124,77,158,.25);
+}
+.ps-hg-arrow:hover { background: var(--lav-dark); transform: scale(1.08); }
+.ps-hg-dots { display: flex; justify-content: center; gap: .4rem; }
+.ps-hg-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background .2s, transform .2s;
+}
+.ps-hg-dot.active { background: var(--lav); transform: scale(1.3); }
+
+/* ══ EVENTS ══ */
+.ps-hg-events-list { display: flex; flex-direction: column; gap: .9rem; flex: 1; }
+.ps-hg-event-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--lav-xlight);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+.ps-hg-event-date {
+  background: var(--lav);
+  color: #fff;
+  border-radius: 10px;
+  min-width: 52px;
+  text-align: center;
+  padding: .4rem .3rem .5rem;
+  flex-shrink: 0;
+}
+.ps-hg-event-month { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; opacity: .85; }
+.ps-hg-event-day { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; line-height: 1; }
+.ps-hg-event-info { flex: 1; }
+.ps-hg-event-weekday { font-size: .7rem; color: var(--lav-mid); letter-spacing: .06em; text-transform: uppercase; font-weight: 700; margin-bottom: .2rem; }
+.ps-hg-event-name { font-family: 'Luckiest Guy', cursive; font-size: 1rem; color: var(--lav-ink); letter-spacing: .03em; margin: 0 0 .25rem; }
+.ps-hg-event-name a { color: inherit; text-decoration: none; }
+.ps-hg-event-name a:hover { color: var(--lav); }
+.ps-hg-event-venue, .ps-hg-event-time { font-size: .78rem; color: var(--lav-mid); margin-bottom: .15rem; }
+.ps-hg-event-desc { font-size: .8rem; color: var(--lav-ink); line-height: 1.5; margin: .3rem 0 .4rem; }
+.ps-hg-event-cal { font-size: .72rem; color: #888; margin-top: .4rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.ps-hg-cal-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .15rem .5rem;
+  font-size: .7rem;
+  cursor: pointer;
+  color: var(--lav);
+  text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  transition: background .15s;
+}
+.ps-hg-cal-btn:hover { background: var(--lav-light); }
+.ps-hg-events-empty { text-align: center; padding: 2rem 0; color: var(--lav-mid); }
+.ps-hg-events-empty-icon { font-size: 3rem; margin-bottom: .75rem; }
+.ps-hg-events-empty p { font-size: .9rem; line-height: 1.6; }
+
+/* ══ FIND US ══ */
+.ps-hg-map-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,.15);
+  aspect-ratio: 16/9;
+  flex-shrink: 0;
+}
+.ps-hg-map { width: 100%; height: 100%; border: none; display: block; }
+.ps-hg-local-details { display: flex; flex-direction: column; gap: .8rem; }
+.ps-hg-local-row {
+  display: flex;
+  gap: .8rem;
+  align-items: flex-start;
+  font-size: .88rem;
+  color: rgba(255,255,255,.8);
+  line-height: 1.5;
+}
+.ps-hg-local-row strong { color: #fff; display: block; }
+.ps-hg-local-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: .05rem; }
+.ps-hg-local-link { color: var(--lav-light); text-decoration: none; }
+.ps-hg-local-link:hover { text-decoration: underline; }
+.ps-hg-local-link-dim { color: rgba(255,255,255,.5); font-size: .82rem; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .ps-hg { padding: 3rem 1.25rem 4rem; gap: 2rem; }
+  .ps-hg-pair { flex-direction: column; gap: 1.5rem; }
+  .ps-hg-panel {
+    --ps-offset: 0px !important;
+    --ps-par: 0px !important;
+    transform: none !important;
+  }
+  .ps-hg-panel-inner { padding: 2.25rem 1.75rem 2rem; }
+  .ps-hg-heading { font-size: 1.8rem; }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .ps-hg-panel-inner { padding: 2.5rem 2rem 2.25rem; }
+  .ps-hg-heading { font-size: 2rem; }
+}
+</style>
+
+<script>
+// ── Carousel ──
+(function() {
+  var track = document.getElementById('psHgTrack');
+  var dotsWrap = document.getElementById('psHgDots');
+  if (!track) return;
+  var cards = track.querySelectorAll('.ps-hg-review-card');
+  var total = cards.length;
+  if (total === 0) return;
+  var current = 0;
+  var dots = [];
+
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('button');
+    d.className = 'ps-hg-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Review ' + (i+1));
+    d.dataset.idx = i;
+    d.addEventListener('click', function() { goTo(parseInt(this.dataset.idx)); });
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  }
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  document.querySelector('.ps-hg-prev').addEventListener('click', function() { goTo(current - 1); });
+  document.querySelector('.ps-hg-next').addEventListener('click', function() { goTo(current + 1); });
+  setInterval(function() { goTo(current + 1); }, 6000);
+})();
+
+// ── Parallax (large screens only) ──
+(function() {
+  if (window.innerWidth <= 900) return;
+  var panels = document.querySelectorAll('#ps-home-grid [data-parallax]');
+  var ticking = false;
+
+  function applyParallax() {
+    panels.forEach(function(panel) {
+      var speed = parseFloat(panel.dataset.parallax);
+      var rect = panel.getBoundingClientRect();
+      var centerOffset = (rect.top + rect.height / 2) - (window.innerHeight / 2);
+      panel.style.setProperty('--ps-par', (centerOffset * speed).toFixed(2) + 'px');
+    });
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(applyParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  applyParallax();
+})();
+
+// ── Apple .ics download ──
+document.querySelectorAll('.ps-hg-cal-apple').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var card = btn.closest('.ps-hg-event-card');
+    var s = card.dataset.start, e = card.dataset.end, t = card.dataset.title, l = card.dataset.loc, d = card.dataset.desc;
+    var ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','DTSTART:'+s,'DTEND:'+e,'SUMMARY:'+t,'LOCATION:'+l,'DESCRIPTION:'+d,'END:VEVENT','END:VCALENDAR'].join('\n');
+    var a = document.createElement('a');
+    a.href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(ics);
+    a.download = t.replace(/\s+/g,'-') + '.ics';
+    a.click();
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Home Grid",
+  "settings": [
+    { "type": "header", "content": "Review 1" },
+    { "type": "textarea", "id": "review_1_text", "label": "Review text" },
+    { "type": "text", "id": "review_1_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_1_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_1_product", "label": "Product (optional)" },
+    { "type": "header", "content": "Review 2" },
+    { "type": "textarea", "id": "review_2_text", "label": "Review text" },
+    { "type": "text", "id": "review_2_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_2_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_2_product", "label": "Product (optional)" },
+    { "type": "header", "content": "Review 3" },
+    { "type": "textarea", "id": "review_3_text", "label": "Review text" },
+    { "type": "text", "id": "review_3_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_3_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_3_product", "label": "Product (optional)" },
+    { "type": "header", "content": "Review 4" },
+    { "type": "textarea", "id": "review_4_text", "label": "Review text" },
+    { "type": "text", "id": "review_4_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_4_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_4_product", "label": "Product (optional)" },
+    { "type": "header", "content": "Review 5" },
+    { "type": "textarea", "id": "review_5_text", "label": "Review text" },
+    { "type": "text", "id": "review_5_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_5_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_5_product", "label": "Product (optional)" },
+    { "type": "header", "content": "Review 6" },
+    { "type": "textarea", "id": "review_6_text", "label": "Review text" },
+    { "type": "text", "id": "review_6_name", "label": "Reviewer name" },
+    { "type": "range", "id": "review_6_stars", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Stars" },
+    { "type": "text", "id": "review_6_product", "label": "Product (optional)" }
+  ],
+  "presets": [{ "name": "Home Grid" }]
+}
+{% endschema %}
