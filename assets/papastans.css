@@ -530,6 +530,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   z-index: 200;
 }
 .ps-nav-has-dropdown:hover .ps-nav-dropdown,
+.ps-nav-has-dropdown.ps-open .ps-nav-dropdown,
 .ps-nav-has-dropdown:focus-within .ps-nav-dropdown { display: block; }
 .ps-nav-dropdown li a {
   display: block;

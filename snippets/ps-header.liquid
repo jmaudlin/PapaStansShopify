@@ -82,3 +82,10 @@
 </nav>
 
 {% render 'ps-search-bar' %}
+
+<script>
+document.querySelectorAll('.ps-nav-has-dropdown').forEach(function(item) {
+  item.addEventListener('mouseenter', function() { this.classList.add('ps-open'); });
+  item.addEventListener('mouseleave', function() { this.classList.remove('ps-open'); });
+});
+</script>
