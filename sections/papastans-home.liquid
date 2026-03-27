@@ -148,28 +148,58 @@
   </div>
 </section>
 
-<!-- SCENTS PARALLAX -->
-<section class="ps-scents" id="ps-scents">
+<!-- BLOG / FROM THE SHOP -->
+<section class="ps-scents ps-blog-section" id="ps-blog">
   <div class="ps-scents-bg" id="psScentsBg"></div>
   <div class="ps-scents-pattern"></div>
-  <div class="ps-scents-inner">
-    <div class="ps-scents-text">
-      <div class="ps-section-tag ps-reveal" style="background:var(--sun);border-color:rgba(255,255,255,.4);">🌺 Scent Library</div>
-      <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">A Scent for <em>Everyone!</em></h2>
-      <p class="ps-reveal ps-rd2">With {{ collections.all.products_count }}+ products and dozens of amazing scents, we've got something for everybody! From sweet and fruity to fresh and woodsy — all handcrafted in Oskaloosa, Iowa.</p>
-      <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary ps-reveal ps-rd3">Browse All Scents 🌸</a>
-    </div>
-    <div class="ps-scents-grid">
-      <div class="ps-scent-chip ps-reveal"><div class="ps-scent-name">🍊 Citrus &amp; Seagrass</div><div class="ps-scent-type">Candle · Soap</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🍬 Vanilla Caramel</div><div class="ps-scent-type">Soap · Lotion</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🍎 Apple Cinnamon</div><div class="ps-scent-type">Soap</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🥥 Bamboo Coconut</div><div class="ps-scent-type">Soap · Lotion</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🌸 Aloe White Lilac</div><div class="ps-scent-type">Lotion</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd3"><div class="ps-scent-name">🍌 Banana Orange Smoothie</div><div class="ps-scent-type">Soap</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd1"><div class="ps-scent-name">🍩 Sweet Sugar Donut</div><div class="ps-scent-type">Soap</div></div>
-      <div class="ps-scent-chip ps-reveal ps-rd2"><div class="ps-scent-name">🍓 Raspberry Delight</div><div class="ps-scent-type">Soap · Sample</div></div>
-      <div class="ps-scent-more ps-reveal ps-rd3">…and {{ collections.all.products_count | minus: 9 }}+ more amazing scents in the shop! ✨</div>
-    </div>
+  <div class="ps-scents-inner ps-blog-inner">
+
+    {%- assign blog_posts = blogs.news.articles -%}
+
+    {%- if blog_posts.size > 0 -%}
+
+      <!-- ARTICLES STATE -->
+      <div class="ps-blog-header ps-reveal">
+        <div class="ps-section-tag" style="background:var(--sun);border-color:rgba(255,255,255,.4);">✍️ From the Shop</div>
+        <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Stories from <em>Oskaloosa.</em></h2>
+        <p class="ps-reveal ps-rd2">Tips, behind-the-scenes, and updates from our little corner of Iowa.</p>
+        <a href="{{ blogs.news.url }}" class="ps-btn-secondary ps-reveal ps-rd3">Visit the Blog ✍️</a>
+      </div>
+
+      <div class="ps-blog-cards">
+        {%- for article in blog_posts limit: 3 -%}
+          <a href="{{ article.url }}" class="ps-blog-card ps-reveal ps-rd{{ forloop.index }}">
+            {%- if article.image -%}
+              <div class="ps-blog-card-img">
+                <img src="{{ article.image | img_url: '600x400', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="600" height="400">
+              </div>
+            {%- else -%}
+              <div class="ps-blog-card-img ps-blog-card-img-fallback">✍️</div>
+            {%- endif -%}
+            <div class="ps-blog-card-body">
+              <p class="ps-blog-card-date">{{ article.published_at | date: "%B %d, %Y" }}</p>
+              <h3 class="ps-blog-card-title">{{ article.title }}</h3>
+              {%- if article.excerpt != blank -%}
+                <p class="ps-blog-card-excerpt">{{ article.excerpt | strip_html | truncate: 100 }}</p>
+              {%- endif -%}
+              <span class="ps-blog-card-read">Read More →</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+    {%- else -%}
+
+      <!-- COMING SOON STATE -->
+      <div class="ps-blog-coming-soon">
+        <div class="ps-section-tag ps-reveal" style="background:var(--sun);border-color:rgba(255,255,255,.4);">✍️ From the Shop</div>
+        <h2 class="ps-section-h2 ps-light ps-reveal ps-rd1">Stories Coming <em>Soon.</em></h2>
+        <p class="ps-reveal ps-rd2">We're cooking up tips, behind-the-scenes stories, and updates from our little corner of Oskaloosa, Iowa. Check back soon!</p>
+        <a href="{{ blogs.news.url }}" class="ps-btn-secondary ps-reveal ps-rd3">Visit the Blog ✍️</a>
+      </div>
+
+    {%- endif -%}
+
   </div>
 </section>
 
