@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "ps-page-builder",
+      "settings": {
+        "show_page_title": true,
+        "eyebrow": "",
+        "subtitle": ""
+      },
+      "blocks": {}
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,845 @@
+{% render 'ps-header', nav_solid: true %}
+
+<div class="ps-page-wrap ps-builder-wrap">
+
+  {%- if section.settings.show_page_title -%}
+    <div class="ps-builder-title-row">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ps-section-tag">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      <h1 class="ps-section-h2">{{ page.title }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ps-builder-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when '@app' -%}
+        <div class="ps-builder-block ps-builder-app" {{ block.shopify_attributes }}>
+          {% render block %}
+        </div>
+
+      {%- when 'rich_text' -%}
+        <div class="ps-builder-block ps-builder-rich-text ps-builder-align-{{ block.settings.text_align }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.eyebrow != blank -%}
+            <div class="ps-section-tag" style="margin-bottom:.8rem">{{ block.settings.eyebrow }}</div>
+          {%- endif -%}
+          {%- if block.settings.heading != blank -%}
+            <h2 class="ps-builder-heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="ps-builder-rte rte">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </div>
+
+      {%- when 'image_with_text' -%}
+        <div class="ps-builder-block ps-builder-image-text ps-builder-img-{{ block.settings.image_position }}" {{ block.shopify_attributes }}>
+          <div class="ps-builder-it-image">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 900 }}"
+                   alt="{{ block.settings.image.alt | escape }}"
+                   width="900"
+                   height="{{ 900 | divided_by: block.settings.image.aspect_ratio | round }}"
+                   loading="lazy"
+                   class="ps-builder-img">
+            {%- else -%}
+              <div class="ps-builder-img-placeholder">{{ 'image' | placeholder_svg_tag: 'ps-placeholder-svg' }}</div>
+            {%- endif -%}
+          </div>
+          <div class="ps-builder-it-content">
+            {%- if block.settings.eyebrow != blank -%}
+              <div class="ps-section-tag" style="margin-bottom:.8rem">{{ block.settings.eyebrow }}</div>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="ps-builder-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="ps-builder-rte rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank and block.settings.button_url != blank -%}
+              <a href="{{ block.settings.button_url }}" class="{% if block.settings.button_style == 'secondary' %}ps-btn-secondary{% else %}ps-btn-primary{% endif %}" style="margin-top:1.5rem;display:inline-block;">
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'banner' -%}
+        <div class="ps-builder-block ps-builder-banner" {{ block.shopify_attributes }}
+             style="{% if block.settings.image != blank %}background-image:url({{ block.settings.image | image_url: width: 2000 }});{% endif %}
+                    {% if block.settings.bg_color != blank %}background-color:{{ block.settings.bg_color }};{% endif %}
+                    min-height:{{ block.settings.height }}px;">
+          <div class="ps-builder-banner-overlay" style="opacity:{{ block.settings.overlay_opacity | divided_by: 100.0 }}"></div>
+          <div class="ps-builder-banner-content">
+            {%- if block.settings.eyebrow != blank -%}
+              <div class="ps-section-tag" style="margin-bottom:.8rem">{{ block.settings.eyebrow }}</div>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="ps-builder-banner-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.subtext != blank -%}
+              <p class="ps-builder-banner-sub">{{ block.settings.subtext }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank and block.settings.button_url != blank -%}
+              <a href="{{ block.settings.button_url }}" class="{% if block.settings.button_style == 'secondary' %}ps-btn-secondary{% else %}ps-btn-primary{% endif %}" style="margin-top:1.5rem;display:inline-block;">
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'columns' -%}
+        <div class="ps-builder-block ps-builder-columns ps-builder-cols-{{ block.settings.column_count }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.section_heading != blank -%}
+            <h2 class="ps-builder-heading ps-builder-cols-heading">{{ block.settings.section_heading }}</h2>
+          {%- endif -%}
+          <div class="ps-builder-cols-grid">
+            {%- for i in (1..3) -%}
+              {%- assign col_heading = 'col_' | append: i | append: '_heading' -%}
+              {%- assign col_icon    = 'col_' | append: i | append: '_icon' -%}
+              {%- assign col_text    = 'col_' | append: i | append: '_text' -%}
+              {%- assign col_link    = 'col_' | append: i | append: '_link' -%}
+              {%- assign col_linklbl = 'col_' | append: i | append: '_link_label' -%}
+              {%- if block.settings[col_heading] != blank or block.settings[col_text] != blank -%}
+                <div class="ps-builder-col-item">
+                  {%- if block.settings[col_icon] != blank -%}
+                    <div class="ps-builder-col-icon">{{ block.settings[col_icon] }}</div>
+                  {%- endif -%}
+                  {%- if block.settings[col_heading] != blank -%}
+                    <h3 class="ps-builder-col-heading">{{ block.settings[col_heading] }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings[col_text] != blank -%}
+                    <div class="rte ps-builder-col-text">{{ block.settings[col_text] }}</div>
+                  {%- endif -%}
+                  {%- if block.settings[col_link] != blank and block.settings[col_linklbl] != blank -%}
+                    <a href="{{ block.settings[col_link] }}" class="ps-builder-col-link">{{ block.settings[col_linklbl] }} →</a>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+      {%- when 'cta_button' -%}
+        <div class="ps-builder-block ps-builder-cta ps-builder-align-{{ block.settings.alignment }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="ps-builder-heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.subtext != blank -%}
+            <p class="ps-builder-cta-sub">{{ block.settings.subtext }}</p>
+          {%- endif -%}
+          <div class="ps-builder-cta-buttons">
+            {%- if block.settings.button_1_label != blank -%}
+              <a href="{{ block.settings.button_1_url | default: '#' }}" class="{% if block.settings.button_1_style == 'secondary' %}ps-btn-secondary{% else %}ps-btn-primary{% endif %}">
+                {{ block.settings.button_1_label }}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.button_2_label != blank -%}
+              <a href="{{ block.settings.button_2_url | default: '#' }}" class="{% if block.settings.button_2_style == 'secondary' %}ps-btn-secondary{% else %}ps-btn-primary{% endif %}">
+                {{ block.settings.button_2_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'image' -%}
+        <div class="ps-builder-block ps-builder-image-block ps-builder-align-{{ block.settings.alignment }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 1400 }}"
+                 alt="{{ block.settings.image.alt | escape }}"
+                 width="{{ block.settings.max_width }}"
+                 loading="lazy"
+                 class="ps-builder-standalone-img"
+                 style="max-width:{{ block.settings.max_width }}px;border-radius:{{ block.settings.border_radius }}px;">
+            {%- if block.settings.caption != blank -%}
+              <p class="ps-builder-img-caption">{{ block.settings.caption }}</p>
+            {%- endif -%}
+          {%- else -%}
+            <div class="ps-builder-img-placeholder">{{ 'image' | placeholder_svg_tag: 'ps-placeholder-svg' }}</div>
+          {%- endif -%}
+        </div>
+
+      {%- when 'divider' -%}
+        <div class="ps-builder-block ps-builder-divider" {{ block.shopify_attributes }}>
+          {%- case block.settings.style -%}
+            {%- when 'rainbow' -%}
+              <div class="ps-rainbow-bar" style="height:{{ block.settings.height }}px;margin:{{ block.settings.spacing }}px 0;"></div>
+            {%- when 'lavender' -%}
+              <hr class="ps-builder-hr ps-builder-hr-lav" style="margin:{{ block.settings.spacing }}px 0;">
+            {%- when 'dots' -%}
+              <div class="ps-builder-dots" style="margin:{{ block.settings.spacing }}px 0;">
+                <span>✿</span><span>✿</span><span>✿</span>
+              </div>
+            {%- else -%}
+              <hr class="ps-builder-hr" style="margin:{{ block.settings.spacing }}px 0;">
+          {%- endcase -%}
+        </div>
+
+      {%- when 'spacer' -%}
+        <div class="ps-builder-block ps-builder-spacer" style="height:{{ block.settings.height }}px;" {{ block.shopify_attributes }}></div>
+
+      {%- when 'custom_html' -%}
+        <div class="ps-builder-block ps-builder-custom-html" {{ block.shopify_attributes }}>
+          {{ block.settings.html }}
+        </div>
+
+    {%- endcase -%}
+  {%- endfor -%}
+
+  {%- if section.blocks.size == 0 -%}
+    <div class="ps-builder-empty">
+      <div class="ps-builder-empty-icon">🧱</div>
+      <h3>Start building this page</h3>
+      <p>Click <strong>Add block</strong> in the theme editor to add content sections.</p>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% render 'ps-footer' %}
+
+<style>
+/* ── Page Builder Wrapper ── */
+.ps-builder-wrap {
+  padding-bottom: 5rem;
+}
+
+/* ── Page Title Row ── */
+.ps-builder-title-row {
+  text-align: center;
+  padding: 3.5rem 2rem 2.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.ps-builder-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: var(--lav-mid);
+  margin-top: .8rem;
+  line-height: 1.5;
+}
+
+/* ── Base block spacing ── */
+.ps-builder-block {
+  max-width: 1100px;
+  margin: 0 auto 3.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Alignment helpers ── */
+.ps-builder-align-center { text-align: center; }
+.ps-builder-align-right  { text-align: right; }
+.ps-builder-align-left   { text-align: left; }
+
+/* ── Headings ── */
+.ps-builder-heading {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  color: var(--lav);
+  letter-spacing: .04em;
+  margin-bottom: .9rem;
+  line-height: 1.15;
+}
+
+/* ── Rich Text ── */
+.ps-builder-rte { max-width: 72ch; }
+.ps-builder-align-center .ps-builder-rte { margin: 0 auto; }
+.ps-builder-align-right  .ps-builder-rte { margin-left: auto; }
+.ps-builder-rte p { font-size: 1.05rem; line-height: 1.75; margin-bottom: 1rem; color: var(--lav-ink); }
+.ps-builder-rte h3 { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav); letter-spacing: .03em; margin: 1.4rem 0 .5rem; }
+.ps-builder-rte ul, .ps-builder-rte ol { margin: .8rem 0 .8rem 1.5rem; }
+.ps-builder-rte li { margin-bottom: .4rem; line-height: 1.65; }
+.ps-builder-rte a { color: var(--lav); font-weight: 700; }
+.ps-builder-rte a:hover { color: var(--lav-dark); }
+.ps-builder-rte strong { color: var(--lav-dark); }
+
+/* ── Image With Text ── */
+.ps-builder-image-text {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1100px;
+  padding: 0 2rem;
+}
+.ps-builder-img-right { direction: rtl; }
+.ps-builder-img-right > * { direction: ltr; }
+.ps-builder-img { width: 100%; height: auto; border-radius: 16px; border: 4px solid var(--lav-light); box-shadow: 6px 6px 0 var(--lav-light); display: block; }
+.ps-builder-img-placeholder { background: var(--lav-light); border-radius: 16px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+.ps-builder-img-placeholder .ps-placeholder-svg { width: 80px; opacity: .35; }
+.ps-builder-it-content .ps-builder-rte { max-width: none; }
+
+/* ── Banner ── */
+.ps-builder-banner {
+  background-color: var(--lav);
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  border: 4px solid var(--lav-dark);
+  box-shadow: 6px 6px 0 var(--lav-dark);
+}
+.ps-builder-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--lav-dark);
+  pointer-events: none;
+}
+.ps-builder-banner-content { position: relative; z-index: 2; max-width: 680px; }
+.ps-builder-banner-heading {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #fff;
+  letter-spacing: .04em;
+  text-shadow: 3px 3px 0 rgba(0,0,0,.25);
+  margin-bottom: .5rem;
+}
+.ps-builder-banner-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  color: var(--lav-light);
+  margin-top: .5rem;
+  line-height: 1.5;
+}
+
+/* ── Columns ── */
+.ps-builder-cols-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.ps-builder-cols-grid {
+  display: grid;
+  gap: 2rem;
+}
+.ps-builder-cols-2 .ps-builder-cols-grid { grid-template-columns: repeat(2, 1fr); }
+.ps-builder-cols-3 .ps-builder-cols-grid { grid-template-columns: repeat(3, 1fr); }
+.ps-builder-col-item {
+  background: #fff;
+  border: 2px solid var(--lav-light);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 4px 4px 0 var(--lav-light);
+}
+.ps-builder-col-icon {
+  font-size: 2.2rem;
+  margin-bottom: .8rem;
+}
+.ps-builder-col-heading {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 1.15rem;
+  color: var(--lav);
+  letter-spacing: .03em;
+  margin-bottom: .5rem;
+}
+.ps-builder-col-text { font-size: .97rem; line-height: 1.7; color: var(--lav-ink); }
+.ps-builder-col-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: .85rem;
+  font-weight: 800;
+  color: var(--lav);
+  text-decoration: none;
+  letter-spacing: .04em;
+}
+.ps-builder-col-link:hover { color: var(--lav-dark); }
+
+/* ── CTA Block ── */
+.ps-builder-cta { padding: 3rem 2rem; }
+.ps-builder-cta-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--lav-mid);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.ps-builder-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.ps-builder-align-center .ps-builder-cta-buttons { justify-content: center; }
+.ps-builder-align-right  .ps-builder-cta-buttons { justify-content: flex-end; }
+
+/* ── Standalone Image ── */
+.ps-builder-image-block img.ps-builder-standalone-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ps-builder-align-center .ps-builder-standalone-img { margin: 0 auto; }
+.ps-builder-align-right  .ps-builder-standalone-img { margin-left: auto; }
+.ps-builder-img-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--lav-mid);
+  margin-top: .6rem;
+  text-align: center;
+}
+
+/* ── Divider ── */
+.ps-builder-hr {
+  border: none;
+  border-top: 2px solid var(--border);
+}
+.ps-builder-hr-lav {
+  border-top: 3px solid var(--lav-light);
+}
+.ps-builder-dots {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--lav-mid);
+  font-size: 1.1rem;
+}
+
+/* ── Empty State ── */
+.ps-builder-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  border: 3px dashed var(--lav-light);
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 3rem auto;
+}
+.ps-builder-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.ps-builder-empty h3 { font-family: 'Luckiest Guy', cursive; color: var(--lav); letter-spacing: .03em; margin-bottom: .5rem; }
+.ps-builder-empty p { color: var(--lav-mid); font-size: .95rem; line-height: 1.6; }
+.ps-builder-empty strong { color: var(--lav); }
+
+/* ── App blocks ── */
+.ps-builder-app { padding: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ps-builder-image-text { grid-template-columns: 1fr; gap: 1.5rem; }
+  .ps-builder-img-right { direction: ltr; }
+  .ps-builder-cols-2 .ps-builder-cols-grid,
+  .ps-builder-cols-3 .ps-builder-cols-grid { grid-template-columns: 1fr; }
+  .ps-builder-block { padding: 0 1.2rem; }
+  .ps-builder-banner { border-radius: 12px; }
+  .ps-builder-cta-buttons { flex-direction: column; align-items: flex-start; }
+  .ps-builder-align-center .ps-builder-cta-buttons { align-items: center; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Page Builder",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow tag above title",
+      "placeholder": "e.g. 🌿 About Us"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle below title",
+      "placeholder": "Optional tagline or subtitle"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "rich_text",
+      "name": "📝 Rich Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow tag",
+          "placeholder": "e.g. 🌿 Our Story"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text content"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Alignment",
+          "options": [
+            { "value": "left",   "label": "Left"   },
+            { "value": "center", "label": "Center" },
+            { "value": "right",  "label": "Right"  }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "image_with_text",
+      "name": "🖼️ Image with Text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            { "value": "left",  "label": "Image left"  },
+            { "value": "right", "label": "Image right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow tag"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text content"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary",   "label": "Primary (lavender)" },
+            { "value": "secondary", "label": "Secondary (yellow)"  }
+          ],
+          "default": "primary"
+        }
+      ]
+    },
+    {
+      "type": "banner",
+      "name": "🎨 Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#7C4D9E"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Dark overlay opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 40,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Minimum height",
+          "min": 200,
+          "max": 700,
+          "step": 50,
+          "default": 300,
+          "unit": "px"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow tag"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary",   "label": "Primary (lavender)" },
+            { "value": "secondary", "label": "Secondary (yellow)"  }
+          ],
+          "default": "secondary"
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "name": "📊 Columns",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section heading (optional)"
+        },
+        {
+          "type": "select",
+          "id": "column_count",
+          "label": "Number of columns",
+          "options": [
+            { "value": "2", "label": "2 columns" },
+            { "value": "3", "label": "3 columns" }
+          ],
+          "default": "3"
+        },
+        { "type": "header", "content": "Column 1" },
+        { "type": "text",     "id": "col_1_icon",       "label": "Icon / Emoji" },
+        { "type": "text",     "id": "col_1_heading",    "label": "Heading"      },
+        { "type": "richtext", "id": "col_1_text",       "label": "Text"         },
+        { "type": "url",      "id": "col_1_link",       "label": "Link URL"     },
+        { "type": "text",     "id": "col_1_link_label", "label": "Link label"   },
+        { "type": "header", "content": "Column 2" },
+        { "type": "text",     "id": "col_2_icon",       "label": "Icon / Emoji" },
+        { "type": "text",     "id": "col_2_heading",    "label": "Heading"      },
+        { "type": "richtext", "id": "col_2_text",       "label": "Text"         },
+        { "type": "url",      "id": "col_2_link",       "label": "Link URL"     },
+        { "type": "text",     "id": "col_2_link_label", "label": "Link label"   },
+        { "type": "header", "content": "Column 3" },
+        { "type": "text",     "id": "col_3_icon",       "label": "Icon / Emoji" },
+        { "type": "text",     "id": "col_3_heading",    "label": "Heading"      },
+        { "type": "richtext", "id": "col_3_text",       "label": "Text"         },
+        { "type": "url",      "id": "col_3_link",       "label": "Link URL"     },
+        { "type": "text",     "id": "col_3_link_label", "label": "Link label"   }
+      ]
+    },
+    {
+      "type": "cta_button",
+      "name": "🎯 Call to Action",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            { "value": "left",   "label": "Left"   },
+            { "value": "center", "label": "Center" },
+            { "value": "right",  "label": "Right"  }
+          ],
+          "default": "center"
+        },
+        { "type": "header", "content": "Button 1" },
+        { "type": "text",   "id": "button_1_label", "label": "Label"          },
+        { "type": "url",    "id": "button_1_url",   "label": "Link"           },
+        {
+          "type": "select",
+          "id": "button_1_style",
+          "label": "Style",
+          "options": [
+            { "value": "primary",   "label": "Primary (lavender)" },
+            { "value": "secondary", "label": "Secondary (yellow)"  }
+          ],
+          "default": "primary"
+        },
+        { "type": "header", "content": "Button 2 (optional)" },
+        { "type": "text",   "id": "button_2_label", "label": "Label"          },
+        { "type": "url",    "id": "button_2_url",   "label": "Link"           },
+        {
+          "type": "select",
+          "id": "button_2_style",
+          "label": "Style",
+          "options": [
+            { "value": "primary",   "label": "Primary (lavender)" },
+            { "value": "secondary", "label": "Secondary (yellow)"  }
+          ],
+          "default": "secondary"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "📷 Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "label": "Max width",
+          "min": 200,
+          "max": 1100,
+          "step": 50,
+          "default": 900,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "label": "Corner rounding",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "default": 12,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "options": [
+            { "value": "left",   "label": "Left"   },
+            { "value": "center", "label": "Center" },
+            { "value": "right",  "label": "Right"  }
+          ],
+          "default": "center"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "➖ Divider",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Divider style",
+          "options": [
+            { "value": "line",    "label": "Thin line"        },
+            { "value": "lavender","label": "Lavender line"    },
+            { "value": "rainbow", "label": "Rainbow bar"      },
+            { "value": "dots",    "label": "Floral dots ✿✿✿" }
+          ],
+          "default": "lavender"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Bar height (rainbow only)",
+          "min": 4,
+          "max": 20,
+          "step": 2,
+          "default": 8,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "spacing",
+          "label": "Vertical spacing",
+          "min": 0,
+          "max": 80,
+          "step": 4,
+          "default": 24,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "↕️ Spacer",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "min": 10,
+          "max": 200,
+          "step": 5,
+          "default": 40,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "custom_html",
+      "name": "⚙️ Custom HTML",
+      "settings": [
+        {
+          "type": "html",
+          "id": "html",
+          "label": "HTML"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Builder",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "settings": {
+            "heading": "Welcome to this page",
+            "text": "<p>Edit this text in the theme editor, or add more blocks below.</p>",
+            "text_align": "left"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
