@@ -55,32 +55,35 @@
   <div class="ps-cat-tabs ps-reveal" id="psCatTabs">
     <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
     <button class="ps-cat-tab" data-cat="soap">🧼 Soaps</button>
-    <button class="ps-cat-tab" data-cat="lotion">🧴 Lotions</button>
+    <button class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</button>
     <button class="ps-cat-tab" data-cat="candle">🕯️ Candles</button>
+    <button class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</button>
     <button class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</button>
+    <button class="ps-cat-tab" data-cat="accessory">🛁 Accessories</button>
   </div>
 
   <div class="ps-pgrid" id="psProductGrid">
-    {%- assign product_limit = 24 -%}
-    {%- for product in collections.all.products limit: product_limit -%}
-      {%- assign product_type_lower = product.type | downcase -%}
-      {%- assign product_tags_lower = product.tags | join: ' ' | downcase -%}
-      {%- assign product_title_lower = product.title | downcase -%}
-      {%- assign combined = product_type_lower | append: ' ' | append: product_tags_lower | append: ' ' | append: product_title_lower -%}
+    {%- assign featured = collections['featured-products'] -%}
+    {%- assign source = featured.products | default: collections.all.products -%}
+    {%- for product in source limit: 24 -%}
+      {%- assign ps_type = product.type | strip -%}
 
-      {%- if combined contains 'candle' -%}
-        {%- assign ps_cat = 'candle' -%}
-        {%- assign ps_emoji = '🕯️' -%}
-      {%- elsif combined contains 'lotion' or combined contains 'butter' or combined contains 'cream' -%}
-        {%- assign ps_cat = 'lotion' -%}
-        {%- assign ps_emoji = '🧴' -%}
-      {%- elsif combined contains 'scrub' -%}
-        {%- assign ps_cat = 'scrub' -%}
-        {%- assign ps_emoji = '🌸' -%}
-      {%- else -%}
-        {%- assign ps_cat = 'soap' -%}
-        {%- assign ps_emoji = '🧼' -%}
-      {%- endif -%}
+      {%- case ps_type -%}
+        {%- when 'Body Bars' -%}
+          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+        {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}
+        {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
+          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
+        {%- when 'Bath Bombs' -%}
+          {%- assign ps_cat = 'bomb' -%}{%- assign ps_emoji = '💣' -%}
+        {%- when 'Brown Sugar Scrub' -%}
+          {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
+        {%- when 'Bath Accessories', 'Happily Ever After' -%}
+          {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}
+        {%- else -%}
+          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+      {%- endcase -%}
 
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
       {%- assign is_available = product.available -%}
@@ -117,7 +120,7 @@
         </div>
 
         <div class="ps-pc-body">
-          <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_cat | capitalize }}</p>
+          <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_type | default: 'Body Bar' }}</p>
           <h3 class="ps-pc-name">
             <a href="{{ product.url }}" style="text-decoration:none;color:inherit;">{{ product.title }}</a>
           </h3>
