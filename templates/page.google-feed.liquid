@@ -1,0 +1,120 @@
+{%- layout none -%}
+{%- comment -%}
+  Google Merchant Center Product Feed — Papa Stan's of Iowa
+  URL: /pages/google-feed
+  Format: RSS 2.0 / Google Base XML
+  Fetch: Daily via Google Merchant Center scheduled fetch
+{%- endcomment -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>{{ shop.name | xml_escape }}</title>
+    <link>{{ shop.url }}</link>
+    <description>Handcrafted soaps, lotions &amp; candles from Oskaloosa, Iowa — Veteran Owned</description>
+    {%- paginate collections.all.products by 250 -%}
+    {%- for product in collections.all.products -%}
+      {%- assign type_lower  = product.type  | downcase -%}
+      {%- assign title_lower = product.title | downcase -%}
+      {%- assign combined    = type_lower | append: ' ' | append: title_lower -%}
+
+      {%- comment -%} Resolve Google category ID and product type label once per product {%- endcomment -%}
+      {%- if combined contains 'candle' -%}
+        {%- assign gmc_label    = 'Candles' -%}
+        {%- assign gmc_cat_id   = '588' -%}
+      {%- elsif combined contains 'scrub' -%}
+        {%- assign gmc_label    = 'Body Scrubs' -%}
+        {%- assign gmc_cat_id   = '2592' -%}
+      {%- elsif combined contains 'lotion' or combined contains 'butter' or combined contains 'cream' or combined contains 'moisturizer' or combined contains 'aloe' or combined contains 'almond coconut' -%}
+        {%- assign gmc_label    = 'Lotions & Moisturizers' -%}
+        {%- assign gmc_cat_id   = '2592' -%}
+      {%- else -%}
+        {%- assign gmc_label    = 'Handcrafted Bar Soap' -%}
+        {%- assign gmc_cat_id   = '2279' -%}
+      {%- endif -%}
+
+      {%- for variant in product.variants -%}
+
+        {%- comment -%} ── Price: divide cents by 100 for clean decimal, no commas ── {%- endcomment -%}
+        {%- assign price_whole  = variant.price | divided_by: 100 -%}
+        {%- assign price_cents  = variant.price | modulo: 100 -%}
+        {%- if price_cents < 10 -%}
+          {%- assign price_str = price_whole | append: '.0' | append: price_cents -%}
+        {%- else -%}
+          {%- assign price_str = price_whole | append: '.' | append: price_cents -%}
+        {%- endif -%}
+
+        {%- if variant.compare_at_price > variant.price -%}
+          {%- assign cap_whole = variant.compare_at_price | divided_by: 100 -%}
+          {%- assign cap_cents = variant.compare_at_price | modulo: 100 -%}
+          {%- if cap_cents < 10 -%}
+            {%- assign cap_str = cap_whole | append: '.0' | append: cap_cents -%}
+          {%- else -%}
+            {%- assign cap_str = cap_whole | append: '.' | append: cap_cents -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- comment -%} ── Image URL: img_url returns protocol-relative, prepend https: ── {%- endcomment -%}
+        {%- if variant.image -%}
+          {%- assign main_img = variant.image.src | img_url: '1200x1200' | prepend: 'https:' -%}
+        {%- elsif product.featured_image -%}
+          {%- assign main_img = product.featured_image.src | img_url: '1200x1200' | prepend: 'https:' -%}
+        {%- else -%}
+          {%- assign main_img = '' -%}
+        {%- endif -%}
+
+<item>
+  <g:id>{{ variant.id }}</g:id>
+  <g:item_group_id>{{ product.id }}</g:item_group_id>
+  <g:title>{%- if product.variants.size > 1 -%}{{ product.title | xml_escape }} - {{ variant.title | xml_escape }}{%- else -%}{{ product.title | xml_escape }}{%- endif -%}</g:title>
+  <g:description>{%- if product.description != blank -%}{{ product.description | strip_html | strip_newlines | truncatewords: 150 | xml_escape }}{%- else -%}{{ product.title | xml_escape }} — Handcrafted by Papa Stan's of Iowa, a veteran-owned small business in Oskaloosa, Iowa.{%- endif -%}</g:description>
+  <g:link>{{ shop.url }}/products/{{ product.handle }}{%- if product.variants.size > 1 -%}?variant={{ variant.id }}{%- endif -%}</g:link>
+  {%- if main_img != '' -%}
+  <g:image_link>{{ main_img }}</g:image_link>
+  {%- endif -%}
+  {%- for img in product.images limit: 9 -%}
+    {%- unless img.src == product.featured_image.src -%}
+  <g:additional_image_link>{{ img.src | img_url: '1200x1200' | prepend: 'https:' }}</g:additional_image_link>
+    {%- endunless -%}
+  {%- endfor -%}
+  <g:availability>{%- if variant.available -%}in_stock{%- else -%}out_of_stock{%- endif -%}</g:availability>
+  <g:condition>new</g:condition>
+  <g:price>{{ price_str }} USD</g:price>
+  {%- if variant.compare_at_price > variant.price -%}
+  <g:sale_price>{{ price_str }} USD</g:sale_price>
+  <g:original_price>{{ cap_str }} USD</g:original_price>
+  {%- endif -%}
+  <g:brand>Papa Stan's of Iowa</g:brand>
+  {%- if variant.sku != blank -%}
+  <g:mpn>{{ variant.sku | xml_escape }}</g:mpn>
+  {%- endif -%}
+  <g:identifier_exists>no</g:identifier_exists>
+  <g:product_type>{{ gmc_label | xml_escape }}</g:product_type>
+  <g:google_product_category>{{ gmc_cat_id }}</g:google_product_category>
+  {%- comment -%} ── Variant attributes ── {%- endcomment -%}
+  {%- for option in product.options_with_values -%}
+    {%- assign opt_name = option.name | downcase -%}
+    {%- assign opt_val  = variant.options[forloop.index0] -%}
+    {%- if opt_val != blank and opt_val != 'Default Title' -%}
+      {%- if opt_name == 'scent' or opt_name == 'fragrance' or opt_name == 'scent / fragrance' -%}
+  <g:scent>{{ opt_val | xml_escape }}</g:scent>
+      {%- elsif opt_name == 'size' or opt_name == 'weight' or opt_name == 'volume' -%}
+  <g:size>{{ opt_val | xml_escape }}</g:size>
+      {%- elsif opt_name == 'color' or opt_name == 'colour' -%}
+  <g:color>{{ opt_val | xml_escape }}</g:color>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  <g:shipping>
+    <g:country>US</g:country>
+    <g:service>Standard Shipping</g:service>
+    <g:price>{%- if variant.price >= 5500 -%}0.00{%- else -%}5.99{%- endif -%} USD</g:price>
+  </g:shipping>
+  <g:custom_label_0>{{ gmc_label | downcase | replace: ' ', '-' | xml_escape }}</g:custom_label_0>
+  <g:custom_label_1>veteran-owned</g:custom_label_1>
+  <g:custom_label_2>handcrafted-iowa</g:custom_label_2>
+</item>
+      {%- endfor -%}
+    {%- endfor -%}
+    {%- endpaginate -%}
+  </channel>
+</rss>
