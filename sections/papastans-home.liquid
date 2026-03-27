@@ -90,7 +90,7 @@
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
       {%- assign is_available = product.available -%}
 
-      <div class="ps-pc ps-reveal" data-cat="{{ ps_cat }}">
+      <div class="ps-pc" data-cat="{{ ps_cat }}">
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <img
