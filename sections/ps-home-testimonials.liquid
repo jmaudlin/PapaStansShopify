@@ -18,6 +18,7 @@
 
     <div class="ps-htestimonials-track-wrap">
       <button class="ps-htestimonials-arrow ps-htestimonials-prev" aria-label="Previous review">&#8592;</button>
+      <div class="ps-htestimonials-viewport">
       <div class="ps-htestimonials-track" id="psTestimonialsTrack">
         {% for i in (1..6) %}
           {% assign text_key  = 'review_' | append: i | append: '_text' %}
@@ -43,6 +44,7 @@
             </div>
           {% endif %}
         {% endfor %}
+      </div>
       </div>
       <button class="ps-htestimonials-arrow ps-htestimonials-next" aria-label="Next review">&#8594;</button>
     </div>
@@ -93,11 +95,14 @@
   align-items: center;
   gap: 1rem;
 }
-.ps-htestimonials-track {
-  display: flex;
+.ps-htestimonials-viewport {
   overflow: hidden;
   flex: 1;
   min-width: 0;
+}
+.ps-htestimonials-track {
+  display: flex;
+  transition: transform .4s ease;
 }
 .ps-htestimonials-card {
   flex: 0 0 100%;
@@ -230,7 +235,6 @@
   function goTo(idx) {
     current = (idx + total) % total;
     track.style.transform = 'translateX(-' + (current * 100) + '%)';
-    track.style.transition = 'transform .4s ease';
     dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
   }
 
