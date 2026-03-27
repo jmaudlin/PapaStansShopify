@@ -30,7 +30,7 @@
             "products_heading_text": "<p>Products</p>",
             "pages_heading_text": "<p>Pages</p>",
             "blogs_heading_text": "<p>Blogs</p>",
-            "articles_heading_text": "<p></p>",
+            "articles_heading_text": "<p>Articles</p>",
             "collections_max_count_displayed": 10000,
             "products_max_count_displayed": 10000,
             "pages_max_count_displayed": 10000,
