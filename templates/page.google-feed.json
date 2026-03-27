@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ps-google-feed",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
