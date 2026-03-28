@@ -1,0 +1,18 @@
+{%- layout none -%}
+{%- assign all_products = collections.all.products -%}
+[
+{%- for product in all_products -%}
+  {
+    "id": {{ product.id }},
+    "handle": {{ product.handle | json }},
+    "gender":    {{ product.metafields.google.gender | json }},
+    "age_group": {{ product.metafields.google.age_group | json }},
+    "color":     {{ product.metafields.google.color | json }},
+    "material":  {{ product.metafields.google.material | json }},
+    "pattern":   {{ product.metafields.google.pattern | json }},
+    "size_type": {{ product.metafields.google.size_type | json }},
+    "multipack": {{ product.metafields.google.multipack | json }},
+    "is_bundle": {{ product.metafields.google.is_bundle | json }}
+  }{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+]
