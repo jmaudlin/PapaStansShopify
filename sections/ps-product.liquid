@@ -35,11 +35,23 @@
     <!-- Info -->
     <div class="ps-product-info">
       <div class="ps-section-tag" style="margin-bottom:.5rem">
-        {%- assign t = product.type | downcase -%}
-        {%- if t contains 'candle' -%}🕯️ Candle
-        {%- elsif t contains 'lotion' or t contains 'cream' -%}🧴 Lotion
-        {%- elsif t contains 'scrub' -%}🌸 Scrub
-        {%- else -%}🧼 Soap{%- endif -%}
+        {%- assign ps_type = product.type | strip -%}
+        {%- case ps_type -%}
+          {%- when 'Body Bars' -%}
+            🧼 Soap
+          {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
+            🧴 Body Care
+          {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
+            🕯️ Candle
+          {%- when 'Bath Bombs' -%}
+            💣 Bath Bomb
+          {%- when 'Brown Sugar Scrub' -%}
+            🌸 Scrub
+          {%- when 'Bath Accessories', 'Happily Ever After' -%}
+            🛁 Accessories
+          {%- else -%}
+            🧼 Soap
+        {%- endcase -%}
       </div>
       <h1 class="ps-product-title">{{ product.title }}</h1>
       <!-- Start of Judge.me code -->
