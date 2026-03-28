@@ -194,9 +194,22 @@ document.getElementById('psCatTabs').addEventListener('click', e => {
   document.querySelectorAll('.ps-cat-tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
   const cat = tab.dataset.cat;
-  document.querySelectorAll('.ps-pc').forEach(card => {
-    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+  const isMobile = window.innerWidth < 680;
+  let shown = 0;
+  document.querySelectorAll('#psProductGrid .ps-pc').forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    // On mobile "All" tab: keep the 6-card cap; specific categories show all matches
+    const overMobileLimit = isMobile && cat === 'all' && shown >= 6;
+    const visible = match && !overMobileLimit;
+    card.style.display = visible ? 'flex' : 'none';
+    if (visible) shown++;
   });
+  // Reset slider position and refresh arrow states
+  var grid = document.getElementById('psProductGrid');
+  if (grid) {
+    grid.scrollLeft = 0;
+    grid.dispatchEvent(new Event('scroll'));
+  }
 });
 
 // ── Smooth anchor scrolling ──

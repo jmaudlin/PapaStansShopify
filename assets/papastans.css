@@ -524,7 +524,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   /* Hide arrow buttons on mobile */
   .ps-pgrid-arrow { display:none !important; }
   /* Hide product cards beyond the 6th */
-  .ps-pgrid .ps-pc:nth-child(n+7) { display: none !important; }
+  .ps-pgrid .ps-pc:nth-child(n+7) { display: none; }
   /* Show the mobile-only "view all" nudge */
   .ps-mobile-view-all { display: block !important; }
 }
