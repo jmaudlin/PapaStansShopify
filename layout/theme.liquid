@@ -39,7 +39,13 @@
     {%- elsif page_title -%}{{ page_title }} — {{ shop.name }}
     {%- else -%}{{ shop.name }}{%- endif -%}
   </title>
-  <meta name="description" content="{%- if page_description -%}{{ page_description | escape }}{%- else -%}Handcrafted soaps, lotions and candles made in small batches in Oskaloosa, Iowa. Veteran-owned since 2019. 641.670.1573{%- endif -%}">
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- elsif template.name == 'index' -%}
+    <meta name="description" content="Handcrafted soaps, lotions, candles &amp; more — made in small batches in Oskaloosa, Iowa. Veteran-owned. All natural. Shop Papa Stan's today.">
+  {%- else -%}
+    <meta name="description" content="Handcrafted soaps, lotions and candles made in small batches in Oskaloosa, Iowa. Veteran-owned since 2019. 641.670.1573">
+  {%- endif -%}
   {{ content_for_header }}
   {{ 'papastans.css' | asset_url | stylesheet_tag }}
 </head>
