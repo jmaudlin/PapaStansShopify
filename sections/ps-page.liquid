@@ -160,6 +160,68 @@
       </div>
     </div>
 
+  {%- elsif page.handle == 'find-us' -%}
+
+    {%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
+
+    <div class="ps-section-tag" style="margin-bottom:.8rem">📍 Find Us</div>
+    <h1 class="ps-section-h2" style="margin-bottom:2rem">Where to <em>Find Us!</em></h1>
+
+    <div class="ps-findus-grid">
+
+      <!-- Map -->
+      <div class="ps-findus-map-col">
+        <div class="ps-contact-info-card ps-findus-map-card">
+          <iframe
+            src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
+            class="ps-findus-map"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <a href="https://maps.google.com/?q={{ map_addr }}" target="_blank" class="ps-contact-map-link" style="display:inline-block;margin-top:.75rem">Get Directions →</a>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="ps-findus-info-col">
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">🏠 Our Location</h3>
+          <p class="ps-contact-info-addr">
+            {{ shop.address.address1 }}<br>
+            {{ shop.address.city }}, {{ shop.address.province_code }} {{ shop.address.zip }}<br>
+            {{ shop.address.country }}
+          </p>
+        </div>
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">📞 Reach Us Directly</h3>
+          <div class="ps-contact-info-row"><span>Phone</span><a href="tel:{{ shop.phone }}">{{ shop.phone | default: '641.670.1573' }}</a></div>
+          <div class="ps-contact-info-row"><span>Email</span><a href="mailto:{{ shop.email }}">{{ shop.email }}</a></div>
+        </div>
+
+        <div class="ps-contact-info-card">
+          <h3 class="ps-contact-info-title">🚚 Shipping & Perks</h3>
+          <div class="ps-contact-info-row"><span>Free Shipping</span><span>Orders $55+</span></div>
+          <div class="ps-contact-info-row"><span>Free Samples</span><span>4 with every order</span></div>
+          <div class="ps-contact-info-row"><span>Est.</span><span>2019 — Oskaloosa, Iowa</span></div>
+          <div class="ps-contact-info-row"><span>Ownership</span><span>Veteran-Owned ⭐</span></div>
+        </div>
+
+        <a href="{{ shop.url }}/collections/all" class="ps-btn-primary" style="display:block;text-align:center;">Shop Now 🛒</a>
+
+      </div>
+    </div>
+
+    <style>
+      .ps-findus-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+      .ps-findus-map-card { padding:0; overflow:hidden; }
+      .ps-findus-map-card a { padding:0 1.25rem 1rem; }
+      .ps-findus-map { width:100%; height:340px; border:none; display:block; }
+      @media (max-width:860px) { .ps-findus-grid { grid-template-columns:1fr; } .ps-findus-map { height:260px; } }
+    </style>
+
   {%- else -%}
 
     <!-- Generic page template -->
