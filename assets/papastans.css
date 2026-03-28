@@ -191,7 +191,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-view-all { font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--barrel);text-decoration:none;border-bottom:3px solid var(--barrel);padding-bottom:.1rem;transition:color .2s; }
 .ps-view-all:hover { color:var(--barn2); }
 .ps-cat-tabs { display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap; }
-.ps-cat-tab { padding:.45rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;border:3px solid var(--border);color:var(--lav-mid);cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:3px 3px 0 var(--border); }
+.ps-cat-tab { padding:.45rem 1.2rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;border:3px solid var(--border);color:var(--lav-mid);cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:3px 3px 0 var(--border);text-decoration:none;display:inline-block; }
 .ps-cat-tab:hover, .ps-cat-tab.active { background:var(--lav);border-color:var(--lav-ink);color:#fff;box-shadow:3px 3px 0 var(--bark); }
 .ps-pgrid-wrap {
   position: relative;

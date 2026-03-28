@@ -14,13 +14,14 @@
 
   <div class="ps-coll-toolbar">
     <div class="ps-cat-tabs" id="psCatTabs">
-      <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
-      <button class="ps-cat-tab" data-cat="soap">🧼 Soaps</button>
-      <button class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</button>
-      <button class="ps-cat-tab" data-cat="candle">🕯️ Candles</button>
-      <button class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</button>
-      <button class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</button>
-      <button class="ps-cat-tab" data-cat="accessory">🛁 Accessories</button>
+      {%- assign ch = collection.handle -%}
+      <a href="/collections/all"          class="ps-cat-tab {% if ch == 'all' or ch == '' %}active{% endif %}">🌟 All</a>
+      <a href="/collections/soaps"        class="ps-cat-tab {% if ch == 'soaps' %}active{% endif %}">🧼 Soaps</a>
+      <a href="/collections/body-care"    class="ps-cat-tab {% if ch == 'body-care' %}active{% endif %}">🧴 Body Care</a>
+      <a href="/collections/candles-scents" class="ps-cat-tab {% if ch == 'candles-scents' %}active{% endif %}">🕯️ Candles</a>
+      <a href="/collections/bath-bombs"   class="ps-cat-tab {% if ch == 'bath-bombs' %}active{% endif %}">💣 Bath Bombs</a>
+      <a href="/collections/scrubs"       class="ps-cat-tab {% if ch == 'scrubs' %}active{% endif %}">🌸 Scrubs</a>
+      <a href="/collections/accessories"  class="ps-cat-tab {% if ch == 'accessories' %}active{% endif %}">🛁 Accessories</a>
     </div>
     <form method="get" class="ps-sort-form">
       <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
@@ -117,16 +118,7 @@
 {% render 'ps-footer' %}
 
 <script>
-document.getElementById('psCatTabs').addEventListener('click', e => {
-  const tab = e.target.closest('.ps-cat-tab');
-  if (!tab) return;
-  document.querySelectorAll('.ps-cat-tab').forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  const cat = tab.dataset.cat;
-  document.querySelectorAll('.ps-pc').forEach(card => {
-    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
-  });
-});
+// Category tabs navigate to Smart Collections — no client-side filtering needed
 
 const revObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }});
