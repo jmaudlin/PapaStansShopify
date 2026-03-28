@@ -58,7 +58,7 @@
 
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
 
-      <div class="ps-pc ps-reveal" data-cat="{{ ps_cat }}">
+      <div class="ps-pc" data-cat="{{ ps_cat }}">
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <a href="{{ product.url }}">
@@ -119,11 +119,6 @@
 
 <script>
 // Category tabs navigate to Smart Collections — no client-side filtering needed
-
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }});
-}, { threshold: 0.05 });
-document.querySelectorAll('.ps-reveal').forEach(el => revObs.observe(el));
 </script>
 
 {% schema %}
