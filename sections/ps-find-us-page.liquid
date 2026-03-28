@@ -1,0 +1,89 @@
+{% render 'ps-header', nav_solid: true %}
+
+{%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
+
+<div class="ps-page-wrap">
+  <div class="ps-breadcrumb">
+    <a href="{{ shop.url }}">Home</a> &rsaquo; Find Us
+  </div>
+</div>
+
+<section class="ps-fu-wrap">
+  <div class="ps-fu-panel">
+    <div class="ps-fu-panel-inner">
+
+      <div class="ps-hg-label">📍 Where to Find Us</div>
+      <h1 class="ps-hg-heading ps-hg-heading-light">Proudly <em>Local.</em><br>Shipped <em>Everywhere!</em></h1>
+
+      <div class="ps-hg-map-wrap">
+        <iframe
+          src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
+          class="ps-hg-map"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <div class="ps-hg-local-details">
+        <div class="ps-hg-local-row">
+          <span class="ps-hg-local-icon">🏠</span>
+          <div>
+            <strong>{{ shop.address.address1 | default: 'Oskaloosa, Iowa' }}</strong><br>
+            {{ shop.address.city }}, {{ shop.address.province_code }} {{ shop.address.zip }}
+          </div>
+        </div>
+        <div class="ps-hg-local-row">
+          <span class="ps-hg-local-icon">📞</span>
+          <div>
+            <a href="tel:{{ shop.phone }}" class="ps-hg-local-link">{{ shop.phone | default: '641.670.1573' }}</a><br>
+            <a href="mailto:{{ shop.email }}" class="ps-hg-local-link ps-hg-local-link-dim">{{ shop.email }}</a>
+          </div>
+        </div>
+        <div class="ps-hg-local-row">
+          <span class="ps-hg-local-icon">🚚</span>
+          <div><strong>Free Shipping on $55+</strong><br>Plus 4 free samples with every order!</div>
+        </div>
+        <div class="ps-hg-local-row">
+          <span class="ps-hg-local-icon">⭐</span>
+          <div><strong>Veteran-Owned &amp; Operated</strong><br>Est. 2019 — Oskaloosa, Iowa</div>
+        </div>
+      </div>
+
+      <div class="ps-hg-local-btns">
+        <a href="https://maps.google.com/?q={{ map_addr }}" target="_blank" class="ps-hg-cta-btn ps-hg-cta-outline">Get Directions 🗺️</a>
+        <a href="{{ shop.url }}/collections/all" class="ps-hg-cta-btn ps-hg-cta-solid">Shop Now 🛒</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% render 'ps-footer' %}
+
+<style>
+.ps-fu-wrap {
+  padding: 3rem 2rem 6rem;
+  background: var(--offwhite);
+  display: flex;
+  justify-content: center;
+}
+.ps-fu-panel {
+  background: var(--lav-dark);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 680px;
+}
+.ps-fu-panel-inner {
+  padding: 2.75rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+@media (max-width: 680px) {
+  .ps-fu-wrap { padding: 1.5rem 1rem 4rem; }
+  .ps-fu-panel-inner { padding: 2rem 1.5rem; }
+}
+</style>
+
+{% schema %}{ "name": "Find Us Page", "settings": [], "presets": [{ "name": "Find Us Page" }] }{% endschema %}
