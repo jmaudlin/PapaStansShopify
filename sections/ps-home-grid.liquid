@@ -257,6 +257,8 @@
   display: flex;
   gap: 2rem;
   align-items: stretch;
+  overflow: clip;
+  padding: 1rem 0;
 }
 
 /* ══ PANEL BASE ══ */
@@ -595,11 +597,20 @@
   var ticking = false;
 
   function applyParallax() {
+    var vh = window.innerHeight;
     panels.forEach(function(panel) {
       var speed = parseFloat(panel.dataset.parallax);
       var rect = panel.getBoundingClientRect();
-      var centerOffset = (rect.top + rect.height / 2) - (window.innerHeight / 2);
-      panel.style.setProperty('--ps-par', (centerOffset * speed).toFixed(2) + 'px');
+      // Only animate while panel is within 1 viewport of the visible area;
+      // clamp centerOffset so off-screen panels don't accumulate huge values
+      var buffer = vh;
+      if (rect.bottom < -buffer || rect.top > vh + buffer) {
+        panel.style.setProperty('--ps-par', '0px');
+        return;
+      }
+      var centerOffset = (rect.top + rect.height / 2) - (vh / 2);
+      var clamped = Math.max(-vh, Math.min(vh, centerOffset));
+      panel.style.setProperty('--ps-par', (clamped * speed).toFixed(2) + 'px');
     });
     ticking = false;
   }
