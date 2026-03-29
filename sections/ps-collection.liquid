@@ -15,17 +15,13 @@
   <div class="ps-coll-toolbar">
     <div class="ps-cat-tabs" id="psCatTabs">
       {%- assign ch = collection.handle -%}
-      {%- assign sort_param = '' -%}
-      {%- if collection.sort_by != collection.default_sort_by -%}
-        {%- assign sort_param = '?sort_by=' | append: collection.sort_by -%}
-      {%- endif -%}
-      <a href="/collections/all{{ sort_param }}"            class="ps-cat-tab {% if ch == 'all' or ch == '' %}active{% endif %}">🌟 All</a>
-      <a href="/collections/soaps{{ sort_param }}"          class="ps-cat-tab {% if ch == 'soaps' %}active{% endif %}">🧼 Soaps</a>
-      <a href="/collections/body-care{{ sort_param }}"      class="ps-cat-tab {% if ch == 'body-care' %}active{% endif %}">🧴 Body Care</a>
-      <a href="/collections/candles-scents{{ sort_param }}" class="ps-cat-tab {% if ch == 'candles-scents' %}active{% endif %}">🕯️ Candles</a>
-      <a href="/collections/bath-bombs{{ sort_param }}"     class="ps-cat-tab {% if ch == 'bath-bombs' %}active{% endif %}">💣 Bath Bombs</a>
-      <a href="/collections/scrubs{{ sort_param }}"         class="ps-cat-tab {% if ch == 'scrubs' %}active{% endif %}">🌸 Scrubs</a>
-      <a href="/collections/accessories{{ sort_param }}"    class="ps-cat-tab {% if ch == 'accessories' %}active{% endif %}">🛁 Accessories</a>
+      <a href="/collections/all"            class="ps-cat-tab {% if ch == 'all' or ch == '' %}active{% endif %}">🌟 All</a>
+      <a href="/collections/soaps"          class="ps-cat-tab {% if ch == 'soaps' %}active{% endif %}">🧼 Soaps</a>
+      <a href="/collections/body-care"      class="ps-cat-tab {% if ch == 'body-care' %}active{% endif %}">🧴 Body Care</a>
+      <a href="/collections/candles-scents" class="ps-cat-tab {% if ch == 'candles-scents' %}active{% endif %}">🕯️ Candles</a>
+      <a href="/collections/bath-bombs"     class="ps-cat-tab {% if ch == 'bath-bombs' %}active{% endif %}">💣 Bath Bombs</a>
+      <a href="/collections/scrubs"         class="ps-cat-tab {% if ch == 'scrubs' %}active{% endif %}">🌸 Scrubs</a>
+      <a href="/collections/accessories"    class="ps-cat-tab {% if ch == 'accessories' %}active{% endif %}">🛁 Accessories</a>
     </div>
     <form method="get" class="ps-sort-form">
       <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
@@ -122,7 +118,16 @@
 {% render 'ps-footer' %}
 
 <script>
-// Category tabs navigate to Smart Collections — no client-side filtering needed
+// Preserve sort_by param when clicking category tabs
+(function () {
+  var sortBy = new URLSearchParams(window.location.search).get('sort_by');
+  if (!sortBy) return;
+  document.querySelectorAll('#psCatTabs .ps-cat-tab').forEach(function (a) {
+    var url = new URL(a.href);
+    url.searchParams.set('sort_by', sortBy);
+    a.href = url.toString();
+  });
+})();
 </script>
 
 {% schema %}
