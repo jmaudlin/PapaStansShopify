@@ -15,13 +15,12 @@
   <div class="ps-coll-toolbar">
     <div class="ps-cat-tabs" id="psCatTabs">
       {%- assign ch = collection.handle -%}
-      <a href="/collections/all"            class="ps-cat-tab {% if ch == 'all' or ch == '' %}active{% endif %}">🌟 All</a>
-      <a href="/collections/soaps"          class="ps-cat-tab {% if ch == 'soaps' %}active{% endif %}">🧼 Soaps</a>
-      <a href="/collections/body-care"      class="ps-cat-tab {% if ch == 'body-care' %}active{% endif %}">🧴 Body Care</a>
-      <a href="/collections/candles-scents" class="ps-cat-tab {% if ch == 'candles-scents' %}active{% endif %}">🕯️ Candles</a>
-      <a href="/collections/bath-bombs"     class="ps-cat-tab {% if ch == 'bath-bombs' %}active{% endif %}">💣 Bath Bombs</a>
-      <a href="/collections/scrubs"         class="ps-cat-tab {% if ch == 'scrubs' %}active{% endif %}">🌸 Scrubs</a>
-      <a href="/collections/accessories"    class="ps-cat-tab {% if ch == 'accessories' %}active{% endif %}">🛁 Accessories</a>
+      <a href="/collections/all" class="ps-cat-tab {% if ch == 'all' %}active{% endif %}">🌟 All</a>
+      {%- for col in collections -%}
+        {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle contains 'featured' or col.products_count == 0 -%}
+          <a href="{{ col.url }}" class="ps-cat-tab {% if ch == col.handle %}active{% endif %}">{{ col.title }}</a>
+        {%- endunless -%}
+      {%- endfor -%}
     </div>
     <form method="get" class="ps-sort-form">
       <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
