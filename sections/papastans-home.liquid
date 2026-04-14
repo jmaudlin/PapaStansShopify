@@ -97,14 +97,15 @@ function collide(){
     const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy),mn=a.r+b.r+2;
     if(d<mn&&d>.01){
       const nx=dx/d,ny=dy/d,ov=(mn-d)*.5;
-      if(!a.attached){a.x-=nx*ov;a.y-=ny*ov;}
-      if(!b.attached){b.x+=nx*ov;b.y+=ny*ov;}
+      const aPin=a.attachT>.1, bPin=b.attachT>.1;
+      if(!aPin){a.x-=nx*ov*(bPin?.15:1);a.y-=ny*ov*(bPin?.15:1);}
+      if(!bPin){b.x+=nx*ov*(aPin?.15:1);b.y+=ny*ov*(aPin?.15:1);}
       const rv=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
       if(rv>0){
-        const imp=rv*.72;
-        if(!a.attached){a.vx-=imp*nx;a.vy-=imp*ny;}
-        if(!b.attached){b.vx+=imp*nx;b.vy+=imp*ny;}
-        a.wobble+=(Math.random()-.5)*.28;b.wobble+=(Math.random()-.5)*.28;
+        const imp=rv*.3;
+        if(!aPin){a.vx-=imp*nx;a.vy-=imp*ny;}
+        if(!bPin){b.vx+=imp*nx;b.vy+=imp*ny;}
+        a.wobble+=(Math.random()-.5)*.18;b.wobble+=(Math.random()-.5)*.18;
       }
     }
   }
@@ -128,33 +129,35 @@ function update(dt){
   if(phase===0){
     all.forEach(b=>freeDrift(b,1));
     collide();
-    if(pT>2.4){phase=1;pT=0;}
+    if(pT>4.5){phase=1;pT=0;}
   }
   else if(phase===1){
-    const prog=Math.min(pT/5.5,1);
+    const prog=Math.min(pT/7,1);
     all.forEach(b=>{
       if(b.slot){
         const dx=b.tx-b.x,dy=b.ty-b.y,d=Math.sqrt(dx*dx+dy*dy);
-        const zone=b.r*5,pull=.003+prog*.022;
-        if(d<zone){
-          b.vx+=dx*(pull*(1+(zone-d)/zone*2));
-          b.vy+=dy*(pull*(1+(zone-d)/zone*2));
-          if(d<b.r*2.2&&!b.attached){
-            b.vx*=.68;b.vy*=.68;b.attachT+=dt;
-            if(b.attachT>.28){b.attached=true;}
-          }
-        } else {
-          b.vx+=dx*.001+b.drift.ax;b.vy+=dy*.001+b.drift.ay;
+        const zone=b.r*3.2;
+        const pull=.0003+prog*.005;
+        b.vx+=dx*pull+b.drift.ax*.6;
+        b.vy+=dy*pull+b.drift.ay*.6;
+        if(d<zone&&!b.attached){
+          b.vx*=.6;b.vy*=.6;
+          b.attachT+=dt;
+          if(b.attachT>.18){b.attached=true;}
         }
-        if(!b.attached){b.vx*=.97;b.vy*=.97;b.x+=b.vx;b.y+=b.vy;wall(b);}
-        else{b.x=lerp(b.x,b.tx,.16);b.y=lerp(b.y,b.ty,.16);}
+        if(b.attachT>.0){
+          const snap=Math.min(b.attachT*1.2,.35);
+          b.x=lerp(b.x,b.tx,snap);b.y=lerp(b.y,b.ty,snap);
+        } else {
+          b.vx*=.98;b.vy*=.98;b.x+=b.vx;b.y+=b.vy;wall(b);
+        }
       } else {freeDrift(b,1);}
-      b.wobble*=.87;
+      b.wobble*=.88;
     });
     collide();
     const allIn=all.filter(b=>b.slot).every(b=>b.attached);
-    if((allIn&&pT>2.8)||pT>9){
-      all.filter(b=>b.slot&&!b.attached).forEach(b=>{b.attached=true;});
+    if((allIn&&pT>3)||pT>11){
+      all.filter(b=>b.slot&&!b.attached).forEach(b=>{b.attached=true;b.attachT=1;});
       phase=2;pT=0;
     }
   }
