@@ -114,7 +114,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
                     repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,.8) 30px, rgba(255,255,255,.8) 32px); }
 .ps-bubble { position: absolute; border-radius: 50%; pointer-events: none; will-change: transform; }
 .ps-bubble-1 { width:120px;height:120px; top:12%;right:10%; background:radial-gradient(circle at 35% 35%,rgba(164,112,200,.85),rgba(100,60,150,.5)); border:3px solid rgba(255,255,255,.3); animation:psBobble 6s ease-in-out infinite; }
-.ps-bubble-2 { width:80px;height:80px;  top:55%;right:20%; background:radial-gradient(circle at 35% 35%,rgba(200,160,230,.8),rgba(140,90,190,.4));  border:3px solid rgba(255,255,255,.3); animation:psBobble 8s ease-in-out infinite 2s; }
+.ps-bubble-2 { width:80px;height:80px;  top:15%;left:48%; background:radial-gradient(circle at 35% 35%,rgba(200,160,230,.8),rgba(140,90,190,.4));  border:3px solid rgba(255,255,255,.3); animation:psBobble 8s ease-in-out infinite 2s; }
 .ps-bubble-3 { width:100px;height:100px;bottom:15%;right:8%;background:radial-gradient(circle at 35% 35%,rgba(188,140,190,.8),rgba(120,80,130,.4));  border:3px solid rgba(255,255,255,.3); animation:psBobble 7s ease-in-out infinite 1s; }
 .ps-bubble-4 { width:60px;height:60px;  top:30%;right:32%;background:radial-gradient(circle at 35% 35%,rgba(180,130,220,.8),rgba(120,70,170,.4)); border:3px solid rgba(255,255,255,.3); animation:psBobble 9s ease-in-out infinite 3s; }
 .ps-bubble-5 { width:45px;height:45px;  top:18%;right:52%; background:radial-gradient(circle at 38% 32%,rgba(210,170,240,.9),rgba(150,100,200,.5)); border:2px solid rgba(255,255,255,.25); animation:psBobble 7.5s ease-in-out infinite 0.5s; }
