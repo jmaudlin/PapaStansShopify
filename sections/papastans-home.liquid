@@ -135,13 +135,13 @@ function update(dt){
     all.forEach(b=>{
       if(b.slot){
         const dx=b.tx-b.x,dy=b.ty-b.y,d=Math.sqrt(dx*dx+dy*dy);
-        const zone=b.r*3.8,pull=.003+prog*.02;
+        const zone=b.r*5,pull=.003+prog*.022;
         if(d<zone){
-          b.vx+=dx*(pull*(1+(zone-d)/zone*1.8));
-          b.vy+=dy*(pull*(1+(zone-d)/zone*1.8));
-          if(d<b.r*1.4&&!b.attached){
-            b.vx*=.72;b.vy*=.72;b.attachT+=dt;
-            if(b.attachT>.38){b.attached=true;}
+          b.vx+=dx*(pull*(1+(zone-d)/zone*2));
+          b.vy+=dy*(pull*(1+(zone-d)/zone*2));
+          if(d<b.r*2.2&&!b.attached){
+            b.vx*=.68;b.vy*=.68;b.attachT+=dt;
+            if(b.attachT>.28){b.attached=true;}
           }
         } else {
           b.vx+=dx*.001+b.drift.ax;b.vy+=dy*.001+b.drift.ay;
@@ -153,7 +153,10 @@ function update(dt){
     });
     collide();
     const allIn=all.filter(b=>b.slot).every(b=>b.attached);
-    if(allIn&&pT>3.2){phase=2;pT=0;}
+    if((allIn&&pT>2.8)||pT>9){
+      all.filter(b=>b.slot&&!b.attached).forEach(b=>{b.attached=true;});
+      phase=2;pT=0;
+    }
   }
   else if(phase===2){
     const t=Math.min(pT/1.8,1);
@@ -309,9 +312,14 @@ function tick(now){
   rafId=requestAnimationFrame(tick);
 }
 
-mkBubbles();
-last=performance.now();
-requestAnimationFrame(tick);
+function init(){
+  resize();
+  mkBubbles();
+  last=performance.now();
+  requestAnimationFrame(tick);
+}
+if(document.readyState==='complete'){ init(); }
+else{ window.addEventListener('load', init); }
 })();
 </script>
 
