@@ -273,7 +273,6 @@ function skipTo(){
 }
 
 const scrollEl=document.body;
-let scrollSpinAngle=0, scrollSpinV=0;
 scrollEl.addEventListener('scroll',()=>{
   const sy=scrollEl.scrollTop;
   scrollV=sy-lastScrollY; lastScrollY=sy; scrollIdle=0;
