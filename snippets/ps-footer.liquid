@@ -273,7 +273,69 @@ psRefreshCart();
     return true;
   }
 
-  let scrollV = 0, lastST = 0;
+  let fartBubbles = [];
+  let fartState = 0, fartT = 0;
+
+  function triggerFart(){
+    if(fartState > 0) return;
+    fartState = 1; fartT = 0;
+    // propulsion kick
+    vx += rnd(-40,40); vy -= rnd(20,50);
+    spin += rnd(-.4,.4);
+    // spawn fart bubbles from butt (below mascot center)
+    const buttX = x + Math.sin(angle) * R * .6;
+    const buttY = y + Math.cos(angle) * R * .85;
+    const count = Math.floor(rnd(7,12));
+    for(let i=0;i<count;i++){
+      fartBubbles.push({
+        x: buttX + rnd(-10,10),
+        y: buttY + rnd(-5,5),
+        vx: rnd(-55,55),
+        vy: rnd(20,80),
+        r: rnd(4,14),
+        a: rnd(.7,1),
+        life: rnd(.9,1.8)
+      });
+    }
+  }
+
+  document.addEventListener('click', e=>{
+    const dx = e.clientX - x, dy = e.clientY - y;
+    if(Math.sqrt(dx*dx+dy*dy) < R+12) triggerFart();
+  });
+
+  function drawFartBubbles(){
+    fartBubbles.forEach(b=>{
+      ctx.save(); ctx.globalAlpha = b.a * opacity;
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(190,150,255,.12)'; ctx.fill();
+      ctx.strokeStyle = `rgba(210,170,255,${b.a*.7})`; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(b.x-b.r*.28,b.y-b.r*.28,b.r*.3,b.r*.18,0,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${b.a*.4})`; ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function updateFart(dt){
+    if(fartState===0) return;
+    fartT += dt;
+    fartBubbles.forEach(b=>{
+      b.x += b.vx*dt; b.y += b.vy*dt;
+      b.vy -= 60*dt; // bubbles float up after initial burst
+      b.vx *= Math.pow(.96, dt*60);
+      b.r += .15;
+      b.a -= dt / b.life;
+    });
+    fartBubbles = fartBubbles.filter(b=>b.a>0);
+    if(fartT > 2.8){ fartState=0; fartT=0; }
+  }
+
+  function getMouthPath(type){
+    if(type==='smile'){ return (c)=>{ c.moveTo(-11,12); c.quadraticCurveTo(0,22,11,12); }; }
+    if(type==='open'){ return (c)=>{ c.moveTo(-11,10); c.quadraticCurveTo(0,24,11,10); }; }
+    if(type==='embarrassed'){ return (c)=>{ c.moveTo(-8,16); c.quadraticCurveTo(-4,12,0,16); c.quadraticCurveTo(4,20,8,16); }; }
+    return (c)=>{ c.moveTo(-9,17); c.quadraticCurveTo(0,10,9,17); };
+  }
   document.body.addEventListener('scroll', ()=>{
     const st = document.body.scrollTop || window.scrollY;
     scrollV = st - lastST; lastST = st;
@@ -310,23 +372,34 @@ psRefreshCart();
     const lx = speed>10 ? Math.max(-2,Math.min(2,vx*.012)) : 0;
     const ly = speed>10 ? Math.max(-2,Math.min(2,vy*.012)) : 0;
     const ew=eyeW?11:9, eh=eyeW?13:10.5;
-    [-14,14].forEach(ex=>{
-      ctx.beginPath(); ctx.ellipse(ex,-5,ew,eh,0,0,Math.PI*2);
-      ctx.fillStyle='white'; ctx.fill();
-      ctx.beginPath(); ctx.arc(ex+lx+1.5,ly-4,5.2,0,Math.PI*2);
-      ctx.fillStyle='#1e0838'; ctx.fill();
-      ctx.beginPath(); ctx.arc(ex+lx+3,ly-5.5,1.9,0,Math.PI*2);
-      ctx.fillStyle='white'; ctx.fill();
-    });
+    if(fartState===0){
+      [-14,14].forEach(ex=>{
+        ctx.beginPath(); ctx.ellipse(ex,-5,ew,eh,0,0,Math.PI*2);
+        ctx.fillStyle='white'; ctx.fill();
+        ctx.beginPath(); ctx.arc(ex+lx+1.5,ly-4,5.2,0,Math.PI*2);
+        ctx.fillStyle='#1e0838'; ctx.fill();
+        ctx.beginPath(); ctx.arc(ex+lx+3,ly-5.5,1.9,0,Math.PI*2);
+        ctx.fillStyle='white'; ctx.fill();
+      });
+    }
 
-    const br=blush>1?11:8;
-    ctx.beginPath(); ctx.ellipse(-19,7,br,6,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.5)'; ctx.fill();
-    ctx.beginPath(); ctx.ellipse(19,7,br,6,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.5)'; ctx.fill();
+    const br=blush>1?Math.min(blush*7,20):8;
+    ctx.beginPath(); ctx.ellipse(-19,7,br,br*.55,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.55)'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(19,7,br,br*.55,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.55)'; ctx.fill();
+
+    // embarrassed U-eyes override
+    if(fartState>0){
+      [-14,14].forEach(ex=>{
+        ctx.beginPath(); ctx.arc(ex,-4,8.5,Math.PI,0,false);
+        ctx.strokeStyle='#1e0838'; ctx.lineWidth=3; ctx.stroke();
+        // tears of embarrassment - tiny drops
+        ctx.beginPath(); ctx.ellipse(ex+6,2,2,3,0,0,Math.PI*2);
+        ctx.fillStyle='rgba(150,200,255,.7)'; ctx.fill();
+      });
+    }
 
     ctx.beginPath();
-    if(mouth==='smile'){ ctx.moveTo(-11,12); ctx.quadraticCurveTo(0,22,11,12); }
-    else if(mouth==='open'){ ctx.moveTo(-11,10); ctx.quadraticCurveTo(0,24,11,10); }
-    else { ctx.moveTo(-9,17); ctx.quadraticCurveTo(0,10,9,17); }
+    getMouthPath(mouth)(ctx);
     ctx.strokeStyle='#1e0838'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.stroke();
 
     ctx.restore();
@@ -375,13 +448,22 @@ psRefreshCart();
       sqX = Math.max(.55,Math.min(1.55,sqX));
       sqY = Math.max(.55,Math.min(1.55,sqY));
 
-      mouth = speed>180 ? 'open' : speed>60 ? 'smile' : 'smile';
-      eyeW = speed>160;
-      blush = speed<20 ? 1.5 : 1;
+    mouth = speed>180 ? 'open' : speed>60 ? 'smile' : 'smile';
+    eyeW = speed>160;
+    blush = speed<20 ? 1.5 : 1;
 
-      ctx.globalAlpha = opacity;
-      drawMascot();
-      ctx.globalAlpha = 1;
+    // fart overrides expression
+    if(fartState>0){
+      mouth = 'embarrassed';
+      eyeW = false;
+      blush = 3.5;
+    }
+
+    updateFart(dt);
+    ctx.globalAlpha = opacity;
+    drawMascot();
+    drawFartBubbles();
+    ctx.globalAlpha = 1;
     }
     requestAnimationFrame(tick);
   }
