@@ -630,6 +630,10 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-product-title { font-family: 'Luckiest Guy', cursive; font-size: clamp(1.8rem,3.5vw,2.8rem); color: var(--lav-ink); letter-spacing: .04em; line-height: 1.1; margin-bottom: .8rem; }
 .ps-product-price { margin: 1rem 0; }
 .ps-price-current { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: var(--barn); letter-spacing: .04em; }
+.ps-stock { display: inline-block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 20px; margin: .25rem 0 .75rem; }
+.ps-stock--ok  { background: #e6f4ea; color: #1e7e34; border: 1.5px solid #a8d5b0; }
+.ps-stock--low { background: #fff8e1; color: #8a6200; border: 1.5px solid #f0c94a; }
+.ps-stock--out { background: #fdecea; color: #b71c1c; border: 1.5px solid #f5a9a6; }
 .ps-price-compare { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav-mid); text-decoration: line-through; margin-right: .5rem; opacity: .6; }
 .ps-variant-wrap { margin-bottom: 1rem; }
 .ps-variant-label { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); margin-bottom: .4rem; }

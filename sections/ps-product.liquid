@@ -86,6 +86,28 @@
           <span class="ps-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
         </div>
 
+        <!-- Stock indicator -->
+        {%- assign sel = product.selected_or_first_available_variant -%}
+        {%- if sel.inventory_management == 'shopify' -%}
+          {%- assign qty = sel.inventory_quantity -%}
+          {%- if qty > 10 -%}
+            <div class="ps-stock ps-stock--ok" id="psStockBadge">✔ In Stock</div>
+          {%- elsif qty > 0 -%}
+            <div class="ps-stock ps-stock--low" id="psStockBadge">⚠ Only {{ qty }} left</div>
+          {%- else -%}
+            <div class="ps-stock ps-stock--out" id="psStockBadge">✘ Out of Stock</div>
+          {%- endif -%}
+        {%- endif -%}
+
+        <!-- Variant inventory data for JS -->
+        <script>
+          window.psVariantInventory = {
+            {%- for v in product.variants -%}
+              "{{ v.id }}": { qty: {{ v.inventory_quantity | default: -1 }}, managed: {{ v.inventory_management == 'shopify' }} }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          };
+        </script>
+
         <!-- Add to cart -->
         {%- if product.available -%}
           <div class="ps-qty-row">
@@ -134,6 +156,23 @@ function psChangeQty(delta) {
   const input = document.getElementById('psQtyInput');
   input.value = Math.max(1, parseInt(input.value) + delta);
 }
+function psUpdateStock(variantId) {
+  const badge = document.getElementById('psStockBadge');
+  if (!badge || !window.psVariantInventory) return;
+  const v = window.psVariantInventory[variantId];
+  if (!v || !v.managed) { badge.style.display = 'none'; return; }
+  badge.style.display = 'inline-block';
+  if (v.qty > 10) {
+    badge.className = 'ps-stock ps-stock--ok'; badge.textContent = '✔ In Stock';
+  } else if (v.qty > 0) {
+    badge.className = 'ps-stock ps-stock--low'; badge.textContent = '⚠ Only ' + v.qty + ' left';
+  } else {
+    badge.className = 'ps-stock ps-stock--out'; badge.textContent = '✘ Out of Stock';
+  }
+}
+document.getElementById('psVariantSelect')?.addEventListener('change', function() {
+  psUpdateStock(this.value);
+});
 // Handle form submit via AJAX
 document.getElementById('psProductForm')?.addEventListener('submit', async function(e) {
   e.preventDefault();
