@@ -54,7 +54,7 @@ const PURPLE={r:188,g:105,b:235};
 let phase=0,pT=0,bobT=0,faceFill=0,mascotY=0;
 let hicS=0,hicT=0,hicMouth='smile',hicBlush=1,hicEye='normal';
 let burps=[],all=[],last=0,rafId;
-let scrollV=0,lastScrollY=0,scrollIdle=0,scrollTriggered=false;
+let scrollV=0,lastScrollY=0,scrollIdle=0,scrollTriggered=false,scrollSpinAngle=0,scrollSpinV=0;
 
 const MCX=()=>W*.76;
 const MCY=()=>H*.52;
@@ -171,15 +171,17 @@ function update(dt){
   }
   else if(phase===4){
     bobT+=dt*1.05;
-    const spinAmt=Math.min(Math.abs(scrollV)*.015,1);
     mascotY=Math.sin(bobT)*7;
     scrollIdle+=dt;
-    if(scrollIdle>1.5)scrollTriggered=false;
+    if(scrollIdle>1.8)scrollTriggered=false;
+    scrollSpinV*=.88; scrollSpinAngle+=scrollSpinV;
     all.forEach(b=>{
       if(b.slot){
         b.x=lerp(b.x,b.tx+Math.sin(bobT*(b.depth+.3))*(b.r*.1),.2);
         b.y=lerp(b.y,b.ty,.2);
-        b.wobble=Math.sin(bobT)*.025*(b.slot.key==='body'?1:1.4);
+        b.wobble=b.slot.key==='body'
+          ? Math.sin(bobT)*.025+scrollSpinAngle
+          : Math.sin(bobT*(b.slot.key==='armL'?.9:1.1))*.04+scrollSpinAngle;
         b.fill=1;
       } else {
         const spd=lerp(1.6,.5,b.depth);
@@ -187,10 +189,6 @@ function update(dt){
         b.wobble*=.9;
       }
     });
-    if(spinAmt>.1&&!scrollTriggered){
-      const body=all.find(b=>b.slot?.key==='body');
-      if(body) body.wobble=(scrollV>0?1:-1)*spinAmt*Math.PI*.4;
-    }
     if(hicS>0)tickHic(dt);
     burps.forEach(b=>{b.y-=1.7+b.s*.5;b.r+=.28;b.a-=.014;});
     burps=burps.filter(b=>b.a>0);
@@ -274,12 +272,13 @@ function skipTo(){
   scheduleHic();
 }
 
-window.addEventListener('scroll',()=>{
-  const sy=window.scrollY;
-  scrollV=sy-lastScrollY;lastScrollY=sy;scrollIdle=0;
-  if(Math.abs(scrollV)>8&&phase===4&&hicS===0&&!scrollTriggered){
-    const body=all.find(b=>b.slot?.key==='body');
-    if(body){body.wobble=(scrollV>0?.3:-.3);}
+const scrollEl=document.body;
+let scrollSpinAngle=0, scrollSpinV=0;
+scrollEl.addEventListener('scroll',()=>{
+  const sy=scrollEl.scrollTop;
+  scrollV=sy-lastScrollY; lastScrollY=sy; scrollIdle=0;
+  if(phase===4&&hicS===0){
+    scrollSpinV+=(scrollV>0?.18:-.18)*Math.min(Math.abs(scrollV)*.04,1.2);
     scrollTriggered=true;
   }
 },{passive:true});
