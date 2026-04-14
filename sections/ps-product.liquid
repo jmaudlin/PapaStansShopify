@@ -135,22 +135,18 @@
         <div class="ps-product-desc">{{ product.description }}</div>
       {%- endif -%}
     </div>
+
+    <!-- Similar Items — sidebar strip -->
+    <div class="ps-similar-strip" id="psSimilar" style="display:none">
+      <div class="ps-similar-heading">You Might Also Like</div>
+      <div class="ps-similar-list" id="psSimilarGrid"></div>
+    </div>
   </div>
 
   <!-- Judge.me Review Widget -->
   <div class="ps-reviews-wrap">
     <div class="ps-section-tag" style="margin-bottom:1rem">⭐ Customer Reviews</div>
     <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
-  </div>
-
-  <!-- Similar Items -->
-  <div class="ps-similar" id="psSimilar" style="display:none">
-    <div class="ps-section-tag" style="margin-bottom:1.5rem">🛍️ You Might Also Like</div>
-    <div class="ps-pgrid-wrap">
-      <button class="ps-pgrid-arrow ps-pgrid-prev" onclick="psSimilarScroll(-1)" aria-label="Scroll left">‹</button>
-      <div class="ps-pgrid" id="psSimilarGrid"></div>
-      <button class="ps-pgrid-arrow ps-pgrid-next" onclick="psSimilarScroll(1)" aria-label="Scroll right">›</button>
-    </div>
   </div>
 
   <!-- Back to shop -->
@@ -193,25 +189,21 @@ document.getElementById('psVariantSelect')?.addEventListener('change', function(
     grid.innerHTML = products.map(p => {
       const img = p.featured_image
         ? `<img src="${p.featured_image}" alt="${p.title}" loading="lazy">`
-        : `<div class="ps-pc-img-fallback">🧼</div>`;
+        : `<div class="ps-sim-img-fallback">🧼</div>`;
       const price = (p.price_min / 100).toLocaleString('en-US', { style:'currency', currency:'USD' });
       const available = p.available;
-      return `<div class="ps-pc" onclick="location.href='/products/${p.handle}'">
-        <div class="ps-pc-img">
-          ${img}
-          ${!available ? '<span class="ps-pc-badge ps-sold">Sold Out</span>' : ''}
-          <div class="ps-pc-overlay"><button class="ps-pc-quick" onclick="event.stopPropagation();psSimilarAtc(${p.variants[0].id},this)" ${!available?'disabled':''}>Add to Cart</button></div>
+      return `<a class="ps-sim-card" href="/products/${p.handle}">
+        <div class="ps-sim-img">${img}</div>
+        <div class="ps-sim-body">
+          <div class="ps-sim-name">${p.title}</div>
+          <div class="ps-sim-price">${price}</div>
+          <button class="ps-sim-atc" onclick="event.preventDefault();event.stopPropagation();psSimilarAtc(${p.variants[0].id},this)" ${!available?'disabled':''}>
+            ${available ? 'Add to Cart' : 'Sold Out'}
+          </button>
         </div>
-        <div class="ps-pc-body">
-          <div class="ps-pc-cat">${p.product_type || ''}</div>
-          <div class="ps-pc-name"><a href="/products/${p.handle}">${p.title}</a></div>
-          <div class="ps-pc-foot">
-            <span class="ps-pc-price ${!available?'ps-sold-out':''}">${price}</span>
-          </div>
-        </div>
-      </div>`;
+      </a>`;
     }).join('');
-    document.getElementById('psSimilar').style.display = 'block';
+    document.getElementById('psSimilar').style.display = 'flex';
   } catch(e) {}
 })();
 
