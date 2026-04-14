@@ -173,7 +173,7 @@ function update(dt){
     faceFill=Math.min(pT/.9,1);
     mascotY=-Math.sin(Math.min(pT/.95,1)*Math.PI)*10;
     all.forEach(b=>{if(b.slot){b.x=lerp(b.x,b.tx,.25);b.y=lerp(b.y,b.ty,.25);b.fill=1;}});
-    if(pT>.9){phase=4;pT=0;scheduleHic();}
+    if(pT>.9){phase=4;pT=0;window.psMascotFormed=true;scheduleHic();}
   }
   else if(phase===4){
     bobT+=dt*1.05;
