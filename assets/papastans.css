@@ -43,8 +43,8 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: var(--lav-ink); overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: var(--lav-ink); }
 
 /* ── Rainbow bar ── */
 .ps-rainbow-bar {
