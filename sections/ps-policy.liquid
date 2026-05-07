@@ -97,5 +97,18 @@
 <!-- Footer matching homepage -->
 {% render 'ps-footer' %}
 {% schema %}
-{ "name": "Policy", "settings": [], "presets": [{ "name": "Policy" }] }
+{
+  "name": "Policy",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Policy"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
 {% endschema %}

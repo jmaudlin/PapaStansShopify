@@ -66,4 +66,19 @@
   @media (max-width:860px) { .ps-findus-grid { grid-template-columns:1fr; } .ps-findus-map { height:260px; } }
 </style>
 
-{% schema %}{ "name": "Find Us Page", "settings": [], "presets": [{ "name": "Find Us Page" }] }{% endschema %}
+{% schema %}
+{
+  "name": "Find Us Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Find Us Page"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

@@ -246,4 +246,19 @@ document.getElementById('psProductForm')?.addEventListener('submit', async funct
 });
 </script>
 
-{% schema %}{ "name": "Product", "settings": [], "presets": [{ "name": "Product" }] }{% endschema %}
+{% schema %}
+{
+  "name": "Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}
