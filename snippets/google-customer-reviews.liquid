@@ -1,0 +1,29 @@
+{% comment %}
+  Google Customer Reviews — Survey Opt-In
+  Merchant ID: 5765830005
+
+  This snippet CANNOT be included via theme.liquid (non-Plus Shopify).
+  It must be pasted directly into:
+    Shopify Admin → Settings → Checkout → Order status page → Additional scripts
+
+  All Liquid variables below resolve correctly in that context.
+{% endcomment %}
+
+{% assign delivery_days = 7 %}
+{% assign delivery_date = order.created_at | date: '%s' | plus: 604800 | date: '%Y-%m-%d' %}
+
+<script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+
+<script>
+  window.renderOptIn = function() {
+    window.gapi.load('surveyoptin', function() {
+      window.gapi.surveyoptin.render({
+        "merchant_id":             5765830005,
+        "order_id":                "{{ order.order_number }}",
+        "email":                   "{{ email }}",
+        "delivery_country":        "{{ shipping_address.country_code }}",
+        "estimated_delivery_date": "{{ delivery_date }}"
+      });
+    });
+  }
+</script>
