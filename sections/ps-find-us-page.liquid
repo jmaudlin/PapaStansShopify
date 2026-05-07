@@ -1,4 +1,3 @@
-{% render 'ps-header', nav_solid: true %}
 
 {%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
 
@@ -56,7 +55,6 @@
 
 </div>
 
-{% render 'ps-footer' %}
 
 <style>
   .ps-findus-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }

@@ -1,10 +1,4 @@
-{% assign total_reviews = 0 %}
-{% for i in (1..6) %}
-  {% assign text_key = 'review_' | append: i | append: '_text' %}
-  {% if section.settings[text_key] != blank %}
-    {% assign total_reviews = total_reviews | plus: 1 %}
-  {% endif %}
-{% endfor %}
+{%- assign total_reviews = section.blocks | where: "type", "review" | size -%}
 
 {% if total_reviews > 0 %}
 <section class="ps-htestimonials" id="ps-htestimonials">
@@ -12,38 +6,34 @@
 
     <div class="ps-htestimonials-header">
       <div class="ps-section-tag">⭐ Customer Love</div>
-      <h2 class="ps-section-h2">What Our <em>Customers Say!</em></h2>
-      <p class="ps-htestimonials-sub">Real words from real people who've brought a little Iowa into their homes.</p>
+      <h2 class="ps-section-h2">{{ section.settings.heading }}</h2>
+      <p class="ps-htestimonials-sub">{{ section.settings.subtext }}</p>
     </div>
 
     <div class="ps-htestimonials-track-wrap">
       <button class="ps-htestimonials-arrow ps-htestimonials-prev" aria-label="Previous review">&#8592;</button>
       <div class="ps-htestimonials-viewport">
       <div class="ps-htestimonials-track" id="psTestimonialsTrack">
-        {% for i in (1..6) %}
-          {% assign text_key  = 'review_' | append: i | append: '_text' %}
-          {% assign name_key  = 'review_' | append: i | append: '_name' %}
-          {% assign stars_key = 'review_' | append: i | append: '_stars' %}
-          {% assign prod_key  = 'review_' | append: i | append: '_product' %}
-          {% if section.settings[text_key] != blank %}
-            <div class="ps-htestimonials-card">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'review' and block.settings.text != blank -%}
+            <div class="ps-htestimonials-card" {{ block.shopify_attributes }}>
               <div class="ps-htestimonials-quote">✿</div>
-              <p class="ps-htestimonials-text">{{ section.settings[text_key] }}</p>
+              <p class="ps-htestimonials-text">{{ block.settings.text }}</p>
               <div class="ps-htestimonials-stars">
-                {% assign star_count = section.settings[stars_key] | default: 5 %}
-                {% for s in (1..5) %}
-                  {% if s <= star_count %}<span class="ps-hstar ps-hstar-filled">★</span>{% else %}<span class="ps-hstar">★</span>{% endif %}
-                {% endfor %}
+                {%- assign star_count = block.settings.stars | default: 5 -%}
+                {%- for s in (1..5) -%}
+                  {%- if s <= star_count -%}<span class="ps-hstar ps-hstar-filled">★</span>{%- else -%}<span class="ps-hstar">★</span>{%- endif -%}
+                {%- endfor -%}
               </div>
               <div class="ps-htestimonials-reviewer">
-                <span class="ps-htestimonials-name">— {{ section.settings[name_key] | default: 'Happy Customer' }}</span>
-                {% if section.settings[prod_key] != blank %}
-                  <span class="ps-htestimonials-product">{{ section.settings[prod_key] }}</span>
-                {% endif %}
+                <span class="ps-htestimonials-name">— {{ block.settings.name | default: 'Happy Customer' }}</span>
+                {%- if block.settings.product != blank -%}
+                  <span class="ps-htestimonials-product">{{ block.settings.product }}</span>
+                {%- endif -%}
               </div>
             </div>
-          {% endif %}
-        {% endfor %}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
       </div>
       <button class="ps-htestimonials-arrow ps-htestimonials-next" aria-label="Next review">&#8594;</button>
@@ -249,191 +239,66 @@
 </script>
 {% endif %}
 
-{% schema %}
+{%- schema -%}
 {
   "name": "Testimonials",
   "settings": [
     {
-      "type": "header",
-      "content": "Review 1"
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say!"
     },
     {
       "type": "textarea",
-      "id": "review_1_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_1_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_1_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_1_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 2"
-    },
-    {
-      "type": "textarea",
-      "id": "review_2_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_2_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_2_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_2_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 3"
-    },
-    {
-      "type": "textarea",
-      "id": "review_3_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_3_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_3_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_3_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 4"
-    },
-    {
-      "type": "textarea",
-      "id": "review_4_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_4_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_4_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_4_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 5"
-    },
-    {
-      "type": "textarea",
-      "id": "review_5_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_5_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_5_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_5_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 6"
-    },
-    {
-      "type": "textarea",
-      "id": "review_6_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_6_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_6_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_6_product",
-      "label": "Product (optional)"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Testimonials"
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Real words from real people who've brought a little Iowa into their homes."
     }
   ],
   "blocks": [
     {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Stars"
+        },
+        {
+          "type": "text",
+          "id": "product",
+          "label": "Product (optional)"
+        }
+      ]
+    },
+    {
       "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Home"
     }
   ],
   "templates": [
     "index"
   ]
 }
-{% endschema %}
+{%- endschema -%}

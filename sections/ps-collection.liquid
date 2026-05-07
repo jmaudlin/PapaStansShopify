@@ -1,4 +1,3 @@
-{% render 'ps-header', nav_solid: true %}
 
 {%- paginate collection.products by 24 -%}
 
@@ -61,7 +60,7 @@
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <a href="{{ product.url }}">
-              <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}"
+              <img src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}"
                    alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
                    loading="lazy" width="400" height="400">
             </a>
@@ -114,7 +113,6 @@
 
 {%- endpaginate -%}
 
-{% render 'ps-footer' %}
 
 <script>
 // Preserve sort_by param when clicking category tabs

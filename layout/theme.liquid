@@ -50,11 +50,14 @@
   {{ 'papastans.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
-  {{ content_for_layout }}
+  <a href="#MainContent" class="skip-to-content-link visually-hidden">Skip to content</a>
+  {% section 'ps-header' %}
+  <main id="MainContent" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+  {% section 'ps-footer' %}
 {%- if settings.predictive_search_enabled -%}
-      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
-
-
+  <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 </body>
 </html>

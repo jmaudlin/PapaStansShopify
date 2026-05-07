@@ -1,0 +1,532 @@
+{%- comment -%}
+  ps-footer.liquid — Site footer, cart drawer, and all shared cart JS.
+
+  Shopify admin wiring (Content > Navigation):
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ Menu: "Footer"   handle: footer                                 │
+  │   Top-level items = column headings (e.g. "Shop", "About",      │
+  │   "Help"). Set their URL to / since they are labels, not links. │
+  │   Child items under each heading = the actual footer links.     │
+  │                                                                 │
+  │   Example structure:                                            │
+  │     Shop (/)                                                    │
+  │       ├ All Products  → /collections/all                        │
+  │       └ Best Sellers  → /collections/all?sort_by=best-selling   │
+  │     About (/)                                                   │
+  │       ├ Our Story     → /pages/our-story                        │
+  │       └ Find Us       → /#ps-find-us                            │
+  │     Help (/)                                                    │
+  │       ├ Contact Us    → /pages/contact                          │
+  │       └ View Cart     → /cart                                   │
+  │                                                                 │
+  │   If the "Footer" menu doesn't exist, hardcoded defaults show.  │
+  └─────────────────────────────────────────────────────────────────┘
+
+  Also contains all shared cart JS functions used site-wide:
+    psOpenCart / psCloseCart / psRefreshCart / psRenderCart
+    psAddToCart / psUpdateQty / psRemoveLine / psShowToast / psMoney
+{%- endcomment -%}
+
+<footer class="ps-footer">
+  <div class="ps-footer-top">
+    <div>
+      <a href="{{ shop.url }}" class="ps-f-logo">
+        {%- if section.settings.footer_logo != blank -%}
+          <img src="{{ section.settings.footer_logo | image_url: width: 200 }}" alt="{{ shop.name }}" class="ps-f-logo-img" width="200" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" class="ps-f-logo-img" loading="lazy">
+        {%- endif -%}
+      </a>
+      <p class="ps-f-sub">{{ section.settings.tagline }}</p>
+      <p class="ps-f-desc">{{ section.settings.description }}</p>
+      <div class="ps-f-contact">📞 <a href="tel:{{ section.settings.phone_link }}">{{ section.settings.phone }}</a></div>
+      {%- assign soc_menu = linklists['social-media-accounts'] -%}
+      {%- if soc_menu.links.size > 0 -%}
+        <div class="ps-f-soc">
+          {%- for link in soc_menu.links -%}
+            {%- assign url_lower = link.url | downcase -%}
+            {%- assign title_lower = link.title | downcase -%}
+            {%- if url_lower contains 'facebook' or title_lower contains 'facebook' -%}
+              {%- assign soc_color = '#1877F2' -%}
+            {%- elsif url_lower contains 'instagram' or title_lower contains 'instagram' -%}
+              {%- assign soc_color = '#E1306C' -%}
+            {%- elsif url_lower contains 'tiktok' or title_lower contains 'tiktok' or title_lower contains 'tik-tok' -%}
+              {%- assign soc_color = '#69C9D0' -%}
+            {%- elsif url_lower contains 'youtube' or title_lower contains 'youtube' -%}
+              {%- assign soc_color = '#FF0000' -%}
+            {%- elsif url_lower contains 'pinterest' or title_lower contains 'pinterest' or title_lower contains 'pintrest' -%}
+              {%- assign soc_color = '#BD081C' -%}
+            {%- elsif url_lower contains 'twitter' or url_lower contains 'x.com' or title_lower contains 'twitter' or title_lower == 'x' -%}
+              {%- assign soc_color = '#1DA1F2' -%}
+            {%- elsif url_lower contains 'google' or title_lower contains 'google' -%}
+              {%- assign soc_color = '#34A853' -%}
+            {%- elsif url_lower contains 'bing' or title_lower contains 'bing' -%}
+              {%- assign soc_color = '#008373' -%}
+            {%- elsif title_lower contains 'bbb' or title_lower contains 'better business' -%}
+              {%- assign soc_color = '#003087' -%}
+            {%- else -%}
+              {%- assign soc_color = '#BC8CBE' -%}
+            {%- endif -%}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" aria-label="{{ link.title }}" class="ps-soc-a" style="color:{{ soc_color }};border-color:{{ soc_color }}33;">
+              {%- if url_lower contains 'facebook' or title_lower contains 'facebook' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              {%- elsif url_lower contains 'instagram' or title_lower contains 'instagram' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              {%- elsif url_lower contains 'tiktok' or title_lower contains 'tiktok' or title_lower contains 'tik-tok' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+              {%- elsif url_lower contains 'youtube' or title_lower contains 'youtube' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              {%- elsif url_lower contains 'pinterest' or title_lower contains 'pinterest' or title_lower contains 'pintrest' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              {%- elsif url_lower contains 'twitter' or url_lower contains 'x.com' or title_lower contains 'twitter' or title_lower == 'x' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+              {%- elsif url_lower contains 'google' or title_lower contains 'google' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
+              {%- elsif url_lower contains 'bing' or title_lower contains 'bing' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M3.005 3.005v18.015l3.492 1.96 9.009-5.047-3.688-2.197 3.688-1.558V3.005H3.005zm3.496 2.496h3.008v9.988l-3.008-1.79V5.501z"/></svg>
+              {%- elsif title_lower contains 'bbb' or title_lower contains 'better business' -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4c1.86 0 3.37 1.51 3.37 3.37 0 1.86-1.51 3.37-3.37 3.37-1.86 0-3.37-1.51-3.37-3.37C8.63 6.51 10.14 5 12 5zm0 8.5c2.24 0 6.71 1.12 6.71 3.37v1.13H5.29v-1.13c0-2.25 4.47-3.37 6.71-3.37z"/></svg>
+              {%- else -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              {%- endif -%}
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- assign footer_nav = linklists['footer'] -%}
+    {%- if footer_nav.links.size > 0 -%}
+      {%- for col in footer_nav.links -%}
+        <div class="ps-footer-col">
+          <h5>{{ col.title }}</h5>
+          <ul>
+            {%- for link in col.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="ps-footer-col"><h5>Shop</h5><ul>
+        <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
+        <li><a href="{{ shop.url }}/collections/all?sort_by=best-selling">Best Sellers</a></li>
+        <li><a href="{{ shop.url }}/collections/all">Soaps</a></li>
+        <li><a href="{{ shop.url }}/collections/all">Lotions</a></li>
+        <li><a href="{{ shop.url }}/collections/all">Candles</a></li>
+      </ul></div>
+      <div class="ps-footer-col"><h5>About</h5><ul>
+        <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
+        <li><a href="{{ shop.url }}/pages/our-story">Veteran Owned</a></li>
+        <li><a href="{{ shop.url }}/#ps-scents">Scent Library</a></li>
+        <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
+      </ul></div>
+      <div class="ps-footer-col"><h5>Help</h5><ul>
+        <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
+        <li><a href="{{ shop.url }}/pages/returns">Returns &amp; Refunds</a></li>
+        <li><a href="{{ shop.url }}/pages/privacy-policy">Privacy Policy</a></li>
+        <li><a href="{{ shop.url }}/pages/terms-of-service">Terms of Service</a></li>
+        <li><a href="{{ shop.url }}/pages/contact">Contact Us</a></li>
+        <li><a href="{{ shop.url }}/cart">View Cart</a></li>
+      </ul></div>
+    {%- endif -%}
+  </div>
+  <div class="ps-footer-btm">
+    <p>© {{ 'now' | date: "%Y" }} Papa Stan's of Iowa. All rights reserved. Made with ❤️ in Oskaloosa.</p>
+    {%- if section.settings.show_powered_by -%}<p>Powered by Shopify</p>{%- endif -%}
+  </div>
+</footer>
+
+{% render 'ps-cart-drawer' %}
+
+<script>
+/* ─── Shared cart JS — do not duplicate in individual sections ─── */
+const PS_FREE_SHIP_CENTS = 5500;
+
+function psMoney(c) { return '$' + (c / 100).toFixed(2); }
+
+async function psAddToCart(variantId, title) {
+  psShowToast('Adding to cart… 🛒');
+  try {
+    const r = await fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    });
+    if (!r.ok) throw new Error('Failed');
+    await psRefreshCart();
+    psShowToast('✅ ' + title + ' added!');
+    const pill = document.querySelector('.ps-cart-pill');
+    if (pill) { pill.classList.remove('ps-bump'); void pill.offsetWidth; pill.classList.add('ps-bump'); }
+    psOpenCart();
+  } catch(e) { psShowToast('Something went wrong, please try again.'); }
+}
+
+async function psUpdateQty(key, qty) {
+  const u = {}; u[key] = qty;
+  await fetch('/cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ updates: u }) });
+  await psRefreshCart();
+}
+async function psRemoveLine(key) { await psUpdateQty(key, 0); }
+
+async function psRefreshCart() {
+  const r = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+  const cart = await r.json();
+  psRenderCart(cart);
+  const countEl = document.getElementById('psCartCount');
+  if (countEl) countEl.textContent = cart.item_count || 0;
+}
+
+function psRenderCart(cart) {
+  const el = document.getElementById('psCartItems');
+  const ft = document.getElementById('psCartFoot');
+  if (!el) return;
+  if (!cart.items || !cart.items.length) {
+    el.innerHTML = '<p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>';
+    if (ft) ft.style.display = 'none';
+    return;
+  }
+  if (ft) ft.style.display = 'block';
+  el.innerHTML = cart.items.map(item => `
+    <div class="ps-cart-item">
+      <img class="ps-ci-img" src="${item.image ? item.image.replace('http:', 'https:') : ''}" alt="${item.title}" onerror="this.style.visibility='hidden'">
+      <div>
+        <div class="ps-ci-name">${item.product_title}</div>
+        <div class="ps-ci-price">${psMoney(item.price)}</div>
+        <div class="ps-ci-qty">
+          <button onclick="psUpdateQty('${item.key}',${item.quantity - 1})">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="psUpdateQty('${item.key}',${item.quantity + 1})">+</button>
+        </div>
+      </div>
+      <button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button>
+    </div>`).join('');
+  document.getElementById('psCartTotal').textContent = psMoney(cart.total_price);
+  const pct = Math.min((cart.total_price / PS_FREE_SHIP_CENTS) * 100, 100);
+  document.getElementById('psShipFill').style.width = pct + '%';
+  const rem = psMoney(Math.max(PS_FREE_SHIP_CENTS - cart.total_price, 0));
+  document.getElementById('psShipMsg').innerHTML = cart.total_price >= PS_FREE_SHIP_CENTS
+    ? '<strong>🎉 Free shipping unlocked!</strong>'
+    : `Add <strong>${rem} more</strong> for free shipping 🚚`;
+}
+
+function psOpenCart() {
+  psRefreshCart();
+  document.getElementById('psCartDrawer').classList.add('open');
+  document.getElementById('psCartOverlay').classList.add('open');
+}
+function psCloseCart() {
+  document.getElementById('psCartDrawer').classList.remove('open');
+  document.getElementById('psCartOverlay').classList.remove('open');
+}
+
+let psToastTimer;
+function psShowToast(msg) {
+  const t = document.getElementById('psToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(psToastTimer);
+  psToastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('psNav');
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+psRefreshCart();
+</script>
+
+<script>
+(function(){
+  if(window.innerWidth < 900) return;
+  const cv = document.createElement('canvas');
+  cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9998;';
+  document.body.appendChild(cv);
+  const ctx = cv.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  let W, H;
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr;
+    cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  const R = 35;
+  let x = W*0.85, y = H*0.35;
+  let vx = rnd(-30,30), vy = 0;
+  let angle = 0, spin = 0;
+  let sqX = 1, sqY = 1;
+  let opacity = 0, targetOp = 0;
+  let mouth = 'smile', eyeW = false, blush = 1;
+  let bobT = 0, last = 0;
+
+  function rnd(a,b){ return a+(b-a)*Math.random(); }
+  function lerp(a,b,t){ return a+(b-a)*Math.max(0,Math.min(1,t)); }
+
+  const isHome = !!document.getElementById('psMascotCanvas');
+  const heroH = window.innerHeight;
+
+  function shouldShow(){
+    const st = document.body.scrollTop || window.scrollY;
+    if(isHome) return st > heroH * 0.55;
+    return true;
+  }
+
+  let fartBubbles = [];
+  let fartState = 0, fartT = 0;
+
+  function triggerFart(){
+    if(fartState > 0) return;
+    fartState = 1; fartT = 0;
+    // propulsion kick
+    vx += rnd(-40,40); vy -= rnd(20,50);
+    spin += rnd(-.4,.4);
+    // spawn fart bubbles from butt (below mascot center)
+    const buttX = x + Math.sin(angle) * R * .6;
+    const buttY = y + Math.cos(angle) * R * .85;
+    const count = Math.floor(rnd(7,12));
+    for(let i=0;i<count;i++){
+      fartBubbles.push({
+        x: buttX + rnd(-10,10),
+        y: buttY + rnd(-5,5),
+        vx: rnd(-55,55),
+        vy: rnd(20,80),
+        r: rnd(4,14),
+        a: rnd(.7,1),
+        life: rnd(.9,1.8)
+      });
+    }
+  }
+
+  document.addEventListener('click', e=>{
+    const dx = e.clientX - x, dy = e.clientY - y;
+    if(Math.sqrt(dx*dx+dy*dy) < R+12) triggerFart();
+  });
+
+  function drawFartBubbles(){
+    fartBubbles.forEach(b=>{
+      ctx.save(); ctx.globalAlpha = b.a * opacity;
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(190,150,255,.12)'; ctx.fill();
+      ctx.strokeStyle = `rgba(210,170,255,${b.a*.7})`; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(b.x-b.r*.28,b.y-b.r*.28,b.r*.3,b.r*.18,0,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${b.a*.4})`; ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function updateFart(dt){
+    if(fartState===0) return;
+    fartT += dt;
+    fartBubbles.forEach(b=>{
+      b.x += b.vx*dt; b.y += b.vy*dt;
+      b.vy -= 60*dt; // bubbles float up after initial burst
+      b.vx *= Math.pow(.96, dt*60);
+      b.r += .15;
+      b.a -= dt / b.life;
+    });
+    fartBubbles = fartBubbles.filter(b=>b.a>0);
+    if(fartT > 2.8){ fartState=0; fartT=0; }
+  }
+
+  function getMouthPath(type){
+    if(type==='smile'){ return (c)=>{ c.moveTo(-11,12); c.quadraticCurveTo(0,22,11,12); }; }
+    if(type==='open'){ return (c)=>{ c.moveTo(-11,10); c.quadraticCurveTo(0,24,11,10); }; }
+    if(type==='embarrassed'){ return (c)=>{ c.moveTo(-8,16); c.quadraticCurveTo(-4,12,0,16); c.quadraticCurveTo(4,20,8,16); }; }
+    return (c)=>{ c.moveTo(-9,17); c.quadraticCurveTo(0,10,9,17); };
+  }
+  document.body.addEventListener('scroll', ()=>{
+    const st = document.body.scrollTop || window.scrollY;
+    scrollV = st - lastST; lastST = st;
+    if(targetOp > 0.1 && Math.abs(scrollV) > 4){
+      vy += scrollV * 0.38;
+      vx += rnd(-55, 55);
+      spin += scrollV * 0.009;
+    }
+  }, {passive:true});
+
+  function drawMascot(){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.scale(sqX, sqY);
+
+    const limbs=[{dx:-48,dy:-2,r:7.5},{dx:48,dy:-2,r:7.5},{dx:-16,dy:48,r:7.5},{dx:16,dy:48,r:7.5}];
+    limbs.forEach(l=>{
+      ctx.beginPath(); ctx.arc(l.dx,l.dy,l.r,0,Math.PI*2);
+      ctx.fillStyle='#b87de8'; ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.22)'; ctx.lineWidth=1.5; ctx.stroke();
+    });
+
+    ctx.beginPath(); ctx.arc(0,0,R,0,Math.PI*2);
+    const g=ctx.createRadialGradient(-R*.28,-R*.28,R*.06,0,0,R);
+    g.addColorStop(0,'#ddb8f8'); g.addColorStop(1,'#a055d8');
+    ctx.fillStyle=g; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.lineWidth=2; ctx.stroke();
+
+    ctx.beginPath(); ctx.ellipse(-R*.28,-R*.28,R*.3,R*.18,-.35,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.32)'; ctx.fill();
+
+    const speed=Math.sqrt(vx*vx+vy*vy);
+    const lx = speed>10 ? Math.max(-2,Math.min(2,vx*.012)) : 0;
+    const ly = speed>10 ? Math.max(-2,Math.min(2,vy*.012)) : 0;
+    const ew=eyeW?11:9, eh=eyeW?13:10.5;
+    if(fartState===0){
+      [-14,14].forEach(ex=>{
+        ctx.beginPath(); ctx.ellipse(ex,-5,ew,eh,0,0,Math.PI*2);
+        ctx.fillStyle='white'; ctx.fill();
+        ctx.beginPath(); ctx.arc(ex+lx+1.5,ly-4,5.2,0,Math.PI*2);
+        ctx.fillStyle='#1e0838'; ctx.fill();
+        ctx.beginPath(); ctx.arc(ex+lx+3,ly-5.5,1.9,0,Math.PI*2);
+        ctx.fillStyle='white'; ctx.fill();
+      });
+    }
+
+    const br=blush>1?Math.min(blush*7,20):8;
+    ctx.beginPath(); ctx.ellipse(-19,7,br,br*.55,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.55)'; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(19,7,br,br*.55,0,0,Math.PI*2); ctx.fillStyle='rgba(255,130,165,.55)'; ctx.fill();
+
+    // embarrassed U-eyes override
+    if(fartState>0){
+      [-14,14].forEach(ex=>{
+        ctx.beginPath(); ctx.arc(ex,-4,8.5,Math.PI,0,false);
+        ctx.strokeStyle='#1e0838'; ctx.lineWidth=3; ctx.stroke();
+        // tears of embarrassment - tiny drops
+        ctx.beginPath(); ctx.ellipse(ex+6,2,2,3,0,0,Math.PI*2);
+        ctx.fillStyle='rgba(150,200,255,.7)'; ctx.fill();
+      });
+    }
+
+    ctx.beginPath();
+    getMouthPath(mouth)(ctx);
+    ctx.strokeStyle='#1e0838'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function tick(now){
+    const dt = Math.min((now-last)/1000, 0.05); last=now;
+    ctx.clearRect(0,0,W,H);
+
+    targetOp = shouldShow() ? 1 : 0;
+    if(!isHome && opacity===0 && targetOp===0){
+      const st=document.body.scrollTop||window.scrollY;
+      if(now>1800) targetOp=1;
+    }
+    opacity = lerp(opacity, targetOp, dt*2.5);
+
+    if(opacity > 0.02){
+      bobT += dt*0.9;
+      const speed = Math.sqrt(vx*vx+vy*vy);
+
+      vy += 220*dt;
+      vx *= Math.pow(0.991, dt*60);
+      vy *= Math.pow(0.994, dt*60);
+      spin *= Math.pow(0.91, dt*60);
+      angle += spin*dt*55;
+
+      if(speed < 25){
+        vy -= 90*dt;
+        vx += Math.sin(bobT*1.1)*12*dt;
+      }
+
+      x += vx*dt; y += vy*dt;
+
+      const pad=R+6;
+      if(x < pad){ x=pad; vx=Math.abs(vx)*0.58; spin+=rnd(.2,.5); sqX=0.72; sqY=1.28; }
+      if(x > W-pad){ x=W-pad; vx=-Math.abs(vx)*0.58; spin-=rnd(.2,.5); sqX=0.72; sqY=1.28; }
+      if(y < pad){ y=pad; vy=Math.abs(vy)*0.52; spin+=rnd(-.4,.4); }
+      if(y > H-pad){
+        y=H-pad; vy=-Math.abs(vy)*0.52;
+        spin+=rnd(-.6,.6); sqX=1.45; sqY=0.68;
+        if(Math.abs(vy)<15) vy=-rnd(40,80);
+      }
+
+      sqX = sqX>1 ? Math.max(sqX-dt*10,1) : Math.min(sqX+dt*10,1);
+      sqY = sqY>1 ? Math.max(sqY-dt*10,1) : Math.min(sqY+dt*10,1);
+      sqX = Math.max(.55,Math.min(1.55,sqX));
+      sqY = Math.max(.55,Math.min(1.55,sqY));
+
+    mouth = speed>180 ? 'open' : speed>60 ? 'smile' : 'smile';
+    eyeW = speed>160;
+    blush = speed<20 ? 1.5 : 1;
+
+    // fart overrides expression
+    if(fartState>0){
+      mouth = 'embarrassed';
+      eyeW = false;
+      blush = 3.5;
+    }
+
+    updateFart(dt);
+    ctx.globalAlpha = opacity;
+    drawMascot();
+    drawFartBubbles();
+    ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if(!isHome){
+    setTimeout(()=>{ targetOp=1; }, 1800);
+  } else {
+    const poll=setInterval(()=>{
+      if(window.psMascotFormed){ clearInterval(poll); }
+    },300);
+    setTimeout(()=>{ clearInterval(poll); },15000);
+  }
+
+  requestAnimationFrame(t=>{ last=t; requestAnimationFrame(tick); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo",
+      "info": "Leave blank to use logo-transparent.png asset."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "of Iowa · Est. 2019 · Veteran-Owned"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "\"The cleanest body products that money can buy\" — handcrafted with love in Oskaloosa, Iowa."
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone number",
+      "default": "641.670.1573"
+    },
+    {
+      "type": "text",
+      "id": "phone_link",
+      "label": "Phone link (digits only)",
+      "default": "6416701573"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "Show 'Powered by Shopify'",
+      "default": true
+    }
+  ],
+  "blocks": [{ "type": "@app" }]
+}
+{% endschema %}

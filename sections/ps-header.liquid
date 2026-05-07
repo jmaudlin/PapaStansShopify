@@ -1,0 +1,149 @@
+{%- comment -%}
+  ps-header.liquid — Site header: rainbow bar, announcement bar, main nav, search bar.
+
+  Usage (inner pages):  {% render 'ps-header', nav_solid: true %}
+  Usage (homepage):     {% render 'ps-header' %}
+
+  Shopify admin wiring (Content > Navigation):
+  ┌─────────────────────────────────────────────────────────────┐
+  │ Menu: "Main Menu"          handle: main-menu                │
+  │   Add/remove/reorder nav links here.                        │
+  │                                                             │
+  │ Menu: "Announcement Bar"   handle: announcement-bar         │
+  │   Each menu item = one announcement segment.                │
+  │   • Title = the text shown (emoji OK, e.g. "🎁 Free Samples"│
+  │   • URL   = set to / for plain text, or a real URL to link  │
+  └─────────────────────────────────────────────────────────────┘
+{%- endcomment -%}
+
+<div class="ps-rainbow-bar"></div>
+
+{%- if section.settings.show_announcement -%}
+<div class="ps-announce">
+  {%- assign ann_links = linklists['announcement-bar'].links -%}
+  {%- if ann_links.size > 0 -%}
+    {%- for link in ann_links -%}
+      {%- unless forloop.first -%} &nbsp;·&nbsp; {%- endunless -%}
+      {%- if link.url != blank and link.url != '/' -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- else -%}
+        {{ link.title }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {{ section.settings.announcement_fallback }}
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+{%- assign is_home = false -%}
+{%- if request.page_type == 'index' -%}{%- assign is_home = true -%}{%- endif -%}
+<nav class="ps-nav{% unless is_home %} ps-nav-solid{% endunless %}" id="psNav">
+  <a href="{{ shop.url }}" class="ps-nav-logo">
+    {%- if section.settings.logo != blank -%}
+      <img src="{{ section.settings.logo | image_url: width: section.settings.logo_width }}"
+           alt="{{ shop.name }}"
+           class="ps-nav-logo-img"
+           width="{{ section.settings.logo_width }}"
+           height="{{ section.settings.logo_width | divided_by: 4 }}"
+           loading="eager">
+    {%- else -%}
+      <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img" loading="eager">
+    {%- endif -%}
+  </a>
+  <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="ps-nav-links" id="psNavLinks">
+    {%- for link in linklists['main-menu'].links -%}
+      {%- if link.links != blank -%}
+        <li class="ps-nav-has-dropdown">
+          <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }} <span class="ps-nav-caret">▾</span></a>
+          <ul class="ps-nav-dropdown">
+            {%- for child in link.links -%}
+              <li><a href="{{ child.url }}"{% if child.url == request.path %} class="active"{% endif %}>{{ child.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+      {%- else -%}
+        <li><a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }}</a></li>
+      {%- endif -%}
+    {%- else -%}
+      <li><a href="{{ shop.url }}/collections/all">Shop</a></li>
+    {%- endfor -%}
+    <li class="ps-nav-drawer-account">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">👤 {{ customer.first_name }}</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">👤 Sign In</a>
+      {%- endif -%}
+    </li>
+  </ul>
+  <div class="ps-nav-actions">
+    <button type="button" id="psSearchTrigger" class="ps-nav-search-btn" aria-label="Open search" onclick="event.stopPropagation();psOpenSearch()">🔍</button>
+    {%- if customer -%}
+      <a href="{{ routes.account_url }}" class="ps-nav-account-link">👤 {{ customer.first_name }}</a>
+    {%- else -%}
+      <a href="{{ routes.account_login_url }}" class="ps-nav-account-link">👤 Sign In</a>
+    {%- endif -%}
+    <button class="ps-cart-btn" onclick="psOpenCart()">
+      🛒 Cart <span class="ps-cart-pill" id="psCartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+{% render 'ps-search-bar' %}
+
+<script>
+document.querySelectorAll('.ps-nav-has-dropdown').forEach(function(item) {
+  item.addEventListener('mouseenter', function() { this.classList.add('ps-open'); });
+  item.addEventListener('mouseleave', function() { this.classList.remove('ps-open'); });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Leave blank to use the default logo.png asset."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "default": 160,
+      "unit": "px",
+      "label": "Logo width"
+    },
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_fallback",
+      "label": "Fallback announcement text",
+      "info": "Shown when no 'Announcement Bar' navigation menu exists.",
+      "default": "🎁 Free Samples with every order · 🚚 Free Shipping $55+ · 📞 641.670.1573"
+    }
+  ],
+  "blocks": [{ "type": "@app" }]
+}
+{% endschema %}
