@@ -1,3 +1,4 @@
+{% render 'product-jsonld' %}
 {% render 'ps-header', nav_solid: true %}
 
 <div class="ps-page-wrap">
@@ -122,32 +123,38 @@
           <button class="ps-btn-primary ps-atc-big" disabled style="opacity:.5;cursor:not-allowed">Sold Out 😢</button>
         {%- endif -%}
 
+        {%- if section.settings.show_perks -%}
         <div class="ps-product-perks">
           <span>🌿 All Natural</span>
           <span>⭐ Made in Iowa</span>
           <span>🎁 Free Samples on Orders</span>
           <span>🚚 Free Shipping $55+</span>
         </div>
+        {%- endif -%}
       {%- endform -%}
 
       <!-- Description -->
-      {%- if product.description != blank -%}
+      {%- if section.settings.show_description and product.description != blank -%}
         <div class="ps-product-desc">{{ product.description }}</div>
       {%- endif -%}
     </div>
 
     <!-- Similar Items — sidebar strip -->
+    {%- if section.settings.show_similar -%}
     <div class="ps-similar-strip" id="psSimilar" style="display:none">
       <div class="ps-similar-heading">You Might Also Like</div>
       <div class="ps-similar-list" id="psSimilarGrid"></div>
     </div>
+    {%- endif -%}
   </div>
 
   <!-- Judge.me Review Widget -->
+  {%- if section.settings.show_reviews -%}
   <div class="ps-reviews-wrap">
     <div class="ps-section-tag" style="margin-bottom:1rem">⭐ Customer Reviews</div>
     <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
   </div>
+  {%- endif -%}
 
   <!-- Back to shop -->
   <div style="text-align:center;margin:3rem 0">
@@ -249,16 +256,38 @@ document.getElementById('psProductForm')?.addEventListener('submit', async funct
 {% schema %}
 {
   "name": "Product",
-  "settings": [],
-  "presets": [
+  "settings": [
     {
-      "name": "Product"
+      "type": "header",
+      "content": "Page sections"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show customer reviews",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_similar",
+      "label": "Show similar products",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_perks",
+      "label": "Show perks bar",
+      "default": true
     }
   ],
-  "blocks": [
-    {
-      "type": "@app"
-    }
-  ]
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Product", "category": "Product" }],
+  "templates": ["product"]
 }
 {% endschema %}

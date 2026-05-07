@@ -14,11 +14,8 @@
 
 {%- assign map_addr = shop.address.address1 | append: ', ' | append: shop.address.city | append: ', ' | append: shop.address.province_code | append: ' ' | append: shop.address.zip | url_encode -%}
 {%- assign blog_posts = blogs.news.articles -%}
-{%- assign total_reviews = 0 -%}
-{%- for i in (1..6) -%}
-  {%- assign _tk = 'review_' | append: i | append: '_text' -%}
-  {%- if section.settings[_tk] != blank -%}{%- assign total_reviews = total_reviews | plus: 1 -%}{%- endif -%}
-{%- endfor -%}
+{%- assign use_jm = section.settings.use_judgeme -%}
+{%- assign total_reviews = section.blocks | where: 'type', 'review' | size -%}
 
 <section class="ps-hg" id="ps-home-grid">
 
@@ -71,31 +68,31 @@
         <h2 class="ps-hg-heading">What Our <em>Customers Say!</em></h2>
         <p class="ps-hg-sub">Real words from real people who've brought a little Iowa into their homes.</p>
 
-        {%- if total_reviews > 0 -%}
+        {%- if use_jm -%}
+          <div class='jdgm-widget jdgm-all-reviews-widget' data-auto-install='false'>
+            {{ shop.metafields.judgeme.all_reviews_widget }}
+          </div>
+        {%- elsif total_reviews > 0 -%}
           <div class="ps-hg-carousel">
             <div class="ps-hg-carousel-wrap">
               <button class="ps-hg-arrow ps-hg-prev" aria-label="Previous">&#8592;</button>
               <div class="ps-hg-viewport">
                 <div class="ps-hg-track" id="psHgTrack">
-                  {%- for i in (1..6) -%}
-                    {%- assign tk = 'review_' | append: i | append: '_text' -%}
-                    {%- assign nk = 'review_' | append: i | append: '_name' -%}
-                    {%- assign sk = 'review_' | append: i | append: '_stars' -%}
-                    {%- assign pk = 'review_' | append: i | append: '_product' -%}
-                    {%- if section.settings[tk] != blank -%}
-                      <div class="ps-hg-review-card">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'review' and block.settings.text != blank -%}
+                      <div class="ps-hg-review-card" {{ block.shopify_attributes }}>
                         <div class="ps-hg-review-flower">✿</div>
-                        <p class="ps-hg-review-text">{{ section.settings[tk] }}</p>
+                        <p class="ps-hg-review-text">{{ block.settings.text }}</p>
                         <div class="ps-hg-stars">
-                          {%- assign sc = section.settings[sk] | default: 5 -%}
+                          {%- assign sc = block.settings.stars | default: 5 -%}
                           {%- for s in (1..5) -%}
                             {%- if s <= sc -%}<span class="ps-hgs ps-hgs-on">★</span>{%- else -%}<span class="ps-hgs">★</span>{%- endif -%}
                           {%- endfor -%}
                         </div>
                         <div class="ps-hg-reviewer">
-                          <span class="ps-hg-reviewer-name">— {{ section.settings[nk] | default: 'Happy Customer' }}</span>
-                          {%- if section.settings[pk] != blank -%}
-                            <span class="ps-hg-reviewer-prod">{{ section.settings[pk] }}</span>
+                          <span class="ps-hg-reviewer-name">— {{ block.settings.name | default: 'Happy Customer' }}</span>
+                          {%- if block.settings.product != blank -%}
+                            <span class="ps-hg-reviewer-prod">{{ block.settings.product }}</span>
                           {%- endif -%}
                         </div>
                       </div>
@@ -638,188 +635,65 @@ document.querySelectorAll('.ps-hg-cal-apple').forEach(function(btn) {
 });
 </script>
 
-{% schema %}
+{%- schema -%}
 {
   "name": "Home Grid",
   "settings": [
     {
       "type": "header",
-      "content": "Review 1"
+      "content": "Customer Reviews"
     },
     {
-      "type": "textarea",
-      "id": "review_1_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_1_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_1_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_1_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 2"
-    },
-    {
-      "type": "textarea",
-      "id": "review_2_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_2_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_2_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_2_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 3"
-    },
-    {
-      "type": "textarea",
-      "id": "review_3_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_3_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_3_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_3_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 4"
-    },
-    {
-      "type": "textarea",
-      "id": "review_4_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_4_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_4_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_4_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 5"
-    },
-    {
-      "type": "textarea",
-      "id": "review_5_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_5_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_5_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_5_product",
-      "label": "Product (optional)"
-    },
-    {
-      "type": "header",
-      "content": "Review 6"
-    },
-    {
-      "type": "textarea",
-      "id": "review_6_text",
-      "label": "Review text"
-    },
-    {
-      "type": "text",
-      "id": "review_6_name",
-      "label": "Reviewer name"
-    },
-    {
-      "type": "range",
-      "id": "review_6_stars",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "label": "Stars"
-    },
-    {
-      "type": "text",
-      "id": "review_6_product",
-      "label": "Product (optional)"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Home Grid"
+      "type": "checkbox",
+      "id": "use_judgeme",
+      "label": "Use Judge.me reviews widget",
+      "info": "When enabled, pulls live reviews from Judge.me instead of the blocks below.",
+      "default": false
     }
   ],
   "blocks": [
     {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Stars"
+        },
+        {
+          "type": "text",
+          "id": "product",
+          "label": "Product (optional)"
+        }
+      ]
+    },
+    {
       "type": "@app"
     }
+  ],
+  "presets": [
+    {
+      "name": "Home Grid",
+      "category": "Home"
+    }
+  ],
+  "templates": [
+    "index"
   ]
 }
-{% endschema %}
+{%- endschema -%}

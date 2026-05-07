@@ -1,0 +1,152 @@
+{% render 'ps-account-nav' %}
+
+<div class="ps-page-wrap">
+
+  <div class="ps-account-header">
+    <div>
+      <div class="ps-section-tag" style="margin-bottom:.5rem">📦 Order Details</div>
+      <h1 class="ps-section-h2">Order <em>{{ order.name }}</em></h1>
+    </div>
+    <a href="{{ routes.account_url }}" class="ps-btn-secondary">← Back to Account</a>
+  </div>
+
+  {%- assign status_map = 'authorized:Authorized,expired:Expired,paid:Paid,partially_paid:Partially Paid,partially_refunded:Partially Refunded,pending:Pending,refunded:Refunded,voided:Voided' | split: ',' -%}
+  <div class="ps-order-meta-row">
+    <div class="ps-order-meta-item">
+      <span class="ps-order-meta-label">Placed</span>
+      <span class="ps-order-meta-value">{{ order.created_at | time_tag: format: 'date' }}</span>
+    </div>
+    <div class="ps-order-meta-item">
+      <span class="ps-order-meta-label">Payment</span>
+      <span class="ps-order-badge ps-badge-{{ order.financial_status }}">{{ order.financial_status_label }}</span>
+    </div>
+    <div class="ps-order-meta-item">
+      <span class="ps-order-meta-label">Fulfillment</span>
+      <span class="ps-order-badge ps-badge-{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span>
+    </div>
+  </div>
+
+  <div class="ps-account-grid">
+
+    <!-- Line items -->
+    <div class="ps-account-main">
+      <div class="ps-account-section-card">
+        <h2 class="ps-account-section-title">🧼 Items Ordered</h2>
+        <div class="ps-order-items">
+          {%- for line_item in order.line_items -%}
+            <div class="ps-order-item">
+              <div class="ps-order-item-img">
+                {%- if line_item.image -%}
+                  <img src="{{ line_item.image | img_url: '100x100', crop: 'center' }}" alt="{{ line_item.title | escape }}" width="100" height="100" loading="lazy">
+                {%- else -%}
+                  <div class="ps-order-item-img-fallback">🧼</div>
+                {%- endif -%}
+              </div>
+              <div class="ps-order-item-info">
+                <p class="ps-order-item-title">{{ line_item.title }}</p>
+                {%- unless line_item.variant.title == 'Default Title' -%}
+                  <p class="ps-order-item-variant">{{ line_item.variant.title }}</p>
+                {%- endunless -%}
+                <p class="ps-order-item-qty">Qty: {{ line_item.quantity }}</p>
+              </div>
+              <div class="ps-order-item-price">{{ line_item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Totals -->
+        <div class="ps-order-totals">
+          <div class="ps-order-total-row">
+            <span>Subtotal</span>
+            <span>{{ order.subtotal_price | money }}</span>
+          </div>
+          {%- for discount in order.cart_level_discount_applications -%}
+            <div class="ps-order-total-row ps-order-discount">
+              <span>Discount ({{ discount.title }})</span>
+              <span>−{{ discount.total_allocated_amount | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- for shipping_method in order.shipping_methods -%}
+            <div class="ps-order-total-row">
+              <span>Shipping ({{ shipping_method.title }})</span>
+              <span>{{ shipping_method.price | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- for tax_line in order.tax_lines -%}
+            <div class="ps-order-total-row">
+              <span>{{ tax_line.title }} ({{ tax_line.rate | times: 100 }}%)</span>
+              <span>{{ tax_line.price | money }}</span>
+            </div>
+          {%- endfor -%}
+          <div class="ps-order-total-row ps-order-total-final">
+            <span>Total</span>
+            <span>{{ order.total_price | money_with_currency }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="ps-account-sidebar">
+      {%- if order.shipping_address -%}
+        <div class="ps-account-section-card">
+          <h2 class="ps-account-section-title">📍 Ship To</h2>
+          <address style="font-style:normal;line-height:1.6">
+            {{ order.shipping_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+
+      {%- if order.billing_address -%}
+        <div class="ps-account-section-card">
+          <h2 class="ps-account-section-title">💳 Billed To</h2>
+          <address style="font-style:normal;line-height:1.6">
+            {{ order.billing_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Order",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Padding top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 36,
+      "unit": "px",
+      "label": "Padding bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order"
+    }
+  ],
+  "templates": [
+    "customers/order"
+  ]
+}
+{% endschema %}

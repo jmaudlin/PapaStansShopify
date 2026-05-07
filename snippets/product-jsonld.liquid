@@ -1,0 +1,38 @@
+{%- comment -%}
+  snippets/product-jsonld.liquid
+  Product structured data (JSON-LD) for Google rich results.
+  Render inside <head> or just before </body> on product pages.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "brand": { "@type": "Brand", "name": "Papa Stan's of Iowa" },
+  "image": [
+    {%- for image in product.images limit: 5 -%}
+      {{ image.src | img_url: '1024x1024' | json }}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "lowPrice": {{ product.price_min | money_without_currency | json }},
+    "highPrice": {{ product.price_max | money_without_currency | json }},
+    "offerCount": {{ product.variants.size }},
+    "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+    "url": {{ shop.url | append: product.url | json }},
+    "seller": { "@type": "Organization", "name": "Papa Stan's of Iowa" }
+  }
+  {%- if product.metafields.reviews.rating.value != blank -%}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.reviews.rating.value | json }},
+    "reviewCount": {{ product.metafields.reviews.rating_count.value | default: 1 | json }}
+  }
+  {%- endif -%}
+}
+</script>

@@ -7,23 +7,52 @@
     "ps_home_grid": {
       "type": "ps-home-grid",
       "settings": {
-        "review_1_text": "I've tried a lot of handmade soaps and nothing compares. My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!",
-        "review_1_name": "Sarah M.",
-        "review_1_stars": 5,
-        "review_1_product": "Body Bars",
-        "review_2_text": "Ordered the candles as a gift and ended up keeping them for myself. The scent is incredible — not overpowering, just warm and perfect. Will be ordering again.",
-        "review_2_name": "James T.",
-        "review_2_stars": 5,
-        "review_2_product": "Candles - 8 oz",
-        "review_3_text": "Papa Stans is amazing! The lotion is so smooth and you can tell it's made with real ingredients. Supporting a veteran-owned small business is just the cherry on top.",
-        "review_3_name": "Jay",
-        "review_3_stars": 5,
-        "review_3_product": "Body Lotion",
-        "review_4_text": "I got the sample pack with my order and now I need full sizes of everything. The brown sugar scrub especially — my skin felt brand new after one use.",
-        "review_4_name": "Melissa R.",
-        "review_4_stars": 5,
-        "review_4_product": "Brown Sugar Scrub"
-      }
+        "use_judgeme": false
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "text": "I've tried a lot of handmade soaps and nothing compares. My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!",
+            "name": "Sarah M.",
+            "stars": 5,
+            "product": "Body Bars"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "text": "Ordered the candles as a gift and ended up keeping them for myself. The scent is incredible \u2014 not overpowering, just warm and perfect. Will be ordering again.",
+            "name": "James T.",
+            "stars": 5,
+            "product": "Candles - 8 oz"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "text": "Papa Stans is amazing! The lotion is so smooth and you can tell it's made with real ingredients. Supporting a veteran-owned small business is just the cherry on top.",
+            "name": "Jay",
+            "stars": 5,
+            "product": "Body Lotion"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "text": "I got the sample pack with my order and now I need full sizes of everything. The brown sugar scrub especially \u2014 my skin felt brand new after one use.",
+            "name": "Melissa R.",
+            "stars": 5,
+            "product": "Brown Sugar Scrub"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ]
     },
     "ps_home_lower": {
       "type": "ps-home-lower",
