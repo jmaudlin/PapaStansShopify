@@ -391,7 +391,11 @@ else{ window.addEventListener('load', init); }
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <img
-              src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}"
+              src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}"
+              srcset="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }} 200w,
+                      {{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }} 400w,
+                      {{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }} 600w"
+              sizes="(max-width: 480px) 44vw, (max-width: 768px) 30vw, 220px"
               alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
               loading="lazy"
               width="400" height="400"
