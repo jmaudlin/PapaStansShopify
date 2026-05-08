@@ -9,6 +9,26 @@
  */
 {
   "current": {
+    "sections": {
+      "ps-header": {
+        "type": "ps-header",
+        "settings": {
+          "logo_width": 160,
+          "show_announcement": true,
+          "announcement_fallback": "🎁 Free Samples with every order · 🚚 Free Shipping $55+ · 📞 641.670.1573"
+        }
+      },
+      "ps-footer": {
+        "type": "ps-footer",
+        "settings": {
+          "tagline": "of Iowa · Est. 2019 · Veteran-Owned",
+          "description": "\"The cleanest body products that money can buy\" — handcrafted with love in Oskaloosa, Iowa.",
+          "phone": "641.670.1573",
+          "phone_link": "6416701573",
+          "show_powered_by": true
+        }
+      }
+    },
     "content_for_index": [],
     "blocks": {
       "14060646107696862457": {
@@ -30,7 +50,7 @@
         "type": "shopify://apps/google-youtube/blocks/store_widget/14ec7bd0-ac77-49a9-9417-90752398bdff",
         "disabled": false,
         "settings": {
-          "widget_position": "LEFT_BOTTOM",
+          "widget_position": "RIGHT_BOTTOM",
           "side_margin": 36,
           "bottom_margin": 36,
           "mobile_side_margin": 16,
