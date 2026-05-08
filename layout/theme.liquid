@@ -15,8 +15,6 @@
 
 {% render 'meta-tags' %}
 
-    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
 
 {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}

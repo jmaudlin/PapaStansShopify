@@ -228,7 +228,7 @@
     drawFartBubbles();
     ctx.globalAlpha = 1;
     }
-    requestAnimationFrame(tick);
+    if (!document.hidden) rafId = requestAnimationFrame(tick);
   }
 
   if(!isHome){
@@ -240,5 +240,9 @@
     setTimeout(()=>{ clearInterval(poll); },15000);
   }
 
-  requestAnimationFrame(t=>{ last=t; requestAnimationFrame(tick); });
+  let rafId;
+  function startRaf(){ if(!rafId) rafId = requestAnimationFrame(t=>{ last=t; rafId = requestAnimationFrame(tick); }); }
+  function stopRaf(){ if(rafId){ cancelAnimationFrame(rafId); rafId=null; } }
+  document.addEventListener('visibilitychange', ()=> document.hidden ? stopRaf() : startRaf());
+  startRaf();
 })();

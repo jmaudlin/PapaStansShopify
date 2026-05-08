@@ -99,7 +99,7 @@
     {%- if footer_nav.links.size > 0 -%}
       {%- for col in footer_nav.links -%}
         <div class="ps-footer-col">
-          <h5>{{ col.title }}</h5>
+          <p class="ps-footer-col-heading">{{ col.title }}</p>
           <ul>
             {%- for link in col.links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -108,20 +108,20 @@
         </div>
       {%- endfor -%}
     {%- else -%}
-      <div class="ps-footer-col"><h5>Shop</h5><ul>
+      <div class="ps-footer-col"><p class="ps-footer-col-heading">Shop</p><ul>
         <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
         <li><a href="{{ shop.url }}/collections/all?sort_by=best-selling">Best Sellers</a></li>
         <li><a href="{{ shop.url }}/collections/all">Soaps</a></li>
         <li><a href="{{ shop.url }}/collections/all">Lotions</a></li>
         <li><a href="{{ shop.url }}/collections/all">Candles</a></li>
       </ul></div>
-      <div class="ps-footer-col"><h5>About</h5><ul>
+      <div class="ps-footer-col"><p class="ps-footer-col-heading">About</p><ul>
         <li><a href="{{ shop.url }}/pages/our-story">Our Story</a></li>
         <li><a href="{{ shop.url }}/pages/our-story">Veteran Owned</a></li>
         <li><a href="{{ shop.url }}/#ps-scents">Scent Library</a></li>
         <li><a href="{{ shop.url }}/#ps-find-us">Find Us</a></li>
       </ul></div>
-      <div class="ps-footer-col"><h5>Help</h5><ul>
+      <div class="ps-footer-col"><p class="ps-footer-col-heading">Help</p><ul>
         <li><a href="{{ shop.url }}/pages/shipping">Shipping Info</a></li>
         <li><a href="{{ shop.url }}/pages/returns">Returns &amp; Refunds</a></li>
         <li><a href="{{ shop.url }}/pages/privacy-policy">Privacy Policy</a></li>

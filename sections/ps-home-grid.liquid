@@ -196,6 +196,7 @@
           <iframe
             src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
             class="ps-hg-map"
+            title="Papa Stan's of Iowa location on Google Maps"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
@@ -458,7 +459,8 @@
   background: var(--border);
   cursor: pointer;
   border: none;
-  padding: 0;
+  padding: 18px;
+  box-sizing: content-box;
   transition: background .2s, transform .2s;
 }
 .ps-hg-dot.active { background: var(--lav); transform: scale(1.3); }

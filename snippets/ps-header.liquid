@@ -38,7 +38,7 @@
 
 <nav class="ps-nav{% if nav_solid %} ps-nav-solid{% endif %}" id="psNav">
   <a href="{{ shop.url }}" class="ps-nav-logo">
-    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img">
+    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img" width="320" height="133" loading="eager">
   </a>
   <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
     <span></span><span></span><span></span>
