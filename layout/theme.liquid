@@ -51,7 +51,21 @@
     <meta name="description" content="Handcrafted soaps, lotions and candles made in small batches in Oskaloosa, Iowa. Veteran-owned since 2019. 641.670.1573">
   {%- endif -%}
   {{ content_for_header }}
-  {{ 'papastans.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Google Fonts — preconnect + non-blocking load {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600;700&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600;700&display=swap"></noscript>
+
+  {%- comment -%} Critical CSS inlined — eliminates render-blocking request for above-fold styles {%- endcomment -%}
+  <style>
+    {% render 'ps-critical-css' %}
+  </style>
+
+  {%- comment -%} Full CSS loaded non-blocking — hero onwards {%- endcomment -%}
+  <link rel="stylesheet" href="{{ 'ps-deferred.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'ps-deferred.css' | asset_url | stylesheet_tag }}</noscript>
 </head>
 <body>
   <a href="#MainContent" class="skip-to-content-link visually-hidden">Skip to content</a>

@@ -1,0 +1,100 @@
+:root {
+  --lav:       #7C4D9E;  /* deep lavender — primary              */
+  --lav-mid:   #A470C8;  /* mid lavender — buttons, accents      */
+  --lav-light: #E8D5F5;  /* pale lavender — card fills, borders  */
+  --lav-xlight:#F5EDFB;  /* whisper lavender — page background   */
+  --lav-dark:  #4A2870;  /* darkest lavender — hover, footer     */
+  --lav-ink:   #1E0A2E;  /* near-black purple — all body text    */
+  --pink:      #C8607A;  /* deep pink — secondary CTA            */
+  --pink-light:#F5D0DA;  /* pale pink — fills                    */
+  --white:     #ffffff;
+  --offwhite:  #FDFAFF;  /* page background                      */
+  --border:    #D0B0E8;  /* lavender border                      */
+
+  /* ── Every legacy alias → lavender equivalents, NO brown, NO yellow ── */
+  --cream:  #FDFAFF;
+  --warm:   #F5EDFB;
+  --tan:    #E8D5F5;
+  --brown:  #7C4D9E;
+  --bark:   #1E0A2E;
+  --ink:    #1E0A2E;
+  --border-alt: #D0B0E8;
+  --sun:    #E8D5F5;
+  --honey:  #A470C8;
+  --barn:   #7C4D9E;
+  --barn2:  #4A2870;
+  --barrel: #7C4D9E;
+  --barrel2:#4A2870;
+  --sage:   #A470C8;
+  --moss:   #7C4D9E;
+  --sky:    #E8D5F5;
+  --butter: #E8D5F5;
+  --butter-dk: #A470C8;
+  --spoon:  #C8A8E0;
+  --lavender: #7C4D9E;
+  --lav-mid-old: #A470C8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: var(--lav-ink); }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-to-content-link:focus { position: fixed; top: 1rem; left: 1rem; z-index: 9999; padding: .75rem 1.5rem; background: var(--lav); color: #fff; border-radius: 6px; font-weight: 700; text-decoration: none; width: auto; height: auto; clip: auto; }
+
+/* ── Rainbow bar ── */
+.ps-rainbow-bar {
+  height: 8px;
+  background: linear-gradient(90deg,
+    #C8A8E0 0%,   /* pale lavender    */
+    #A470C8 20%,  /* mid lavender     */
+    #7C4D9E 40%,  /* deep lavender    */
+    #4A2870 60%,  /* dark lavender    */
+    #C8607A 80%,  /* pink             */
+    #E8D5F5 100%  /* whisper lavender */
+  ) 0px,    var(--lavender) 40px,
+    var(--butter)   40px,   var(--butter)   80px,
+    var(--barrel)   80px,   var(--barrel)   120px,
+    var(--spoon)    120px,  var(--spoon)    160px,
+    var(--lav-light)160px,  var(--lav-light)200px,
+    var(--tan)      200px,  var(--tan)      240px
+  );
+}
+
+/* ── Announce ── */
+.ps-announce { background: var(--lav-dark); color: #fff; text-align: center; padding: .55rem 1rem; font-size: .78rem; font-weight: 700; letter-spacing: .04em; }
+.ps-announce a { color: var(--sun); text-decoration: none; }
+.ps-announce strong { color: var(--sun); }
+
+/* ── Nav ── */
+.ps-nav { position: fixed; top: var(--nav-top, 44px); left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: .6rem 3rem; transition: top .2s, padding .4s, background .4s, box-shadow .4s; }
+.ps-nav.scrolled { background: rgba(253,250,255,.97); backdrop-filter: blur(12px); top: 0 !important; padding: .5rem 3rem; box-shadow: 0 2px 0 var(--border), 0 4px 12px rgba(74,40,112,.1); }
+.ps-nav-logo { text-decoration: none; display: flex; align-items: center; }
+.ps-nav-logo-img { height: 64px; width: auto; object-fit: contain; transition: height .4s; }
+.ps-nav.scrolled .ps-nav-logo-img { height: 54px; }
+.ps-nav-solid .ps-nav-logo-img { height: 54px; }
+
+
+.ps-nav-links { display: flex; gap: 0; list-style: none; }
+.ps-nav-links a {
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(255,255,255,.9);
+  transition: color .25s, background .25s;
+  padding: .45rem .9rem;
+  border-radius: 20px;
+}
+.ps-nav.scrolled .ps-nav-links a { color: var(--lav-ink); }
+.ps-nav-links a:hover {
+  color: var(--bark) !important;
+  background: var(--lav-light);
+}
+.ps-nav-actions { display: flex; align-items: center; }
+.ps-cart-btn { display: flex; align-items: center; gap: .5rem; background: var(--lav-light); border: 3px solid var(--bark); color: var(--lav-ink); font-family: 'Nunito', sans-serif; font-size: .75rem; font-weight: 800; padding: .4rem 1rem; cursor: pointer; border-radius: 20px; transition: all .2s; box-shadow: 3px 3px 0 var(--bark); }
+.ps-cart-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--bark); }
+.ps-cart-pill { background: var(--lav-mid); color: #fff; font-size: .62rem; font-weight: 800; padding: .05rem .4rem; border-radius: 10px; min-width: 18px; text-align: center; }
+.ps-cart-pill.ps-bump { animation: psBump .3s ease; }
+@keyframes psBump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
