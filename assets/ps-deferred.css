@@ -190,7 +190,7 @@
 
 /* ── Footer ── */
 .ps-footer { background:var(--ink);padding:5rem 4rem 2.5rem;border-top:6px solid var(--lav-mid); }
-.ps-footer-top { display:grid;grid-template-columns:2fr repeat(auto-fit, minmax(120px, 1fr));gap:3rem;max-width:1200px;margin:0 auto 3.5rem; }
+.ps-footer-top { display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:2.5rem;max-width:1200px;margin:0 auto 3.5rem; }
 .ps-f-logo { text-decoration:none;display:block;margin-bottom:.8rem; }
 .ps-f-logo-img { height: 90px; width: auto; object-fit: contain; filter: invert(1) brightness(1.8) drop-shadow(1px 1px 3px rgba(0,0,0,.5)); }
 .ps-f-sub { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lavender);opacity:.7;margin-bottom:1rem; }
