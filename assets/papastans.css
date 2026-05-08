@@ -347,7 +347,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-footer-col h5, .ps-footer-col-heading { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lavender);margin-bottom:1.2rem; }
 .ps-footer-col ul { list-style:none; }
 .ps-footer-col li { margin-bottom:.6rem; }
-.ps-footer-col a { font-size:.82rem;font-weight:600;color:rgba(255,255,255,.5);text-decoration:none;transition:color .25s; }
+.ps-footer-col a { font-size:.82rem;font-weight:600;color:rgba(255,255,255,.85);text-decoration:none;transition:color .25s; }
 .ps-footer-col a:hover { color:var(--lavender); }
 .ps-footer-btm { max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(164,112,200,.15);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem; }
 .ps-footer-btm p { font-size:.68rem;font-weight:600;color:rgba(255,255,255,.3); }

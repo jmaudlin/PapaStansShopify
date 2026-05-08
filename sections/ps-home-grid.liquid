@@ -35,7 +35,7 @@
               <a href="{{ article.url }}" class="ps-hg-blog-card">
                 {%- if article.image -%}
                   <div class="ps-hg-blog-card-img">
-                    <img src="{{ article.image | img_url: '600x360', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="600" height="360">
+                    <img src="{{ article.image | img_url: '440x260', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="440" height="260">
                   </div>
                 {%- else -%}
                   <div class="ps-hg-blog-card-img ps-hg-blog-card-fallback">✍️</div>
@@ -192,16 +192,34 @@
         <div class="ps-hg-label">📍 Where to Find Us</div>
         <h2 class="ps-hg-heading ps-hg-heading-light">Proudly <em>Local.</em><br>Shipped <em>Everywhere!</em></h2>
 
-        <div class="ps-hg-map-wrap">
-          <iframe
-            src="https://maps.google.com/maps?q={{ map_addr }}&output=embed&z=16"
-            class="ps-hg-map"
-            title="Papa Stan's of Iowa location on Google Maps"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+        <div class="ps-hg-map-wrap" id="psMapWrap">
+          <div class="ps-hg-map-placeholder" id="psMapPlaceholder" aria-label="Map loading...">
+            <span class="ps-hg-map-placeholder-icon">📍</span>
+            <span>Loading map…</span>
+          </div>
         </div>
+        <script>
+        (function(){
+          var wrap = document.getElementById('psMapWrap');
+          if (!wrap) return;
+          var src = "https://maps.google.com/maps?q={{ map_addr | url_encode }}&output=embed&z=16";
+          var io = new IntersectionObserver(function(entries){
+            if(entries[0].isIntersecting){
+              var f = document.createElement('iframe');
+              f.src = src;
+              f.className = 'ps-hg-map';
+              f.title = "Papa Stan\u2019s of Iowa location on Google Maps";
+              f.setAttribute('allowfullscreen','');
+              f.setAttribute('referrerpolicy','no-referrer-when-downgrade');
+              var ph = document.getElementById('psMapPlaceholder');
+              if(ph) ph.remove();
+              wrap.appendChild(f);
+              io.disconnect();
+            }
+          }, { rootMargin: '200px' });
+          io.observe(wrap);
+        })();
+        </script>
 
         <div class="ps-hg-local-details">
           <div class="ps-hg-local-row">
@@ -407,7 +425,7 @@
   background: rgba(188,140,190,.15);
 }
 .ps-hg-blog-card-body { padding: .9rem .9rem .9rem 0; display: flex; flex-direction: column; gap: .3rem; }
-.ps-hg-blog-date { font-size: .7rem; letter-spacing: .08em; color: rgba(255,255,255,.45); text-transform: uppercase; }
+.ps-hg-blog-date { font-size: .7rem; letter-spacing: .08em; color: rgba(255,255,255,.8); text-transform: uppercase; }
 .ps-hg-blog-title { font-family: 'Luckiest Guy', cursive; font-size: .95rem; color: #fff; line-height: 1.25; }
 .ps-hg-blog-excerpt { font-size: .8rem; color: rgba(255,255,255,.65); line-height: 1.5; flex: 1; }
 .ps-hg-blog-read { font-size: .75rem; font-weight: 700; color: var(--lav-light); letter-spacing: .04em; }
@@ -437,7 +455,7 @@
 .ps-hgs-on { color: #F5A623; }
 .ps-hg-reviewer { display: flex; flex-direction: column; align-items: center; gap: .15rem; }
 .ps-hg-reviewer-name { font-weight: 800; font-size: .9rem; color: var(--lav); }
-.ps-hg-reviewer-prod { font-family: 'Caveat', cursive; font-size: .85rem; color: var(--lav-mid); }
+.ps-hg-reviewer-prod { font-family: 'Caveat', cursive; font-size: .85rem; color: var(--lav-dark); }
 .ps-hg-arrow {
   background: var(--lav);
   color: #fff;
@@ -488,13 +506,13 @@
 .ps-hg-event-month { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; opacity: .85; }
 .ps-hg-event-day { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; line-height: 1; }
 .ps-hg-event-info { flex: 1; }
-.ps-hg-event-weekday { font-size: .7rem; color: var(--lav-mid); letter-spacing: .06em; text-transform: uppercase; font-weight: 700; margin-bottom: .2rem; }
+.ps-hg-event-weekday { font-size: .7rem; color: var(--lav-dark); letter-spacing: .06em; text-transform: uppercase; font-weight: 700; margin-bottom: .2rem; }
 .ps-hg-event-name { font-family: 'Luckiest Guy', cursive; font-size: 1rem; color: var(--lav-ink); letter-spacing: .03em; margin: 0 0 .25rem; }
 .ps-hg-event-name a { color: inherit; text-decoration: none; }
 .ps-hg-event-name a:hover { color: var(--lav); }
-.ps-hg-event-venue, .ps-hg-event-time { font-size: .78rem; color: var(--lav-mid); margin-bottom: .15rem; }
+.ps-hg-event-venue, .ps-hg-event-time { font-size: .78rem; color: var(--lav-dark); margin-bottom: .15rem; }
 .ps-hg-event-desc { font-size: .8rem; color: var(--lav-ink); line-height: 1.5; margin: .3rem 0 .4rem; }
-.ps-hg-event-cal { font-size: .72rem; color: #888; margin-top: .4rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.ps-hg-event-cal { font-size: .72rem; color: #555; margin-top: .4rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
 .ps-hg-cal-btn {
   background: none;
   border: 1px solid var(--border);
@@ -522,6 +540,8 @@
   flex-shrink: 0;
 }
 .ps-hg-map { width: 100%; height: 100%; border: none; display: block; }
+.ps-hg-map-placeholder { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:var(--lav-xlight);color:var(--lav);font-size:.9rem;font-weight:600; }
+.ps-hg-map-placeholder-icon { font-size:2rem; }
 .ps-hg-local-details { display: flex; flex-direction: column; gap: .55rem; }
 .ps-hg-local-row {
   display: flex;
@@ -535,7 +555,7 @@
 .ps-hg-local-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: .05rem; }
 .ps-hg-local-link { color: var(--lav-light); text-decoration: none; }
 .ps-hg-local-link:hover { text-decoration: underline; }
-.ps-hg-local-link-dim { color: rgba(255,255,255,.5); font-size: .82rem; }
+.ps-hg-local-link-dim { color: rgba(255,255,255,.85); font-size: .82rem; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 900px) {
