@@ -130,7 +130,18 @@
 {% schema %}
 {
   "name": "Collection",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "SEO"
+    },
+    {
+      "type": "textarea",
+      "id": "meta_description",
+      "label": "Meta description override",
+      "info": "Overrides the default collection description for search engines."
+    }
+  ],
   "presets": [
     {
       "name": "Collection"

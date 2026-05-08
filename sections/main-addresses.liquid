@@ -1,0 +1,145 @@
+{% render 'ps-account-nav' %}
+
+<div class="ps-page-wrap">
+
+  <div class="ps-account-header">
+    <div>
+      <div class="ps-section-tag" style="margin-bottom:.5rem">📍 Saved Addresses</div>
+      <h1 class="ps-section-h2">Your <em>Addresses</em></h1>
+    </div>
+    <button class="ps-btn-primary" id="psAddAddressBtn">+ Add Address</button>
+  </div>
+
+  <!-- New address form (hidden by default) -->
+  <div id="psNewAddressForm" style="display:none" class="ps-account-section-card" style="margin-bottom:2rem">
+    <h2 class="ps-account-section-title">New Address</h2>
+    {%- form 'customer_address', customer.new_address -%}
+      <div class="ps-address-form-grid">
+        <div class="ps-form-group">
+          <label for="AddressFirstNameNew">First name</label>
+          <input type="text" id="AddressFirstNameNew" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressLastNameNew">Last name</label>
+          <input type="text" id="AddressLastNameNew" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name">
+        </div>
+        <div class="ps-form-group ps-form-full">
+          <label for="AddressCompanyNew">Company (optional)</label>
+          <input type="text" id="AddressCompanyNew" name="address[company]" value="{{ form.company }}" autocomplete="organization">
+        </div>
+        <div class="ps-form-group ps-form-full">
+          <label for="AddressAddress1New">Address</label>
+          <input type="text" id="AddressAddress1New" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1">
+        </div>
+        <div class="ps-form-group ps-form-full">
+          <label for="AddressAddress2New">Apt, suite, etc. (optional)</label>
+          <input type="text" id="AddressAddress2New" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressCityNew">City</label>
+          <input type="text" id="AddressCityNew" name="address[city]" value="{{ form.city }}" autocomplete="address-level2">
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressCountryNew">Country</label>
+          <select id="AddressCountryNew" name="address[country]" data-default="{{ form.country }}" autocomplete="country">
+            {{ all_country_option_tags }}
+          </select>
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressProvinceNew">State / Province</label>
+          <select id="AddressProvinceNew" name="address[province]" data-default="{{ form.province }}" autocomplete="address-level1">
+            <option value="">--</option>
+          </select>
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressZipNew">ZIP / Postal code</label>
+          <input type="text" id="AddressZipNew" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code">
+        </div>
+        <div class="ps-form-group">
+          <label for="AddressPhoneNew">Phone (optional)</label>
+          <input type="tel" id="AddressPhoneNew" name="address[phone]" value="{{ form.phone }}" autocomplete="tel">
+        </div>
+      </div>
+      <div class="ps-form-check" style="margin:.75rem 0">
+        <input type="checkbox" id="AddressDefaultNew" name="address[default]" value="1" {% if customer.default_address == customer.new_address %}checked{% endif %}>
+        <label for="AddressDefaultNew">Set as default address</label>
+      </div>
+      <div class="ps-form-actions">
+        <button type="submit" class="ps-btn-primary">Save Address</button>
+        <button type="button" class="ps-btn-secondary" id="psCancelAddressBtn">Cancel</button>
+      </div>
+    {%- endform -%}
+  </div>
+
+  <!-- Existing addresses -->
+  {%- if customer.addresses_count == 0 -%}
+    <div class="ps-account-section-card" style="text-align:center;padding:3rem">
+      <p style="font-size:2rem;margin-bottom:1rem">📍</p>
+      <p>No saved addresses yet. Add one above!</p>
+    </div>
+  {%- else -%}
+    <div class="ps-addresses-grid">
+      {%- for address in customer.addresses -%}
+        <div class="ps-account-section-card ps-address-card">
+          {%- if address == customer.default_address -%}
+            <span class="ps-address-default-badge">⭐ Default</span>
+          {%- endif -%}
+          <address style="font-style:normal;line-height:1.7;margin-bottom:1rem">
+            <strong>{{ address.name }}</strong><br>
+            {%- if address.company != blank -%}{{ address.company }}<br>{%- endif -%}
+            {{ address.address1 }}<br>
+            {%- if address.address2 != blank -%}{{ address.address2 }}<br>{%- endif -%}
+            {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+            {{ address.country }}
+            {%- if address.phone != blank -%}<br>{{ address.phone }}{%- endif -%}
+          </address>
+          <div class="ps-address-actions">
+            <button class="ps-btn-secondary ps-edit-address-btn"
+              data-id="{{ address.id }}"
+              data-first="{{ address.first_name }}"
+              data-last="{{ address.last_name }}"
+              data-company="{{ address.company }}"
+              data-address1="{{ address.address1 }}"
+              data-address2="{{ address.address2 }}"
+              data-city="{{ address.city }}"
+              data-country="{{ address.country }}"
+              data-province="{{ address.province }}"
+              data-zip="{{ address.zip }}"
+              data-phone="{{ address.phone }}"
+              data-default="{% if address == customer.default_address %}1{% else %}0{% endif %}">
+              ✏️ Edit
+            </button>
+            {%- form 'customer_address', address -%}
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="ps-btn-danger" onclick="return confirm('Delete this address?')">🗑️ Delete</button>
+            {%- endform -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+document.getElementById('psAddAddressBtn')?.addEventListener('click', () => {
+  document.getElementById('psNewAddressForm').style.display = 'block';
+  document.getElementById('psAddAddressBtn').style.display = 'none';
+});
+document.getElementById('psCancelAddressBtn')?.addEventListener('click', () => {
+  document.getElementById('psNewAddressForm').style.display = 'none';
+  document.getElementById('psAddAddressBtn').style.display = 'inline-block';
+});
+</script>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "settings": [
+    { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "default": 36, "unit": "px", "label": "Padding top" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 80, "step": 4, "default": 36, "unit": "px", "label": "Padding bottom" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Addresses" }],
+  "templates": ["customers/addresses"]
+}
+{% endschema %}

@@ -30,4 +30,17 @@
 window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
 </script>
 
-{% schema %}{"name":"Activate Account","settings":[]}{% endschema %}
+{% schema %}
+{
+  "name": "Activate Account",
+  "settings": [],
+  "templates": [
+    "customers/activate_account"
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

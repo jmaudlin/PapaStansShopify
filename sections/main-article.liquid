@@ -1,4 +1,25 @@
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncate: 300 | json }},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "url": {{ shop.url | append: article.url | json }},
+  "author": { "@type": "Person", "name": {{ article.author | json }} },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Papa Stan's of Iowa",
+    "logo": { "@type": "ImageObject", "url": {{ 'logo.png' | asset_url | prepend: 'https:' | json }} }
+  }
+  {%- if article.image -%}
+  ,"image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}
+  {%- endif -%}
+}
+</script>
+
 <div class="ps-page-wrap ps-article-wrap">
 
   <!-- Breadcrumb -->
@@ -126,11 +147,34 @@
   "name": "Article",
   "settings": [],
   "blocks": [
-    { "type": "featured_image", "name": "Featured Image", "settings": [] },
-    { "type": "title", "name": "Title", "settings": [] },
-    { "type": "content", "name": "Content", "settings": [] },
-    { "type": "share", "name": "Share", "settings": [] }
+    {
+      "type": "featured_image",
+      "name": "Featured Image",
+      "settings": []
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "settings": []
+    },
+    {
+      "type": "content",
+      "name": "Content",
+      "settings": []
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "settings": []
+    }
   ],
-  "presets": [{ "name": "Article" }]
+  "presets": [
+    {
+      "name": "Article"
+    }
+  ],
+  "templates": [
+    "article"
+  ]
 }
 {% endschema %}

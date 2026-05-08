@@ -28,3 +28,20 @@
   ]
 }
 {% endschema %}
+<script>
+// Track 404 errors
+if (typeof gtag === 'function') {
+  gtag('event', 'page_not_found', {
+    event_category: '404',
+    event_label: window.location.pathname + window.location.search,
+    non_interaction: true
+  });
+}
+// Also works with GA4 via dataLayer
+if (window.dataLayer) {
+  window.dataLayer.push({
+    event: '404_error',
+    page_path: window.location.pathname + window.location.search
+  });
+}
+</script>

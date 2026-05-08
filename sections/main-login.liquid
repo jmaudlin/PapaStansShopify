@@ -59,4 +59,24 @@ function psToggleRecover(show) {
 window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
 </script>
 
-{% schema %}{"name":"Login","settings":[{"type":"checkbox","id":"enable_shop_login_button","label":"Enable Shop login","default":true}]}{% endschema %}
+{% schema %}
+{
+  "name": "Login",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_shop_login_button",
+      "label": "Enable Shop login",
+      "default": true
+    }
+  ],
+  "templates": [
+    "customers/login"
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}
