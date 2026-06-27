@@ -348,15 +348,15 @@ else{ window.addEventListener('load', init); }
     </a>
   </div>
 
-  <!-- Category filter tabs -->
+  <!-- Category filter tabs — "All" scrolls & filters in-page; others navigate to collection -->
   <div class="ps-cat-tabs ps-reveal" id="psCatTabs">
     <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
-    <button class="ps-cat-tab" data-cat="soap">🧼 Soaps</button>
-    <button class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</button>
-    <button class="ps-cat-tab" data-cat="candle">🕯️ Candles</button>
-    <button class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</button>
-    <button class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</button>
-    <button class="ps-cat-tab" data-cat="accessory">🛁 Accessories</button>
+    <a href="/collections/soaps"             class="ps-cat-tab" data-cat="soap">🧼 Soaps</a>
+    <a href="/collections/body-care"         class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</a>
+    <a href="/collections/candles-and-scents" class="ps-cat-tab" data-cat="candle">🕯️ Candles</a>
+    <a href="/collections/bath-bombs"        class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</a>
+    <a href="/collections/scrubs"            class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</a>
+    <a href="/collections/accessories"       class="ps-cat-tab" data-cat="accessory">🛁 Accessories</a>
   </div>
 
   <div class="ps-pgrid-wrap">
@@ -489,23 +489,23 @@ const psRevObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.ps-reveal').forEach(el => psRevObs.observe(el));
 
 // ── Category filter tabs ──
+// Link tabs (<a>) navigate directly to collection pages.
+// The "All" button still filters/resets the in-page grid.
 document.getElementById('psCatTabs').addEventListener('click', e => {
   const tab = e.target.closest('.ps-cat-tab');
   if (!tab) return;
+  // Only intercept the "All" button; let <a> links navigate normally
+  if (tab.tagName === 'A') return;
   document.querySelectorAll('.ps-cat-tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
-  const cat = tab.dataset.cat;
   const isMobile = window.innerWidth < 680;
   let shown = 0;
   document.querySelectorAll('#psProductGrid .ps-pc').forEach(card => {
-    const match = cat === 'all' || card.dataset.cat === cat;
-    // On mobile "All" tab: keep the 6-card cap; specific categories show all matches
-    const overMobileLimit = isMobile && cat === 'all' && shown >= 6;
-    const visible = match && !overMobileLimit;
+    const overMobileLimit = isMobile && shown >= 6;
+    const visible = !overMobileLimit;
     card.style.display = visible ? 'flex' : 'none';
     if (visible) shown++;
   });
-  // Reset slider position and refresh arrow states
   var grid = document.getElementById('psProductGrid');
   if (grid) {
     grid.scrollLeft = 0;
