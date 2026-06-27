@@ -104,6 +104,7 @@
 .ps-pc-name { font-family:'Caveat',cursive;font-size:1.3rem;font-weight:700;color:var(--lav-ink);margin-bottom:.3rem;line-height:1.2; }
 .ps-pc-name a { color:inherit;text-decoration:none; }
 .ps-pc-name a:hover { color:var(--barn); }
+.ps-type-badge { position:absolute;top:.55rem;left:.55rem;background:rgba(255,255,255,.92);border:1.5px solid var(--lav-mid,#c9b8f0);color:var(--lav-ink,#3b2d6e);font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:20px;line-height:1.4;pointer-events:none;backdrop-filter:blur(4px); }
 .ps-pc-price { font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--barrel);letter-spacing:.04em; }
 .ps-pc-price.ps-sold-out { color:var(--lav-mid);text-decoration:line-through;font-size:1rem; }
 .ps-pc-foot { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.8rem; }

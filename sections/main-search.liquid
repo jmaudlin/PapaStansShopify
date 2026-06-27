@@ -67,6 +67,25 @@
             {%- elsif result.object_type == 'product' -%}
               <!-- Product result -->
               {%- assign first_variant = result.variants.first -%}
+              {%- assign sr_type = result.type | strip -%}
+              {%- case sr_type -%}
+                {%- when 'Body Bars' -%}{%- assign sr_label = '🧼 Body Bar' -%}
+                {%- when 'Ultra-Rich Body Butter' -%}{%- assign sr_label = '🧴 Body Butter' -%}
+                {%- when 'Body Lotion' -%}{%- assign sr_label = '🧴 Body Lotion' -%}
+                {%- when 'Hair And Body Wash' -%}{%- assign sr_label = '🧴 Body Wash' -%}
+                {%- when 'Perfume Body Spray' -%}{%- assign sr_label = '🧴 Body Spray' -%}
+                {%- when 'Foaming Hand Soap' -%}{%- assign sr_label = '🧴 Hand Soap' -%}
+                {%- when 'Lip butter' -%}{%- assign sr_label = '🧴 Lip Butter' -%}
+                {%- when 'Metaphysical' -%}{%- assign sr_label = '✨ Chakra Oil' -%}
+                {%- when 'Candles - 8 oz' -%}{%- assign sr_label = '🕯️ Candle 8oz' -%}
+                {%- when 'Seasonal Candles' -%}{%- assign sr_label = '🕯️ Seasonal Candle' -%}
+                {%- when 'Wax Melts' -%}{%- assign sr_label = '🕯️ Wax Melt' -%}
+                {%- when 'Potpourri' -%}{%- assign sr_label = '🌸 Potpourri' -%}
+                {%- when 'Bath Bombs' -%}{%- assign sr_label = '💣 Bath Bomb' -%}
+                {%- when 'Brown Sugar Scrub' -%}{%- assign sr_label = '🌸 Sugar Scrub' -%}
+                {%- when 'Bath Accessories', 'Happily Ever After' -%}{%- assign sr_label = '🛁 Accessory' -%}
+                {%- else -%}{%- assign sr_label = '🛒 ' | append: sr_type -%}
+              {%- endcase -%}
               <div class="ps-pc ps-reveal" style="flex-direction:row;align-items:center;padding:.8rem">
                 <div class="ps-search-product-img">
                   {%- if result.featured_image -%}
@@ -79,7 +98,7 @@
                   {%- endif -%}
                 </div>
                 <div style="flex:1;padding:.5rem 1rem">
-                  <p class="ps-pc-cat" style="margin-bottom:.2rem">🛒 Product</p>
+                  <p class="ps-pc-cat" style="margin-bottom:.2rem">{{ sr_label }}</p>
                   <h3 class="ps-pc-name" style="margin-bottom:.3rem"><a href="{{ result.url }}">{{ result.title }}</a></h3>
                   <span class="ps-pc-price">{{ result.price | money }}</span>
                 </div>

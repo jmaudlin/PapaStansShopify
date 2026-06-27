@@ -63,19 +63,41 @@
 
       {%- case ps_type -%}
         {%- when 'Body Bars' -%}
-          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
-        {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
-          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}
-        {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
-          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
+          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}{%- assign ps_label = 'Body Bar' -%}
+        {%- when 'Ultra-Rich Body Butter' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Body Butter' -%}
+        {%- when 'Body Lotion' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Body Lotion' -%}
+        {%- when 'Hair And Body Wash' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Body Wash' -%}
+        {%- when 'Perfume Body Spray' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Body Spray' -%}
+        {%- when 'Foaming Hand Soap' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Hand Soap' -%}
+        {%- when 'Lip butter' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Lip Butter' -%}
+        {%- when 'Deodorant' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}{%- assign ps_label = 'Deodorant' -%}
+        {%- when 'Metaphysical' -%}
+          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '✨' -%}{%- assign ps_label = 'Chakra Oil' -%}
+        {%- when 'Candles - 8 oz' -%}
+          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}{%- assign ps_label = 'Candle 8oz' -%}
+        {%- when 'Seasonal Candles' -%}
+          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}{%- assign ps_label = 'Seasonal Candle' -%}
+        {%- when 'Wax Melts' -%}
+          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}{%- assign ps_label = 'Wax Melt' -%}
+        {%- when 'Potpourri' -%}
+          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🌸' -%}{%- assign ps_label = 'Potpourri' -%}
         {%- when 'Bath Bombs' -%}
-          {%- assign ps_cat = 'bomb' -%}{%- assign ps_emoji = '💣' -%}
+          {%- assign ps_cat = 'bomb' -%}{%- assign ps_emoji = '💣' -%}{%- assign ps_label = 'Bath Bomb' -%}
         {%- when 'Brown Sugar Scrub' -%}
-          {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
-        {%- when 'Bath Accessories', 'Happily Ever After' -%}
-          {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}
+          {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}{%- assign ps_label = 'Sugar Scrub' -%}
+        {%- when 'Bath Accessories' -%}
+          {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}{%- assign ps_label = 'Accessory' -%}
+        {%- when 'Happily Ever After' -%}
+          {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}{%- assign ps_label = 'Gift' -%}
         {%- else -%}
-          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}{%- assign ps_label = ps_type | default: 'Product' -%}
       {%- endcase -%}
 
       {%- comment -%} Build scent-family data attribute from product tags {%- endcomment -%}
@@ -105,6 +127,7 @@
           {%- unless product.available -%}
             <span class="ps-pc-badge ps-sold">Sold Out</span>
           {%- endunless -%}
+          <span class="ps-type-badge">{{ ps_emoji }} {{ ps_label }}</span>
           <div class="ps-pc-overlay">
             {%- if product.available -%}
               <button class="ps-pc-quick" onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">Quick Add! 🛒</button>
@@ -114,7 +137,6 @@
           </div>
         </div>
         <div class="ps-pc-body">
-          <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_type | default: 'Body Bar' }}</p>
           <h3 class="ps-pc-name"><a href="{{ product.url }}">{{ product.title }}</a></h3>
           <div class="ps-pc-foot">
             {%- if product.available -%}
