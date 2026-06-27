@@ -1,6 +1,8 @@
 
 {%- paginate collection.products by 24 -%}
 
+{%- assign ch = collection.handle -%}
+
 <div class="ps-page-wrap">
 
   <div class="ps-coll-header">
@@ -11,9 +13,19 @@
     {%- endif -%}
   </div>
 
+  {%- comment -%} ── Massage & Aromatherapy callout (Metaphysical collection only) ── {%- endcomment -%}
+  {%- if ch == 'metaphysical' -%}
+    <div class="ps-use-banner">
+      <span class="ps-use-banner-icon">💆</span>
+      <div>
+        <strong>Massage &amp; Aromatherapy</strong>
+        <p>Our chakra oils are handcrafted for massage, energy work, and daily aromatherapy rituals. Each bottle blends essential oils matched to a specific chakra.</p>
+      </div>
+    </div>
+  {%- endif -%}
+
   <div class="ps-coll-toolbar">
     <div class="ps-cat-tabs" id="psCatTabs">
-      {%- assign ch = collection.handle -%}
       <a href="/collections/all" class="ps-cat-tab {% if ch == 'all' %}active{% endif %}">🌟 All</a>
       {%- for col in collections -%}
         {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle contains 'featured' or col.products_count == 0 -%}
@@ -32,6 +44,18 @@
       </select>
     </form>
   </div>
+
+  {%- comment -%} ── Scent-family filter bar (Candles & Scents collection only) ── {%- endcomment -%}
+  {%- if ch == 'candles-and-scents' -%}
+    <div class="ps-scent-bar" id="psScentBar" role="group" aria-label="Filter by scent family">
+      <button class="ps-scent-btn active" data-scent="all">✨ All</button>
+      <button class="ps-scent-btn" data-scent="floral">🌸 Floral</button>
+      <button class="ps-scent-btn" data-scent="citrus">🍋 Citrus</button>
+      <button class="ps-scent-btn" data-scent="fresh">🌿 Fresh &amp; Clean</button>
+      <button class="ps-scent-btn" data-scent="warm">🍂 Warm &amp; Cozy</button>
+      <button class="ps-scent-btn" data-scent="seasonal">❄️ Seasonal</button>
+    </div>
+  {%- endif -%}
 
   <div class="ps-cgrid" id="psProductGrid">
     {%- for product in collection.products -%}
@@ -54,9 +78,20 @@
           {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
       {%- endcase -%}
 
+      {%- comment -%} Build scent-family data attribute from product tags {%- endcomment -%}
+      {%- assign ps_scent = 'all' -%}
+      {%- for tag in product.tags -%}
+        {%- if tag == 'scent-floral' -%}{%- assign ps_scent = 'floral' -%}
+        {%- elsif tag == 'scent-citrus' -%}{%- assign ps_scent = 'citrus' -%}
+        {%- elsif tag == 'scent-fresh' -%}{%- assign ps_scent = 'fresh' -%}
+        {%- elsif tag == 'scent-warm' -%}{%- assign ps_scent = 'warm' -%}
+        {%- elsif tag == 'scent-seasonal' -%}{%- assign ps_scent = 'seasonal' -%}
+        {%- endif -%}
+      {%- endfor -%}
+
       {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
 
-      <div class="ps-pc" data-cat="{{ ps_cat }}">
+      <div class="ps-pc" data-cat="{{ ps_cat }}" data-scent="{{ ps_scent }}">
         <div class="ps-pc-img">
           {%- if product.featured_image -%}
             <a href="{{ product.url }}">
@@ -125,7 +160,92 @@
     a.href = url.toString();
   });
 })();
+
+// Scent-family filter (Candles & Scents page only)
+(function () {
+  var bar = document.getElementById('psScentBar');
+  if (!bar) return;
+
+  bar.addEventListener('click', function (e) {
+    var btn = e.target.closest('.ps-scent-btn');
+    if (!btn) return;
+
+    bar.querySelectorAll('.ps-scent-btn').forEach(function (b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+
+    var scent = btn.dataset.scent;
+    document.querySelectorAll('#psProductGrid .ps-pc').forEach(function (card) {
+      if (scent === 'all' || card.dataset.scent === scent) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Update visible count in heading
+    var visible = document.querySelectorAll('#psProductGrid .ps-pc:not([style*="none"])').length;
+    var em = document.querySelector('.ps-section-h2 em');
+    if (em) em.textContent = '(' + visible + ')';
+  });
+})();
 </script>
+
+<style>
+/* ── Scent filter bar ──────────────────────────────────── */
+.ps-scent-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 0 1.25rem;
+}
+.ps-scent-btn {
+  background: var(--lav-light, #f3eeff);
+  border: 1.5px solid var(--lav-mid, #c9b8f0);
+  color: var(--lav-ink, #3b2d6e);
+  border-radius: 2rem;
+  padding: 0.35rem 1rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ps-scent-btn:hover {
+  background: var(--lav-mid, #c9b8f0);
+}
+.ps-scent-btn.active {
+  background: var(--lav-ink, #3b2d6e);
+  border-color: var(--lav-ink, #3b2d6e);
+  color: #fff;
+}
+
+/* ── Massage & Aromatherapy use-case banner ────────────── */
+.ps-use-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--lav-light, #f3eeff);
+  border-left: 4px solid var(--lav-mid, #c9b8f0);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.ps-use-banner-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.ps-use-banner strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--lav-ink, #3b2d6e);
+  margin-bottom: 0.25rem;
+}
+.ps-use-banner p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--lav-ink, #3b2d6e);
+  opacity: 0.85;
+}
+</style>
 
 {% schema %}
 {
