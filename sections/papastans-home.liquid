@@ -1,32 +1,225 @@
 
-<!-- HERO -->
-<section class="ps-hero">
-  <div class="ps-hero-bg" id="psHeroBg"></div>
-  <div class="ps-hero-pattern"></div>
-  <div class="ps-bubble ps-bubble-1"></div>
-  <div class="ps-bubble ps-bubble-2"></div>
-  <div class="ps-bubble ps-bubble-3"></div>
-  <div class="ps-bubble ps-bubble-4"></div>
-  <div class="ps-bubble ps-bubble-5"></div>
-  <div class="ps-bubble ps-bubble-6"></div>
-  <div class="ps-bubble ps-bubble-7"></div>
-  <div class="ps-hero-art" id="psHeroArt">🪣</div>
-  <canvas id="psMascotCanvas" class="ps-mascot-canvas" aria-hidden="true"></canvas>
-  <div class="ps-hero-content">
-    <div class="ps-hero-eyebrow">🌿 Handcrafted · Small Batch · All Natural</div>
-    <h1 class="ps-hero-h1"><span>Soaps, Lotions</span><br>&amp; Candles!</h1>
-    <p class="ps-hero-sub">Made with love right here in<br>Oskaloosa, Iowa since 2019</p>
-    <div class="ps-hero-btns">
-      <a href="#ps-products" class="ps-btn-primary">Shop Now 🛒</a>
-      <a href="{{ shop.url }}/pages/our-story" class="ps-btn-secondary">Our Story 🏡</a>
+<!-- HERO: Split Kinetic — one continuous pin (bucket tips → panel opens/splits closed →
+     runway of real featured products scrubs horizontally), then testimonial + into the
+     rest of the homepage below. Mascot canvas (further down) is currently dormant — its
+     old #psMascotCanvas mount point was part of the previous static hero. -->
+{%- assign featured = collections['featured-products'] -%}
+{%- assign runway_source = featured.products | default: collections.all.products -%}
+<div class="ps-herowrap" id="psHeroWrap">
+  <div class="ps-heropin">
+    <div class="ps-hero-bgdark" id="psHeroBgDark"></div>
+    <div class="ps-hero-photo" id="psHeroPhoto">
+      <div class="ps-hero-bucket" id="psHeroBucket">🪣</div>
+    </div>
+    <div id="psBubbleField"></div>
+    <div class="ps-hero-zoomlabel" id="psHeroZoomLabel">
+      <span class="label">{{ section.settings.hero_eyebrow | default: 'Oskaloosa, Iowa · Est. 2019' }}</span>
+      <h1>{{ section.settings.hero_heading | default: 'Soaps. Lotions.' }}<br><span class="glow">{{ section.settings.hero_heading_glow | default: 'Candles.' }}</span></h1>
+      <p>{{ section.settings.hero_subheading | default: 'Handcrafted, veteran-owned, made in small batches.' }}</p>
+      <div class="cta-row">
+        <a href="{{ section.settings.hero_shop_link | default: '/collections/all' }}" class="ps-hkbtn ps-btn-glow">Shop Now</a>
+        {%- if runway_source.first -%}
+          <a href="{{ runway_source.first.url }}" class="ps-hkbtn ps-hkbtn-ghost">View a Product</a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="ps-hero-runway" id="psHeroRunway">
+      <div class="ps-kmarquee">
+        <div class="ps-kmarquee-inner" id="psKmTrack">
+          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+        </div>
+      </div>
+      <div class="ps-runway-body">
+        <div class="ps-runway-head"><div class="eyebrow">🛒 The Runway</div><h2>Pick Your Favorites!</h2></div>
+        <div class="ps-runway-track" id="psRtrack">
+          {%- for product in runway_source limit: 12 -%}
+            {%- assign ps_type = product.type | strip -%}
+            {%- case ps_type -%}
+              {%- when 'Body Bars' -%}{%- assign ps_cat = 'Soaps' -%}{%- assign ps_emoji = '🧼' -%}
+              {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}{%- assign ps_cat = 'Body Care' -%}{%- assign ps_emoji = '🧴' -%}
+              {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}{%- assign ps_cat = 'Candles' -%}{%- assign ps_emoji = '🕯️' -%}
+              {%- when 'Bath Bombs' -%}{%- assign ps_cat = 'Bath Bombs' -%}{%- assign ps_emoji = '💣' -%}
+              {%- when 'Brown Sugar Scrub' -%}{%- assign ps_cat = 'Scrubs' -%}{%- assign ps_emoji = '🌸' -%}
+              {%- when 'Bath Accessories', 'Happily Ever After' -%}{%- assign ps_cat = 'Accessories' -%}{%- assign ps_emoji = '🛁' -%}
+              {%- else -%}{%- assign ps_cat = 'Soaps' -%}{%- assign ps_emoji = '🧼' -%}
+            {%- endcase -%}
+            {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+            <a href="{{ product.url }}" class="ps-rcard">
+              {%- if product.featured_image -%}
+                <img src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}" alt="{{ product.featured_image.alt | escape | default: product.title | escape }}" loading="lazy" width="400" height="400">
+              {%- endif -%}
+              <div class="b">
+                <div class="cat">{{ ps_emoji }} {{ ps_cat }}</div>
+                <div class="n">{{ product.title }}</div>
+                <div class="row">
+                  <span class="p">{{ first_variant.price | money }}</span>
+                  {%- if product.available -%}
+                    <button type="button" onclick="event.preventDefault();psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">+</button>
+                  {%- else -%}
+                    <button type="button" disabled>✕</button>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+        <div class="ps-runway-progress"><div class="ps-runway-progress-fill" id="psRunwayProgressFill"></div></div>
+      </div>
+    </div>
+    <div class="ps-hero-panel" id="psHeroPanel">
+      <div class="ps-hero-panel-content" id="psHeroPanelContent">
+        <h1>{{ section.settings.panel_heading | default: 'Handmade,<br>Head to Toe.' }}</h1>
+        <p>{{ section.settings.panel_subheading | default: "Soaps, lotions & candles from Oskaloosa, Iowa since 2019" }}</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="{{ section.settings.hero_shop_link | default: '/collections/all' }}" class="ps-hkbtn ps-hkbtn-light">🛒 Shop Now</a>
+          {%- if runway_source.first -%}
+            <a href="{{ runway_source.first.url }}" class="ps-hkbtn ps-hkbtn-ghost">A Product →</a>
+          {%- endif -%}
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="ps-hero-phone">
-    <span>📞</span>
-    <a href="tel:6416701573">641.670.1573</a>
+<section class="ps-tband">
+  <div class="ps-tband-inner">
+    <p>&ldquo;{{ section.settings.testimonial_quote | default: "My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!" }}&rdquo;</p>
+    <div class="author">— {{ section.settings.testimonial_author | default: 'Sarah M.' }}</div>
   </div>
 </section>
+
+<script>
+(function(){
+  var herowrap = document.getElementById('psHeroWrap');
+  var heroBgDark = document.getElementById('psHeroBgDark');
+  var heroPhoto = document.getElementById('psHeroPhoto');
+  var heroBucket = document.getElementById('psHeroBucket');
+  var heroPanel = document.getElementById('psHeroPanel');
+  var heroPanelContent = document.getElementById('psHeroPanelContent');
+  var heroZoomLabel = document.getElementById('psHeroZoomLabel');
+  var heroRunway = document.getElementById('psHeroRunway');
+  var bubbleField = document.getElementById('psBubbleField');
+  if (!herowrap || !bubbleField) return;
+
+  // Three phases of ONE continuous pin: A = bucket tips, panel opens (lavender covers
+  // screen); B = panel splits back closed, revealing the runway layer already sitting
+  // full-frame beneath it; C = horizontal product scrub of real featured-products.
+  var PA_END = 0.42, PB_END = 0.56;
+
+  var BUBBLE_COUNT = 40;
+  var bubbleBase = Array.from({ length: BUBBLE_COUNT }, function(_, i) {
+    var ambient = i < 6;
+    return {
+      ambient: ambient,
+      size: ambient ? 8 + Math.random() * 14 : 12 + Math.random() * 46,
+      dx: ambient ? (Math.random() - 0.5) * 60 : -(0.15 + Math.random() * 0.85),
+      dy: (Math.random() - 0.5) * 2,
+      amp: ambient ? 30 + Math.random() * 40 : 120 + Math.random() * 260,
+      appearAt: ambient ? 0 : 0.1 + Math.random() * 0.55,
+      speed: 0.7 + Math.random() * 0.9
+    };
+  });
+  var bubbles = bubbleBase.map(function() {
+    var el = document.createElement('div');
+    el.className = 'ps-hb-bubble';
+    bubbleField.appendChild(el);
+    return el;
+  });
+  bubbleBase.forEach(function(b, i) {
+    bubbles[i].style.width = b.size + 'px';
+    bubbles[i].style.height = b.size + 'px';
+    bubbles[i].style.opacity = '0';
+  });
+  var lerp = function(a, b, t) { return a + (b - a) * t; };
+  var easeInOutCubic = function(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+
+  var progressFill = document.getElementById('psRunwayProgressFill');
+  var kmtrack = document.getElementById('psKmTrack');
+  var rtrack = document.getElementById('psRtrack');
+
+  function onHeroScroll() {
+    var rect = herowrap.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    var p = Math.min(1, Math.max(0, -rect.top / total));
+    var pA = Math.min(1, p / PA_END);
+    var ep = easeInOutCubic(pA);
+    var pB = Math.min(1, Math.max(0, (p - PA_END) / (PB_END - PA_END)));
+    var epB = easeInOutCubic(pB);
+    var pC = Math.min(1, Math.max(0, (p - PB_END) / (1 - PB_END)));
+    var vw = window.innerWidth, vh = window.innerHeight;
+
+    var bucketW = 140, bucketH = 140;
+    var bucketX = vw - bucketW - vw * 0.06;
+    var bucketY = vh - bucketH - vh * 0.05;
+    heroPhoto.style.left = bucketX + 'px';
+    heroPhoto.style.top = bucketY + 'px';
+    heroPhoto.style.width = bucketW + 'px';
+    heroPhoto.style.height = bucketH + 'px';
+
+    var tip = Math.min(1, Math.max(0, (ep - 0.12) / 0.35));
+    var angle = lerp(0, -104, tip);
+    heroBucket.style.transform = 'rotate(' + angle + 'deg)';
+
+    heroBgDark.style.opacity = String(1 - Math.min(1, Math.max(0, (ep - 0.6) / 0.35)));
+
+    var spoutX = bucketX + bucketW * lerp(0.55, 0.05, tip);
+    var spoutY = bucketY + bucketH * lerp(0.15, 0.45, tip);
+
+    bubbles.forEach(function(el, i) {
+      var base = bubbleBase[i];
+      var lp = base.ambient ? ep : Math.min(1, Math.max(0, (ep - base.appearAt) / (1 - base.appearAt)));
+      var rise = lp * base.amp * base.speed;
+      var spread = base.ambient ? base.dx : base.dx * (220 + tip * 900) * lp;
+      var x = spoutX + spread;
+      var y = spoutY - rise + base.dy * 30 * lp;
+      var scale = lerp(base.ambient ? 0.8 : 0.5, base.ambient ? 1.2 : 1.9, lp);
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = 'scale(' + scale + ')';
+      var fadeOut = Math.max(0, lp - 0.78) * 3.5;
+      var baseOpacity = base.ambient ? 0.5 + lp * 0.4 : Math.min(1, lp * 1.8);
+      el.style.opacity = (!base.ambient && lp <= 0) ? '0' : String(Math.max(0, baseOpacity * (1 - fadeOut)));
+    });
+
+    var openT = Math.max(0, ep - epB);
+    var topX = lerp(0, 100, openT), bottomX = lerp(0, 78, openT);
+    heroPanel.style.clipPath = 'polygon(0 0, ' + topX + '% 0, ' + bottomX + '% 100%, 0 100%)';
+
+    var contentP = Math.min(1, Math.max(0, (ep - 0.45) / 0.55)) * (1 - epB);
+    heroPanelContent.style.opacity = contentP;
+    heroPanelContent.style.transform = 'translateX(' + lerp(-40, 0, contentP) + 'px)';
+    heroPanelContent.style.pointerEvents = contentP > 0.5 ? 'auto' : 'none';
+
+    var labelOpacity = (1 - Math.min(1, ep / 0.3)) * (1 - epB);
+    heroZoomLabel.style.opacity = labelOpacity;
+    heroZoomLabel.style.pointerEvents = labelOpacity > 0.5 ? 'auto' : 'none';
+
+    heroPhoto.style.opacity = String(1 - epB);
+    bubbleField.style.opacity = String(1 - epB);
+
+    heroRunway.style.opacity = String(epB);
+    heroRunway.style.pointerEvents = epB > 0.5 ? 'auto' : 'none';
+
+    if (rtrack) {
+      var max = Math.max(0, rtrack.scrollWidth - vw + 240);
+      rtrack.style.transform = 'translateX(' + (-pC * max) + 'px)';
+    }
+    if (progressFill) progressFill.style.width = (pC * 100) + '%';
+    if (kmtrack) {
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY;
+      kmtrack.style.transform = 'translateX(' + (-(scrollTop * 0.25) % 600) + 'px)';
+    }
+  }
+
+  // NOTE: this theme scrolls on <body>, not <window> — 'scroll' events on window alone
+  // never fire here. Listen on both so this keeps working if that ever changes.
+  document.body.addEventListener('scroll', onHeroScroll, { passive: true });
+  window.addEventListener('scroll', onHeroScroll, { passive: true });
+  window.addEventListener('resize', onHeroScroll);
+  onHeroScroll();
+})();
+</script>
 
 <!-- MARQUEE -->
 <script>
@@ -554,7 +747,74 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 {% schema %}
 {
   "name": "Papa Stan's Home",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow text",
+      "default": "Oskaloosa, Iowa · Est. 2019"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading (line 1)",
+      "default": "Soaps. Lotions."
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_glow",
+      "label": "Heading (glow line)",
+      "default": "Candles."
+    },
+    {
+      "type": "text",
+      "id": "hero_subheading",
+      "label": "Subheading",
+      "default": "Handcrafted, veteran-owned, made in small batches."
+    },
+    {
+      "type": "url",
+      "id": "hero_shop_link",
+      "label": "\"Shop Now\" link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Hero — reveal panel"
+    },
+    {
+      "type": "text",
+      "id": "panel_heading",
+      "label": "Panel heading (use <br> for line break)",
+      "default": "Handmade,<br>Head to Toe."
+    },
+    {
+      "type": "text",
+      "id": "panel_subheading",
+      "label": "Panel subheading",
+      "default": "Soaps, lotions & candles from Oskaloosa, Iowa since 2019"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial band"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_quote",
+      "label": "Quote",
+      "default": "My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_author",
+      "label": "Author",
+      "default": "Sarah M."
+    }
+  ],
   "presets": [
     {
       "name": "Papa Stan's Home"
