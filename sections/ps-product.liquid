@@ -1,27 +1,20 @@
 {% render 'product-jsonld' %}
 
-<div class="ps-page-wrap">
-  <div class="ps-breadcrumb">
-    <a href="{{ shop.url }}">Home</a> &rsaquo;
-    <a href="{{ shop.url }}/collections/all">Shop</a> &rsaquo;
-    {{ product.title }}
-  </div>
+<div class="ps-pdp">
+  <a class="ps-pdp-back" href="{{ shop.url }}/collections/all">← Back to Shop</a>
 
-  <div class="ps-product-detail">
-    <!-- Images -->
-    <div class="ps-product-gallery">
-      <div class="ps-product-main-img">
-        {%- if product.featured_image -%}
-          <img id="psMainImg"
-            src="{{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }}"
-            alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
-            width="600" height="600">
-        {%- else -%}
-          <div class="ps-product-img-fallback">🧼</div>
-        {%- endif -%}
-      </div>
+  <section class="ps-pdp-stage" id="psPdpStage">
+    <div class="ps-pdp-imgcol">
+      {%- if product.featured_image -%}
+        <img id="psMainImg"
+          src="{{ product.featured_image | image_url: width: 900, height: 900, crop: 'center' }}"
+          alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+          width="900" height="900">
+      {%- else -%}
+        <div class="ps-product-img-fallback">🧼</div>
+      {%- endif -%}
       {%- if product.images.size > 1 -%}
-        <div class="ps-product-thumbs" role="list">
+        <div class="ps-pdp-thumbs" role="list">
           {%- for image in product.images -%}
             <img class="ps-product-thumb {% if forloop.first %}active{% endif %}"
               src="{{ image | image_url: width: 120, height: 120, crop: 'center' }}"
@@ -30,35 +23,29 @@
               loading="lazy"
               role="listitem"
               tabindex="0"
-              data-full="{{ image | image_url: width: 600, height: 600, crop: 'center' }}"
+              data-full="{{ image | image_url: width: 900, height: 900, crop: 'center' }}"
               aria-label="View image {{ forloop.index }}">
           {%- endfor -%}
         </div>
       {%- endif -%}
     </div>
 
-    <!-- Info -->
-    <div class="ps-product-info">
-      <div class="ps-section-tag" style="margin-bottom:.5rem">
-        {%- assign ps_type = product.type | strip -%}
+    <div class="ps-pdp-detailcol">
+      {%- assign ps_type = product.type | strip -%}
+      <span class="ps-pdp-catchip">
         {%- case ps_type -%}
-          {%- when 'Body Bars' -%}
-            🧼 Soap
-          {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
-            🧴 Body Care
-          {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
-            🕯️ Candle
-          {%- when 'Bath Bombs' -%}
-            💣 Bath Bomb
-          {%- when 'Brown Sugar Scrub' -%}
-            🌸 Scrub
-          {%- when 'Bath Accessories', 'Happily Ever After' -%}
-            🛁 Accessories
-          {%- else -%}
-            🧼 Soap
+          {%- when 'Body Bars' -%}🧼 Soap
+          {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}🧴 Body Care
+          {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}🕯️ Candle
+          {%- when 'Bath Bombs' -%}💣 Bath Bomb
+          {%- when 'Brown Sugar Scrub' -%}🌸 Scrub
+          {%- when 'Bath Accessories', 'Happily Ever After' -%}🛁 Accessories
+          {%- else -%}🧼 Soap
         {%- endcase -%}
-      </div>
-      <h1 class="ps-product-title">{{ product.title }}</h1>
+      </span>
+
+      <h1 class="ps-pdp-title">{{ product.title }}</h1>
+
       <!-- Start of Judge.me code -->
       <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
         {{ product.metafields.judgeme.badge }}
@@ -66,7 +53,26 @@
       <!-- End of Judge.me code -->
 
       {%- form 'product', product, id: 'psProductForm' -%}
-        <!-- Variants -->
+        <div class="ps-pdp-price" id="psProductPrice">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="ps-price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="ps-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
+        </div>
+
+        {%- if section.settings.show_description and product.description != blank -%}
+          <div class="ps-pdp-desc">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_perks -%}
+        <div class="ps-pdp-perks">
+          <span class="ps-pdp-perk">🌿 All Natural</span>
+          <span class="ps-pdp-perk">⭐ Made in Iowa</span>
+          <span class="ps-pdp-perk">🎁 Free Samples on Orders</span>
+          <span class="ps-pdp-perk">🚚 Free Shipping $55+</span>
+        </div>
+        {%- endif -%}
+
         {%- if product.variants.size > 1 -%}
           <div class="ps-variant-wrap">
             <label class="ps-variant-label">Options:</label>
@@ -83,15 +89,6 @@
           </div>
         {%- endif -%}
 
-        <!-- Price -->
-        <div class="ps-product-price" id="psProductPrice">
-          {%- if product.compare_at_price > product.price -%}
-            <span class="ps-price-compare">{{ product.compare_at_price | money }}</span>
-          {%- endif -%}
-          <span class="ps-price-current">{{ product.selected_or_first_available_variant.price | money }}</span>
-        </div>
-
-        <!-- Stock indicator -->
         {%- assign sel = product.selected_or_first_available_variant -%}
         {%- if sel.inventory_management == 'shopify' -%}
           {%- assign qty = sel.inventory_quantity -%}
@@ -104,7 +101,6 @@
           {%- endif -%}
         {%- endif -%}
 
-        <!-- Variant inventory data for JS -->
         <script>
           window.psVariantInventory = {
             {%- for v in product.variants -%}
@@ -113,59 +109,45 @@
           };
         </script>
 
-        <!-- Add to cart -->
         {%- if product.available -%}
-          <div class="ps-qty-row">
+          <div class="ps-pdp-qty-row">
             <div class="ps-qty-wrap">
               <button type="button" class="ps-qty-btn" onclick="psChangeQty(-1)">−</button>
               <input type="number" name="quantity" value="1" min="1" id="psQtyInput" class="ps-qty-input">
               <button type="button" class="ps-qty-btn" onclick="psChangeQty(1)">+</button>
             </div>
-            <button type="submit" class="ps-btn-primary ps-atc-big" id="psAtcBtn">Add to Cart 🛒</button>
+            <button type="submit" class="ps-pdp-btn" id="psAtcBtn">🛒 Add to Cart</button>
           </div>
         {%- else -%}
-          <button class="ps-btn-primary ps-atc-big" disabled style="opacity:.5;cursor:not-allowed">Sold Out 😢</button>
-        {%- endif -%}
-
-        {%- if section.settings.show_perks -%}
-        <div class="ps-product-perks">
-          <span>🌿 All Natural</span>
-          <span>⭐ Made in Iowa</span>
-          <span>🎁 Free Samples on Orders</span>
-          <span>🚚 Free Shipping $55+</span>
-        </div>
+          <button class="ps-pdp-btn" disabled style="opacity:.5;cursor:not-allowed">Sold Out 😢</button>
         {%- endif -%}
       {%- endform -%}
-
-      <!-- Description -->
-      {%- if section.settings.show_description and product.description != blank -%}
-        <div class="ps-product-desc">{{ product.description }}</div>
-      {%- endif -%}
     </div>
+  </section>
 
-    <!-- Similar Items — sidebar strip -->
-    {%- if section.settings.show_similar -%}
-    <div class="ps-similar-strip" id="psSimilar" style="display:none">
-      <div class="ps-similar-heading">You Might Also Like</div>
-      <div class="ps-similar-list" id="psSimilarGrid"></div>
-    </div>
-    {%- endif -%}
-  </div>
-
-  <!-- Judge.me Review Widget -->
   {%- if section.settings.show_reviews -%}
-  <div class="ps-reviews-wrap">
+  <section class="ps-pdp-reviews">
     <div class="ps-section-tag" style="margin-bottom:1rem">⭐ Customer Reviews</div>
     <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
-  </div>
+  </section>
   {%- endif -%}
 
-  <!-- Back to shop -->
-  <div style="text-align:center;margin:3rem 0">
-    <a href="{{ shop.url }}/collections/all" class="ps-btn-secondary">← Back to All Products</a>
-  </div>
-</div>
+  {%- if section.settings.show_similar -%}
+  <section class="ps-pdp-more" id="psSimilar" style="display:none">
+    <h2>More on the Runway</h2>
+    <div class="ps-pdp-mgrid" id="psSimilarGrid"></div>
+  </section>
+  {%- endif -%}
 
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when '@app' -%}
+        <div class="ps-pdp-app-block" {{ block.shopify_attributes }}>
+          {% render block %}
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
 
 <script>
 // ── Gallery: event listeners + keyboard nav ──
@@ -218,37 +200,20 @@ document.getElementById('psVariantSelect')?.addEventListener('change', function(
 {% if section.settings.show_similar %}
 (async function() {
   try {
-    const res = await fetch('/recommendations/products.json?product_id={{ product.id }}&limit=6&intent=related');
+    const res = await fetch('/recommendations/products.json?product_id={{ product.id }}&limit=4&intent=related');
     const { products } = await res.json();
     if (!products?.length) return;
     const grid = document.getElementById('psSimilarGrid');
     if (!grid) return;
     grid.innerHTML = products.map(p => {
-      const img = p.featured_image ? `<img src="${p.featured_image}" alt="${p.title}" loading="lazy">` : `<div class="ps-sim-img-fallback">🧼</div>`;
+      const img = p.featured_image ? `<img src="${p.featured_image}" alt="${p.title}" loading="lazy">` : `<div class="ps-product-img-fallback">🧼</div>`;
       const price = (p.price_min / 100).toLocaleString('en-US', { style:'currency', currency:'USD' });
-      return `<a class="ps-sim-card" href="/products/${p.handle}">
-        <div class="ps-sim-img">${img}</div>
-        <div class="ps-sim-body">
-          <div class="ps-sim-name">${p.title}</div>
-          <div class="ps-sim-price">${price}</div>
-          <button class="ps-sim-atc" data-variant="${p.variants[0].id}" ${!p.available?'disabled':''}>
-            ${p.available ? 'Add to Cart' : 'Sold Out'}
-          </button>
-        </div>
+      return `<a class="ps-pdp-mcard" href="/products/${p.handle}">
+        <img src="${p.featured_image || ''}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">
+        <div class="b"><div class="n">${p.title}</div><div class="p">${price}</div></div>
       </a>`;
     }).join('');
-    document.getElementById('psSimilar').style.display = 'flex';
-    grid.querySelectorAll('.ps-sim-atc').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault(); e.stopPropagation();
-        btn.textContent = '✓ Adding…'; btn.disabled = true;
-        try {
-          await fetch('/cart/add.js', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id: btn.dataset.variant, quantity: 1 }) });
-          psOpenCart(); psShowToast('✅ Added to cart!');
-        } catch(e) { psShowToast('Something went wrong.'); }
-        btn.textContent = 'Add to Cart'; btn.disabled = false;
-      });
-    });
+    document.getElementById('psSimilar').style.display = 'block';
   } catch(e) {}
 })();
 {% endif %}
@@ -265,8 +230,10 @@ document.getElementById('psProductForm')?.addEventListener('submit', async funct
     psShowToast('✅ Added to cart!');
     psOpenCart();
   } catch(e) { psShowToast('Something went wrong.'); }
-  btn.textContent = 'Add to Cart 🛒'; btn.disabled = false;
+  btn.textContent = '🛒 Add to Cart'; btn.disabled = false;
 });
+
+requestAnimationFrame(() => document.getElementById('psPdpStage')?.classList.add('in'));
 </script>
 
 {% schema %}
