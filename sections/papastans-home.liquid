@@ -31,40 +31,117 @@
         </div>
       </div>
       <div class="ps-runway-body">
-        <div class="ps-runway-head"><div class="eyebrow">🛒 The Runway</div><h2>Pick Your Favorites!</h2></div>
-        <div class="ps-runway-track" id="psRtrack">
-          {%- for product in runway_source limit: 12 -%}
-            {%- assign ps_type = product.type | strip -%}
-            {%- case ps_type -%}
-              {%- when 'Body Bars' -%}{%- assign ps_cat = 'Soaps' -%}{%- assign ps_emoji = '🧼' -%}
-              {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}{%- assign ps_cat = 'Body Care' -%}{%- assign ps_emoji = '🧴' -%}
-              {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}{%- assign ps_cat = 'Candles' -%}{%- assign ps_emoji = '🕯️' -%}
-              {%- when 'Bath Bombs' -%}{%- assign ps_cat = 'Bath Bombs' -%}{%- assign ps_emoji = '💣' -%}
-              {%- when 'Brown Sugar Scrub' -%}{%- assign ps_cat = 'Scrubs' -%}{%- assign ps_emoji = '🌸' -%}
-              {%- when 'Bath Accessories', 'Happily Ever After' -%}{%- assign ps_cat = 'Accessories' -%}{%- assign ps_emoji = '🛁' -%}
-              {%- else -%}{%- assign ps_cat = 'Soaps' -%}{%- assign ps_emoji = '🧼' -%}
-            {%- endcase -%}
-            {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
-            <a href="{{ product.url }}" class="ps-rcard">
-              {%- if product.featured_image -%}
-                <img src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}" alt="{{ product.featured_image.alt | escape | default: product.title | escape }}" loading="lazy" width="400" height="400">
-              {%- endif -%}
-              <div class="b">
-                <div class="cat">{{ ps_emoji }} {{ ps_cat }}</div>
-                <div class="n">{{ product.title }}</div>
-                <div class="row">
-                  <span class="p">{{ first_variant.price | money }}</span>
-                  {%- if product.available -%}
-                    <button type="button" onclick="event.preventDefault();psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">+</button>
+        <section class="ps-products ps-products--in-hero" id="ps-products">
+          <div class="ps-products-top">
+            <div>
+              <div class="ps-section-tag">🛒 Shop Now</div>
+              <h2 class="ps-section-h2">Pick Your <em>Favorites!</em></h2>
+            </div>
+            <a href="{{ shop.url }}/collections/all" class="ps-view-all">See All {{ collections.all.products_count }} Products →</a>
+            <a href="{{ shop.url }}/collections/all" class="ps-mobile-view-all ps-btn-primary">
+              See All {{ collections.all.products_count }} Products 🛒
+            </a>
+          </div>
+
+          <!-- Category filter tabs — "All" filters in-page; others navigate to collection -->
+          <div class="ps-cat-tabs" id="psCatTabs">
+            <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
+            <a href="/collections/soaps"             class="ps-cat-tab" data-cat="soap">🧼 Soaps</a>
+            <a href="/collections/body-care"         class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</a>
+            <a href="/collections/candles-and-scents" class="ps-cat-tab" data-cat="candle">🕯️ Candles</a>
+            <a href="/collections/bath-bombs"        class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</a>
+            <a href="/collections/scrubs"            class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</a>
+            <a href="/collections/accessories"       class="ps-cat-tab" data-cat="accessory">🛁 Accessories</a>
+          </div>
+
+          <div class="ps-pgrid-wrap">
+            <button class="ps-pgrid-arrow ps-pgrid-prev" id="psPrev" aria-label="Previous products">&#8592;</button>
+            <div class="ps-pgrid" id="psProductGrid">
+            {%- assign featured = collections['featured-products'] -%}
+            {%- assign source = featured.products | default: collections.all.products -%}
+            {%- for product in source limit: 24 -%}
+              {%- assign ps_type = product.type | strip -%}
+              {%- case ps_type -%}
+                {%- when 'Body Bars' -%}
+                  {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+                {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
+                  {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}
+                {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
+                  {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
+                {%- when 'Bath Bombs' -%}
+                  {%- assign ps_cat = 'bomb' -%}{%- assign ps_emoji = '💣' -%}
+                {%- when 'Brown Sugar Scrub' -%}
+                  {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
+                {%- when 'Bath Accessories', 'Happily Ever After' -%}
+                  {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}
+                {%- else -%}
+                  {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
+              {%- endcase -%}
+
+              {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+              {%- assign is_available = product.available -%}
+
+              <div class="ps-pc" data-cat="{{ ps_cat }}">
+                <div class="ps-pc-img">
+                  {%- if product.featured_image -%}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}"
+                      srcset="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }} 200w,
+                              {{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }} 400w,
+                              {{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }} 600w"
+                      sizes="(max-width: 480px) 44vw, (max-width: 768px) 30vw, 220px"
+                      alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+                      loading="lazy"
+                      width="400" height="400"
+                    >
                   {%- else -%}
-                    <button type="button" disabled>✕</button>
+                    <div class="ps-pc-img-fallback">{{ ps_emoji }}</div>
                   {%- endif -%}
+
+                  {%- unless is_available -%}
+                    <span class="ps-pc-badge ps-sold">Sold Out</span>
+                  {%- endunless -%}
+
+                  <div class="ps-pc-overlay">
+                    {%- if is_available -%}
+                      <button class="ps-pc-quick"
+                        data-variant-id="{{ first_variant.id }}"
+                        data-product-title="{{ product.title | escape }}"
+                        onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
+                        Quick Add! 🛒
+                      </button>
+                    {%- else -%}
+                      <button class="ps-pc-quick" disabled>Out of Stock</button>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="ps-pc-body">
+                  <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_type | default: 'Body Bar' }}</p>
+                  <h3 class="ps-pc-name">
+                    <a href="{{ product.url }}" style="text-decoration:none;color:inherit;">{{ product.title }}</a>
+                  </h3>
+                  <div class="ps-pc-foot">
+                    {%- if is_available -%}
+                      <span class="ps-pc-price">{{ first_variant.price | money }}</span>
+                      <button class="ps-atc"
+                        data-variant-id="{{ first_variant.id }}"
+                        data-product-title="{{ product.title | escape }}"
+                        onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
+                        Add to Cart
+                      </button>
+                    {%- else -%}
+                      <span class="ps-pc-price ps-sold-out">{{ product.price | money }}</span>
+                      <button class="ps-atc" disabled>Sold Out</button>
+                    {%- endif -%}
+                  </div>
                 </div>
               </div>
-            </a>
-          {%- endfor -%}
-        </div>
-        <div class="ps-runway-progress"><div class="ps-runway-progress-fill" id="psRunwayProgressFill"></div></div>
+            {%- endfor -%}
+          </div><!-- /ps-pgrid -->
+            <button class="ps-pgrid-arrow ps-pgrid-next" id="psNext" aria-label="Next products">&#8594;</button>
+          </div><!-- /ps-pgrid-wrap -->
+        </section>
       </div>
     </div>
     <div class="ps-hero-panel" id="psHeroPanel">
@@ -143,9 +220,7 @@
   var lerp = function(a, b, t) { return a + (b - a) * t; };
   var easeInOutCubic = function(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
 
-  var progressFill = document.getElementById('psRunwayProgressFill');
   var kmtrack = document.getElementById('psKmTrack');
-  var rtrack = document.getElementById('psRtrack');
 
   function onHeroScroll() {
     var rect = herowrap.getBoundingClientRect();
@@ -155,7 +230,6 @@
     var ep = easeInOutCubic(pA);
     var pB = Math.min(1, Math.max(0, (p - PA_END) / (PB_END - PA_END)));
     var epB = easeInOutCubic(pB);
-    var pC = Math.min(1, Math.max(0, (p - PB_END) / (1 - PB_END)));
     var vw = window.innerWidth, vh = window.innerHeight;
 
     var bucketW = 140, bucketH = 140;
@@ -210,11 +284,6 @@
     heroRunway.style.opacity = String(epB);
     heroRunway.style.pointerEvents = epB > 0.5 ? 'auto' : 'none';
 
-    if (rtrack) {
-      var max = Math.max(0, rtrack.scrollWidth - vw + 240);
-      rtrack.style.transform = 'translateX(' + (-pC * max) + 'px)';
-    }
-    if (progressFill) progressFill.style.width = (pC * 100) + '%';
     if (kmtrack) {
       var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY;
       kmtrack.style.transform = 'translateX(' + (-(scrollTop * 0.25) % 600) + 'px)';
@@ -527,133 +596,6 @@ else{ window.addEventListener('load', init); }
 })();
 </script>
 
-<!-- MARQUEE -->
-<div class="ps-marquee">
-  <div class="ps-marquee-inner">
-    {%- assign marquee_items = "🧼 Soaps,🧴 Lotions,🕯️ Candles,🧖 Face Scrubs,🌿 All Natural,🎖️ Veteran Owned,📍 Oskaloosa Iowa,⭐ 190+ Products,🎁 Free Samples" | split: "," -%}
-    {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
-    {%- for item in marquee_items -%}<span class="ps-m-item">{{ item }}<span class="ps-m-sep">✦</span></span>{%- endfor -%}
-  </div>
-</div>
-
-
-<!-- PRODUCTS — rendered server-side via Liquid -->
-<section class="ps-products" id="ps-products">
-  <div class="ps-products-top">
-    <div>
-      <div class="ps-section-tag ps-reveal">🛒 Shop Now</div>
-      <h2 class="ps-section-h2 ps-reveal ps-rd1">Pick Your <em>Favorites!</em></h2>
-    </div>
-    <a href="{{ shop.url }}/collections/all" class="ps-view-all ps-reveal">See All {{ collections.all.products_count }} Products →</a>
-    <a href="{{ shop.url }}/collections/all" class="ps-mobile-view-all ps-btn-primary">
-      See All {{ collections.all.products_count }} Products 🛒
-    </a>
-  </div>
-
-  <!-- Category filter tabs — "All" scrolls & filters in-page; others navigate to collection -->
-  <div class="ps-cat-tabs ps-reveal" id="psCatTabs">
-    <button class="ps-cat-tab active" data-cat="all">🌟 All</button>
-    <a href="/collections/soaps"             class="ps-cat-tab" data-cat="soap">🧼 Soaps</a>
-    <a href="/collections/body-care"         class="ps-cat-tab" data-cat="bodycare">🧴 Body Care</a>
-    <a href="/collections/candles-and-scents" class="ps-cat-tab" data-cat="candle">🕯️ Candles</a>
-    <a href="/collections/bath-bombs"        class="ps-cat-tab" data-cat="bomb">💣 Bath Bombs</a>
-    <a href="/collections/scrubs"            class="ps-cat-tab" data-cat="scrub">🌸 Scrubs</a>
-    <a href="/collections/accessories"       class="ps-cat-tab" data-cat="accessory">🛁 Accessories</a>
-  </div>
-
-  <div class="ps-pgrid-wrap">
-    <button class="ps-pgrid-arrow ps-pgrid-prev" id="psPrev" aria-label="Previous products">&#8592;</button>
-    <div class="ps-pgrid" id="psProductGrid">
-    {%- assign featured = collections['featured-products'] -%}
-    {%- assign source = featured.products | default: collections.all.products -%}
-    {%- for product in source limit: 24 -%}
-      {%- assign ps_type = product.type | strip -%}
-
-      {%- case ps_type -%}
-        {%- when 'Body Bars' -%}
-          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
-        {%- when 'Body Lotion', 'Ultra-Rich Body Butter', 'Hair And Body Wash', 'Perfume Body Spray', 'Deodorant', 'Lip butter', 'Foaming Hand Soap', 'Metaphysical' -%}
-          {%- assign ps_cat = 'bodycare' -%}{%- assign ps_emoji = '🧴' -%}
-        {%- when 'Candles - 8 oz', 'Seasonal Candles', 'Wax Melts', 'Potpourri' -%}
-          {%- assign ps_cat = 'candle' -%}{%- assign ps_emoji = '🕯️' -%}
-        {%- when 'Bath Bombs' -%}
-          {%- assign ps_cat = 'bomb' -%}{%- assign ps_emoji = '💣' -%}
-        {%- when 'Brown Sugar Scrub' -%}
-          {%- assign ps_cat = 'scrub' -%}{%- assign ps_emoji = '🌸' -%}
-        {%- when 'Bath Accessories', 'Happily Ever After' -%}
-          {%- assign ps_cat = 'accessory' -%}{%- assign ps_emoji = '🛁' -%}
-        {%- else -%}
-          {%- assign ps_cat = 'soap' -%}{%- assign ps_emoji = '🧼' -%}
-      {%- endcase -%}
-
-      {%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
-      {%- assign is_available = product.available -%}
-
-      <div class="ps-pc" data-cat="{{ ps_cat }}">
-        <div class="ps-pc-img">
-          {%- if product.featured_image -%}
-            <img
-              src="{{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }}"
-              srcset="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }} 200w,
-                      {{ product.featured_image | image_url: width: 400, height: 400, crop: 'center' }} 400w,
-                      {{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' }} 600w"
-              sizes="(max-width: 480px) 44vw, (max-width: 768px) 30vw, 220px"
-              alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
-              loading="lazy"
-              width="400" height="400"
-            >
-          {%- else -%}
-            <div class="ps-pc-img-fallback">{{ ps_emoji }}</div>
-          {%- endif -%}
-
-          {%- unless is_available -%}
-            <span class="ps-pc-badge ps-sold">Sold Out</span>
-          {%- endunless -%}
-
-          <div class="ps-pc-overlay">
-            {%- if is_available -%}
-              <button class="ps-pc-quick"
-                data-variant-id="{{ first_variant.id }}"
-                data-product-title="{{ product.title | escape }}"
-                onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
-                Quick Add! 🛒
-              </button>
-            {%- else -%}
-              <button class="ps-pc-quick" disabled>Out of Stock</button>
-            {%- endif -%}
-          </div>
-        </div>
-
-        <div class="ps-pc-body">
-          <p class="ps-pc-cat">{{ ps_emoji }} {{ ps_type | default: 'Body Bar' }}</p>
-          <h3 class="ps-pc-name">
-            <a href="{{ product.url }}" style="text-decoration:none;color:inherit;">{{ product.title }}</a>
-          </h3>
-          <div class="ps-pc-foot">
-            {%- if is_available -%}
-              <span class="ps-pc-price">{{ first_variant.price | money }}</span>
-              <button class="ps-atc"
-                data-variant-id="{{ first_variant.id }}"
-                data-product-title="{{ product.title | escape }}"
-                onclick="psAddToCart({{ first_variant.id }}, '{{ product.title | escape }}')">
-                Add to Cart
-              </button>
-            {%- else -%}
-              <span class="ps-pc-price ps-sold-out">{{ product.price | money }}</span>
-              <button class="ps-atc" disabled>Sold Out</button>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endfor -%}
-  </div><!-- /ps-pgrid -->
-    <button class="ps-pgrid-arrow ps-pgrid-next" id="psNext" aria-label="Next products">&#8594;</button>
-  </div><!-- /ps-pgrid-wrap -->
-
-  <div class="ps-load-more-wrap">
-    <a href="{{ shop.url }}/collections/all" class="ps-btn-primary">See All Products 👉</a>
-  </div>
-</section>
 
 <script>
 // ── Parallax ──

@@ -1140,21 +1140,6 @@
 .ps-kmarquee span { font-family: var(--font-display); font-size: clamp(1.6rem,5vw,4.5rem); color: var(--lav-300); padding: 0 2rem; white-space: nowrap; letter-spacing: .02em; }
 .ps-kmarquee span.alt { color: #fff; }
 .ps-runway-body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: 1rem 0; }
-.ps-runway-head { text-align: center; margin: 0 0 1.2rem; flex: 0 0 auto; }
-.ps-runway-head .eyebrow { font-size: .8rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--lav-dark); }
-.ps-runway-head h2 { font-family: var(--font-display); font-size: clamp(1.5rem,3.5vw,3.2rem); margin: .4rem 0 0; color: var(--lav-ink); }
-.ps-runway-track { display: flex; gap: 2vh; padding: 0 10vw; will-change: transform; flex: 0 1 auto; min-height: 0; }
-.ps-rcard { flex: 0 0 min(340px, 34vh); background: #fff; clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%); overflow: hidden; text-decoration: none; color: inherit; display: block; }
-.ps-rcard img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
-.ps-rcard .b { padding: .8vh 1.2rem 1vh; }
-.ps-rcard .cat { font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav); margin-bottom: .3rem; }
-.ps-rcard .n { font-family: var(--font-script); font-size: 1.4rem; margin-bottom: .5rem; color: var(--lav-ink); }
-.ps-rcard .row { display: flex; justify-content: space-between; align-items: center; }
-.ps-rcard .p { font-family: var(--font-display); color: var(--lav); font-size: 1.1rem; }
-.ps-rcard button { background: var(--lav); color: #fff; border: none; clip-path: polygon(15% 0,100% 0,85% 100%,0 100%); width: 42px; height: 38px; font-size: 1.1rem; font-weight: 800; cursor: pointer; }
-.ps-rcard button:disabled { background: var(--lav-light); cursor: not-allowed; }
-.ps-runway-progress { width: 100%; max-width: 800px; margin: 1rem auto 0; height: 4px; background: var(--lav-light); position: relative; flex: 0 0 auto; }
-.ps-runway-progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--lav); width: 0%; }
 
 /* ── Diagonal testimonial band ── */
 .ps-tband { position: relative; padding: 7rem 4vw; background: var(--lav-ink); color: #fff; overflow: hidden; }
@@ -1202,4 +1187,17 @@
   .ps-pdp-imgcol { clip-path: none; min-height: 40vh; }
   .ps-pdp-back { margin-left: 1.5rem; }
   .ps-pdp-mgrid { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── Pick Your Favorites, nested inside the pinned hero (phase C) ── */
+.ps-products--in-hero { padding: .5rem 4vw 1rem; background: transparent; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.ps-products--in-hero .ps-products-top { margin-bottom: 1rem; }
+.ps-products--in-hero .ps-cat-tabs { margin-bottom: 1rem; }
+.ps-products--in-hero .ps-pgrid-wrap { flex: 0 0 auto; }
+.ps-products--in-hero .ps-pgrid { padding: .5rem .5rem 1rem; }
+.ps-products--in-hero .ps-pc { flex-basis: 220px; }
+@media (max-height: 720px) {
+  .ps-products--in-hero .ps-products-top,
+  .ps-products--in-hero .ps-cat-tabs { margin-bottom: .6rem; }
+  .ps-products--in-hero .ps-pc { flex-basis: 180px; }
 }
