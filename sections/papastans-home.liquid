@@ -326,9 +326,11 @@ function psRatio(el) {
 function psSetNavTop() {
   const rainbow  = document.querySelector('.ps-rainbow-bar');
   const announce = document.querySelector('.ps-announce');
+  const nav      = document.getElementById('psNav');
   const h = (rainbow  ? rainbow.offsetHeight  : 8)
           + (announce ? announce.offsetHeight : 36);
   document.documentElement.style.setProperty('--nav-top', h + 'px');
+  document.documentElement.style.setProperty('--nav-height', (nav ? nav.offsetHeight : 80) + 'px');
 }
 function psOnScroll() {
   const sy = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY;
