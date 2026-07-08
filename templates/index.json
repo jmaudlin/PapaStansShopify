@@ -4,56 +4,6 @@
       "type": "papastans-home",
       "settings": {}
     },
-    "ps_home_grid": {
-      "type": "ps-home-grid",
-      "settings": {
-        "use_judgeme": false
-      },
-      "blocks": {
-        "review_1": {
-          "type": "review",
-          "settings": {
-            "text": "I've tried a lot of handmade soaps and nothing compares. My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!",
-            "name": "Sarah M.",
-            "stars": 5,
-            "product": "Body Bars"
-          }
-        },
-        "review_2": {
-          "type": "review",
-          "settings": {
-            "text": "Ordered the candles as a gift and ended up keeping them for myself. The scent is incredible \u2014 not overpowering, just warm and perfect. Will be ordering again.",
-            "name": "James T.",
-            "stars": 5,
-            "product": "Candles - 8 oz"
-          }
-        },
-        "review_3": {
-          "type": "review",
-          "settings": {
-            "text": "Papa Stans is amazing! The lotion is so smooth and you can tell it's made with real ingredients. Supporting a veteran-owned small business is just the cherry on top.",
-            "name": "Jay",
-            "stars": 5,
-            "product": "Body Lotion"
-          }
-        },
-        "review_4": {
-          "type": "review",
-          "settings": {
-            "text": "I got the sample pack with my order and now I need full sizes of everything. The brown sugar scrub especially \u2014 my skin felt brand new after one use.",
-            "name": "Melissa R.",
-            "stars": 5,
-            "product": "Brown Sugar Scrub"
-          }
-        }
-      },
-      "block_order": [
-        "review_1",
-        "review_2",
-        "review_3",
-        "review_4"
-      ]
-    },
     "ps_home_lower": {
       "type": "ps-home-lower",
       "settings": {}
@@ -61,7 +11,6 @@
   },
   "order": [
     "papastans_home",
-    "ps_home_grid",
     "ps_home_lower"
   ]
 }
