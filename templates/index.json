@@ -3,14 +3,9 @@
     "papastans_home": {
       "type": "papastans-home",
       "settings": {}
-    },
-    "ps_home_lower": {
-      "type": "ps-home-lower",
-      "settings": {}
     }
   },
   "order": [
-    "papastans_home",
-    "ps_home_lower"
+    "papastans_home"
   ]
 }
