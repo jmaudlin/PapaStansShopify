@@ -23,27 +23,6 @@
       </div>
     </div>
     <div class="ps-hero-runway" id="psHeroRunway">
-      {%- comment -%}
-        Ticker content comes from the same "Announcement Bar" menu as the top
-        bar (Content > Navigation > handle: announcement-bar). Edit it there
-        to update both. Falls back to the original category chips if that
-        menu is ever emptied out.
-      {%- endcomment -%}
-      {%- assign ann_links = linklists['announcement-bar'].links -%}
-      <div class="ps-kmarquee">
-        <div class="ps-kmarquee-inner" id="psKmTrack">
-          {%- if ann_links.size > 0 -%}
-            {%- for i in (1..2) -%}
-              {%- for link in ann_links -%}
-                <span{% if forloop.index0 == 1 or forloop.index0 == 3 or forloop.index0 == 5 %} class="alt"{% endif %}>{{ link.title }}</span>
-              {%- endfor -%}
-            {%- endfor -%}
-          {%- else -%}
-            <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
-            <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
-          {%- endif -%}
-        </div>
-      </div>
       <div class="ps-runway-body">
         <section class="ps-products ps-products--in-hero" id="ps-products">
           <div class="ps-products-top">
@@ -194,6 +173,26 @@
 
     <div class="ps-hero-wipe-d" id="psWipeD"></div>
     <div class="ps-hero-wipe-f" id="psWipeF"></div>
+
+    <!-- Persistent ticker: once revealed (phase B), stays on screen through every
+         later phase/wipe. Only hides again if you scroll back to the very start.
+         Content comes from the same "Announcement Bar" menu as the top bar
+         (Content > Navigation > handle: announcement-bar). -->
+    {%- assign ann_links = linklists['announcement-bar'].links -%}
+    <div class="ps-kmarquee" id="psMarqueeLayer">
+      <div class="ps-kmarquee-inner" id="psKmTrack">
+        {%- if ann_links.size > 0 -%}
+          {%- for i in (1..2) -%}
+            {%- for link in ann_links -%}
+              <span{% if forloop.index0 == 1 or forloop.index0 == 3 or forloop.index0 == 5 %} class="alt"{% endif %}>{{ link.title }}</span>
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- else -%}
+          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
 </div>
 
@@ -220,6 +219,8 @@
   var heroNewsletter = document.getElementById('psHeroNewsletter');
   var wipeD = document.getElementById('psWipeD');
   var wipeF = document.getElementById('psWipeF');
+  var marqueeLayer = document.getElementById('psMarqueeLayer');
+  var marqueeRevealed = false;
   var bubbleField = document.getElementById('psBubbleField');
   if (!herowrap || !bubbleField) return;
 
@@ -267,7 +268,6 @@
   var lerp = function(a, b, t) { return a + (b - a) * t; };
   var easeInOutCubic = function(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
 
-  var kmtrack = document.getElementById('psKmTrack');
   var productGrid = document.getElementById('psProductGrid');
   var productGridTarget = 0;
 
@@ -371,9 +371,15 @@
       heroNewsletter.style.pointerEvents = newsletterOpacity > 0.5 ? 'auto' : 'none';
     }
 
-    if (kmtrack) {
-      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY;
-      kmtrack.style.transform = 'translateX(' + (-(scrollTop * 0.25) % 600) + 'px)';
+    // ── Persistent ticker: revealed once phase B is well underway, stays
+    //    visible through every phase after that. Only hides again once you
+    //    scroll all the way back to the hero's starting state. No movement
+    //    tied to scroll -- it just sits still once shown. ──
+    if (epB > 0.5) marqueeRevealed = true;
+    if (p <= 0.01) marqueeRevealed = false;
+    if (marqueeLayer) {
+      marqueeLayer.style.opacity = marqueeRevealed ? '1' : '0';
+      marqueeLayer.style.pointerEvents = marqueeRevealed ? 'auto' : 'none';
     }
   }
 

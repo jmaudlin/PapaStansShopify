@@ -1137,7 +1137,7 @@
 }
 /* ── Split Kinetic hero: runway + marquee + testimonial (below-the-fold, deferred) ── */
 .ps-hero-runway { position: absolute; inset: 0; z-index: 3; background: var(--offwhite); display: flex; flex-direction: column; }
-.ps-kmarquee { position: relative; height: auto; padding: .55rem 0; margin-top: var(--nav-height, 70px); background: var(--lav-ink); overflow: hidden; flex: 0 0 auto; }
+.ps-kmarquee { position: absolute; left: 0; right: 0; top: var(--nav-height, 70px); z-index: 10; padding: .55rem 0; background: var(--lav-ink); overflow: hidden; opacity: 0; transition: opacity .4s ease; }
 .ps-kmarquee-inner { transform: skewY(1deg); display: flex; align-items: center; }
 .ps-kmarquee span { font-family: var(--font-display); font-size: clamp(.8rem,1.2vw,1.05rem); color: var(--lav-300); padding: 0 1rem; white-space: nowrap; letter-spacing: .02em; line-height: 1.4; }
 .ps-kmarquee span.alt { color: #fff; }
