@@ -182,13 +182,10 @@
     <div class="ps-kmarquee" id="psMarqueeLayer">
       <div class="ps-kmarquee-inner" id="psKmTrack">
         {%- if ann_links.size > 0 -%}
-          {%- for i in (1..2) -%}
-            {%- for link in ann_links -%}
-              <span{% if forloop.index0 == 1 or forloop.index0 == 3 or forloop.index0 == 5 %} class="alt"{% endif %}>{{ link.title }}</span>
-            {%- endfor -%}
+          {%- for link in ann_links -%}
+            <span{% if forloop.index0 == 1 or forloop.index0 == 3 or forloop.index0 == 5 %} class="alt"{% endif %}>{{ link.title }}</span>
           {%- endfor -%}
         {%- else -%}
-          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
           <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
         {%- endif -%}
       </div>
