@@ -714,6 +714,7 @@
   font-size: 1.1rem; line-height: 1; text-decoration: none;
   padding: .35rem .5rem; border-radius: 8px; transition: background .2s;
   color: rgba(255,255,255,.9);
+  background: none; border: none;
 }
 .ps-nav.scrolled .ps-nav-search-btn { color: var(--lav); }
 .ps-nav-search-btn:hover { background: rgba(255,255,255,.15); }
@@ -898,6 +899,7 @@
   transition: background .2s;
   cursor: pointer;
   color: rgba(255,255,255,.9);
+  background: none;
   border: 2px solid transparent;
 }
 .ps-nav.scrolled .ps-nav-search-btn { color: var(--lav); }
