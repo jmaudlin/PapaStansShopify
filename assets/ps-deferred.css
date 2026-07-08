@@ -1197,3 +1197,11 @@
   .ps-products--in-hero .ps-cat-tabs { margin-bottom: .6rem; }
   .ps-products--in-hero .ps-pc { flex-basis: 180px; }
 }
+
+/* ── Testimonials on homepage: mockup's dark diagonal band, real Judge.me data ── */
+.ps-testimonials-dark .ps-testimonials { position: relative; background: var(--lav-ink); padding: 7rem 4vw; overflow: hidden; }
+.ps-testimonials-dark .ps-testimonials::before { content: ''; position: absolute; inset: 0; background: var(--lav-dark); clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%); z-index: 0; }
+.ps-testimonials-dark .ps-testimonials-inner { position: relative; z-index: 1; }
+.ps-testimonials-dark .ps-testimonials-header .ps-section-h2 { color: #fff; text-shadow: 3px 3px 0 rgba(0,0,0,.25); }
+.ps-testimonials-dark .ps-testimonials-header .ps-section-h2 em { color: var(--sun); }
+.ps-testimonials-dark .ps-testimonials-sub { color: rgba(255,255,255,.85); }
