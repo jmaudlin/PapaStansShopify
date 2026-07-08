@@ -23,10 +23,25 @@
       </div>
     </div>
     <div class="ps-hero-runway" id="psHeroRunway">
+      {%- comment -%}
+        Ticker content comes from the same "Announcement Bar" menu as the top
+        bar (Content > Navigation > handle: announcement-bar). Edit it there
+        to update both. Falls back to the original category chips if that
+        menu is ever emptied out.
+      {%- endcomment -%}
+      {%- assign ann_links = linklists['announcement-bar'].links -%}
       <div class="ps-kmarquee">
         <div class="ps-kmarquee-inner" id="psKmTrack">
-          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
-          <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+          {%- if ann_links.size > 0 -%}
+            {%- for i in (1..2) -%}
+              {%- for link in ann_links -%}
+                <span{% if forloop.index0 == 1 or forloop.index0 == 3 or forloop.index0 == 5 %} class="alt"{% endif %}>{{ link.title }}</span>
+              {%- endfor -%}
+            {%- endfor -%}
+          {%- else -%}
+            <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+            <span>🧼 SOAPS</span><span class="alt">🧴 LOTIONS</span><span>🕯️ CANDLES</span><span class="alt">🌸 SCRUBS</span><span>💣 BATH BOMBS</span><span class="alt">🎖️ VETERAN OWNED</span>
+          {%- endif -%}
         </div>
       </div>
       <div class="ps-runway-body">
