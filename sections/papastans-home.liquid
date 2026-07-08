@@ -236,8 +236,9 @@
   // D+E (testimonials) and F+G (newsletter) are each sized to take exactly
   // the same total scroll distance as A+B (hero -> products), so every
   // "chapter" of the page has the same pacing. Wipe segments (B, D, F) are
-  // all equal-length too.
-  var PA_END = 0.204, PB_END = 0.271, PC_END = 0.458, PD_END = 0.525, PE_END = 0.729, PF_END = 0.797;
+  // all equal-length too. Phase C (products dwell) got an extra ~150vh on
+  // top of that baseline so there's more time to browse before it wipes on.
+  var PA_END = 0.187, PB_END = 0.248, PC_END = 0.504, PD_END = 0.566, PE_END = 0.752, PF_END = 0.814;
 
   var BUBBLE_COUNT = 40;
   var bubbleBase = Array.from({ length: BUBBLE_COUNT }, function(_, i) {
