@@ -1214,6 +1214,14 @@
 .ps-hero-testimonials-layer .ps-testimonials { padding: 3.5rem 4vw; }
 .ps-hero-testimonials-layer .ps-testimonials-header { margin-bottom: 1.5rem; }
 .ps-hero-newsletter-layer .ps-newsletter { padding: 3rem 4vw; border-top: none; border-bottom: none; }
+
+/* ── Newsletter: mirrored (horizontally reversed) version of the testimonials
+     dark diagonal band -- same two-tone lavender-ink treatment, diagonal
+     slants the opposite way so the two sections visually rhyme. ── */
+.ps-hero-newsletter-layer .ps-newsletter { position: relative; background: var(--lav-ink); overflow: hidden; }
+.ps-hero-newsletter-layer .ps-newsletter::before { content: ''; position: absolute; inset: 0; background: var(--lav-dark); clip-path: polygon(100% 30%, 0 0, 0 100%, 100% 100%); z-index: 0; }
+.ps-hero-newsletter-layer .ps-newsletter > * { position: relative; z-index: 1; }
+
 @media (max-height: 720px) {
   .ps-hero-testimonials-layer .ps-testimonials { padding: 2rem 4vw; }
   .ps-hero-testimonials-layer .ps-testimonials-header { margin-bottom: 1rem; }
