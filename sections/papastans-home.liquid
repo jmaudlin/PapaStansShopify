@@ -268,6 +268,7 @@
 
   var kmtrack = document.getElementById('psKmTrack');
   var productGrid = document.getElementById('psProductGrid');
+  var productGridTarget = 0;
 
   function onHeroScroll() {
     var rect = herowrap.getBoundingClientRect();
@@ -348,11 +349,13 @@
     heroRunway.style.opacity = String(runwayOpacity);
     heroRunway.style.pointerEvents = runwayOpacity > 0.5 ? 'auto' : 'none';
 
-    // ── Phase C: auto-scroll the product carousel horizontally as the page scrolls ──
+    // ── Phase C: auto-scroll the product carousel horizontally as the page scrolls.
+    //     Sets a target here; a separate rAF loop eases scrollLeft toward it each
+    //     frame instead of jumping straight to it on every scroll tick. ──
     if (productGrid) {
       var pC = Math.min(1, Math.max(0, (p - PB_END) / (PC_END - PB_END)));
       var maxScroll = productGrid.scrollWidth - productGrid.clientWidth;
-      if (maxScroll > 0) productGrid.scrollLeft = pC * maxScroll;
+      productGridTarget = maxScroll > 0 ? pC * maxScroll : 0;
     }
 
     if (heroTestimonials) {
@@ -372,6 +375,15 @@
       kmtrack.style.transform = 'translateX(' + (-(scrollTop * 0.25) % 600) + 'px)';
     }
   }
+
+  function smoothProductGrid() {
+    if (productGrid) {
+      var dist = productGridTarget - productGrid.scrollLeft;
+      if (Math.abs(dist) > 0.5) productGrid.scrollLeft += dist * 0.12;
+    }
+    requestAnimationFrame(smoothProductGrid);
+  }
+  requestAnimationFrame(smoothProductGrid);
 
   // NOTE: this theme scrolls on <body>, not <window> — 'scroll' events on window alone
   // never fire here. Listen on both so this keeps working if that ever changes.
