@@ -173,12 +173,7 @@
   </div>
 </div>
 
-<section class="ps-tband">
-  <div class="ps-tband-inner">
-    <p>&ldquo;{{ section.settings.testimonial_quote | default: "My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!" }}&rdquo;</p>
-    <div class="author">— {{ section.settings.testimonial_author | default: 'Sarah M.' }}</div>
-  </div>
-</section>
+{% render 'ps-testimonials' %}
 
 {%- for block in section.blocks -%}
   {%- case block.type -%}
@@ -467,22 +462,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       "id": "panel_subheading",
       "label": "Panel subheading",
       "default": "Soaps, lotions & candles from Oskaloosa, Iowa since 2019"
-    },
-    {
-      "type": "header",
-      "content": "Testimonial band"
-    },
-    {
-      "type": "textarea",
-      "id": "testimonial_quote",
-      "label": "Quote",
-      "default": "My skin has never felt better and the scent lasts all day. Absolutely love everything from Papa Stan's!"
-    },
-    {
-      "type": "text",
-      "id": "testimonial_author",
-      "label": "Author",
-      "default": "Sarah M."
     }
   ],
   "presets": [
