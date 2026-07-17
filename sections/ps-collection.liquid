@@ -222,10 +222,11 @@
 }
 .ps-scent-btn {
   background: var(--lav-light, #f3eeff);
-  border: 1.5px solid var(--lav-mid, #c9b8f0);
   color: var(--lav-ink, #3b2d6e);
-  border-radius: 2rem;
-  padding: 0.35rem 1rem;
+  clip-path: polygon(8% 0,100% 0,92% 100%,0 100%);
+  border: none;
+  box-shadow: inset 0 0 0 1.5px var(--lav-mid, #c9b8f0);
+  padding: 0.4rem 1.1rem;
   font-size: 0.875rem;
   font-family: inherit;
   cursor: pointer;
@@ -236,7 +237,7 @@
 }
 .ps-scent-btn.active {
   background: var(--lav-ink, #3b2d6e);
-  border-color: var(--lav-ink, #3b2d6e);
+  box-shadow: inset 0 0 0 1.5px var(--lav-ink, #3b2d6e);
   color: #fff;
 }
 
@@ -247,7 +248,7 @@
   gap: 1rem;
   background: var(--lav-light, #f3eeff);
   border-left: 4px solid var(--lav-mid, #c9b8f0);
-  border-radius: 0.5rem;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 98.5% 100%, 0 100%);
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
 }

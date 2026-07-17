@@ -93,8 +93,8 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
   background: var(--lav-light);
 }
 .ps-nav-actions { display: flex; align-items: center; }
-.ps-cart-btn { display: flex; align-items: center; gap: .5rem; background: var(--lav-light); border: 3px solid var(--bark); color: var(--lav-ink); font-family: 'Nunito', sans-serif; font-size: .75rem; font-weight: 800; padding: .4rem 1rem; cursor: pointer; border-radius: 20px; transition: all .2s; box-shadow: 3px 3px 0 var(--bark); }
-.ps-cart-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--bark); }
+.ps-cart-btn { display: flex; align-items: center; gap: .5rem; background: var(--lav-light); border: none; color: var(--lav-ink); font-family: 'Nunito', sans-serif; font-size: .75rem; font-weight: 800; padding: .5rem 1.1rem; cursor: pointer; clip-path: polygon(10% 0,100% 0,90% 100%,0 100%); transition: background .2s, color .2s; }
+.ps-cart-btn:hover { background: var(--lav); color: #fff; }
 .ps-cart-pill { background: var(--lav-mid); color: #fff; font-size: .62rem; font-weight: 800; padding: .05rem .4rem; border-radius: 10px; min-width: 18px; text-align: center; }
 .ps-cart-pill.ps-bump { animation: psBump .3s ease; }
 @keyframes psBump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
