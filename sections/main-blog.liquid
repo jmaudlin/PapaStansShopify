@@ -1,12 +1,13 @@
 
-<div class="ps-page-wrap">
-
-  <!-- Header -->
-  <div class="ps-blog-header">
-    <div class="ps-section-tag" style="margin-bottom:.7rem">📝 {{ blog.title }}</div>
-    <h1 class="ps-section-h2">The Papa Stan's <em>Blog!</em></h1>
-    <p class="ps-blog-header-sub">Tips, stories, and updates from our little corner of Oskaloosa, Iowa.</p>
+<div class="ps-sk-head">
+  <div class="ps-sk-head-inner">
+    <div class="ps-section-tag">📝 {{ blog.title }}</div>
+    <h1>The Papa Stan's <em>Blog!</em></h1>
+    <p class="ps-sk-head-sub">Tips, stories, and updates from our little corner of Oskaloosa, Iowa.</p>
   </div>
+</div>
+
+<div class="ps-page-wrap">
 
   <!-- Search bar -->
   <form action="{{ routes.search_url }}" method="get" class="ps-blog-search" role="search">

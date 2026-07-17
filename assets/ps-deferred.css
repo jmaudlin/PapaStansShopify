@@ -740,15 +740,15 @@
 
 /* Blog grid */
 .ps-blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-.ps-blog-card { background: var(--white); border: 3px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 4px 4px 0 var(--border); transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s; display: flex; flex-direction: column; }
-.ps-blog-card:hover { transform: translate(-3px,-4px); box-shadow: 7px 8px 0 var(--border); }
+.ps-blog-card { background: var(--white); box-shadow: inset 0 0 0 2px var(--border); clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%); overflow: hidden; transition: transform .25s cubic-bezier(.34,1.56,.64,1); display: flex; flex-direction: column; }
+.ps-blog-card:hover { transform: translateY(-4px); }
 .ps-blog-card-img-link { display: block; overflow: hidden; aspect-ratio: 3/2; background: var(--lav-xlight); }
 .ps-blog-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; display: block; }
 .ps-blog-card:hover .ps-blog-card-img { transform: scale(1.05); }
 .ps-blog-card-img-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: var(--lav-xlight); }
 .ps-blog-card-body { padding: 1.3rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
 .ps-blog-card-meta { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; flex-wrap: wrap; }
-.ps-blog-tag { display: inline-block; background: var(--lav-light); color: var(--lav-dark); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 10px; text-decoration: none; }
+.ps-blog-tag { display: inline-block; background: var(--lav-light); color: var(--lav-dark); font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .22rem .65rem; clip-path: polygon(12% 0,100% 0,88% 100%,0 100%); text-decoration: none; }
 .ps-blog-tag:hover { background: var(--lav); color: #fff; }
 .ps-blog-date { font-size: .72rem; font-weight: 600; color: var(--lav-mid); }
 .ps-blog-card-title { font-family: 'Luckiest Guy', cursive; font-size: 1.15rem; line-height: 1.2; letter-spacing: .03em; color: var(--lav-ink); margin-bottom: .5rem; }
@@ -763,7 +763,7 @@
 .ps-article-wrap { max-width: 1200px; }
 .ps-article-grid { display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
 .ps-article-main {}
-.ps-article-hero { border-radius: 12px; overflow: hidden; margin-bottom: 2rem; border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--border); }
+.ps-article-hero { clip-path: polygon(0 0, 100% 0, 100% 90%, 94% 100%, 0 100%); overflow: hidden; margin-bottom: 2rem; box-shadow: inset 0 0 0 2px var(--border); }
 .ps-article-hero-img { width: 100%; height: auto; display: block; }
 .ps-article-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 3px dashed var(--border); }
 .ps-article-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
@@ -1247,3 +1247,14 @@
 .ps-hero-wipe-f { position: absolute; inset: 0; z-index: 4; clip-path: polygon(0 0, 0 0, 0 0, 0 0); }
 .ps-hero-wipe-d { background: var(--lav-dark); }
 .ps-hero-wipe-f { background: var(--lav); }
+
+/* ── Split Kinetic page header band (collection/blog/search) ── */
+.ps-sk-head { position: relative; background: var(--lav); clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%); padding: 7.5rem 4rem 5.5rem; overflow: hidden; }
+.ps-sk-head::before { content: ''; position: absolute; inset: 0; background: var(--lav-dark); clip-path: polygon(72% 0, 100% 0, 100% 100%, 55% 100%); opacity: .5; }
+.ps-sk-head-inner { position: relative; max-width: 1200px; margin: 0 auto; z-index: 1; }
+.ps-sk-head .ps-section-tag { background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 2px rgba(255,255,255,.45); color: #fff; }
+.ps-sk-head h1 { font-family: 'Luckiest Guy', cursive; font-size: clamp(2.4rem,5.5vw,4.4rem); line-height: 1; letter-spacing: .02em; color: #fff; text-shadow: 5px 5px 0 var(--lav-dark); margin: .4rem 0 0; text-transform: uppercase; }
+.ps-sk-head h1 em { font-style: normal; color: var(--lav-light); }
+.ps-sk-head-sub { font-family: 'Caveat', cursive; font-size: clamp(1.1rem,2vw,1.4rem); color: var(--lav-light); margin: .8rem 0 0; max-width: 640px; }
+.ps-sk-head + .ps-page-wrap { padding-top: 1.5rem; }
+@media (max-width: 700px) { .ps-sk-head { padding: 6rem 1.5rem 4rem; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); } }

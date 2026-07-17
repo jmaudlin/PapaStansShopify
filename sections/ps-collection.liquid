@@ -3,15 +3,17 @@
 
 {%- assign ch = collection.handle -%}
 
-<div class="ps-page-wrap">
-
-  <div class="ps-coll-header">
+<div class="ps-sk-head">
+  <div class="ps-sk-head-inner">
     <div class="ps-section-tag">🛒 Shop</div>
-    <h1 class="ps-section-h2">{{ collection.title | default: 'All Products' }} <em>({{ collection.products_count }})</em></h1>
+    <h1>{{ collection.title | default: 'All Products' }} <em>({{ collection.products_count }})</em></h1>
     {%- if collection.description != blank -%}
-      <p class="ps-coll-desc">{{ collection.description }}</p>
+      <p class="ps-sk-head-sub">{{ collection.description }}</p>
     {%- endif -%}
   </div>
+</div>
+
+<div class="ps-page-wrap">
 
   {%- comment -%} ── Massage & Aromatherapy callout (Metaphysical collection only) ── {%- endcomment -%}
   {%- if ch == 'metaphysical' -%}

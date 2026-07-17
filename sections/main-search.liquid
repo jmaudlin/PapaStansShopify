@@ -1,12 +1,13 @@
 {% render 'ps-account-nav' %}
 
-<div class="ps-page-wrap">
-
-  <!-- Search header -->
-  <div class="ps-blog-header">
-    <div class="ps-section-tag" style="margin-bottom:.7rem">🔍 Search</div>
-    <h1 class="ps-section-h2">Search <em>Papa Stan's</em></h1>
+<div class="ps-sk-head">
+  <div class="ps-sk-head-inner">
+    <div class="ps-section-tag">🔍 Search</div>
+    <h1>Search <em>Papa Stan's</em></h1>
   </div>
+</div>
+
+<div class="ps-page-wrap">
 
   <!-- Search form -->
   <form action="{{ routes.search_url }}" method="get" class="ps-search-form" role="search">
