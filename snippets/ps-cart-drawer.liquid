@@ -1,8 +1,8 @@
 <div class="ps-cart-overlay" id="psCartOverlay" onclick="psCloseCart()"></div>
-<div class="ps-cart-drawer" id="psCartDrawer">
+<div class="ps-cart-drawer" id="psCartDrawer" role="dialog" aria-modal="true" aria-labelledby="psCartHeading" tabindex="-1">
   <div class="ps-cart-head">
-    <h3>🛒 Your Cart</h3>
-    <button class="ps-cart-close" onclick="psCloseCart()">✕</button>
+    <h3 id="psCartHeading">🛒 Your Cart</h3>
+    <button class="ps-cart-close" onclick="psCloseCart()" aria-label="Close cart">✕</button>
   </div>
   <div class="ps-cart-items" id="psCartItems">
     <p class="ps-cart-empty">Your cart is empty!<br>Go find something wonderful 🌿</p>

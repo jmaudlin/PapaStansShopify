@@ -1,0 +1,66 @@
+{%- comment -%} Sitewide structured data: LocalBusiness (+WebSite/SearchAction on index, BreadcrumbList on collection/product) {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "{{ shop.url }}/#localbusiness",
+  "name": "Papa Stan's of Iowa",
+  "url": "{{ shop.url }}",
+  "telephone": "+1-641-670-1573",
+  "description": "Handcrafted soaps, lotions, candles and more — made in small batches. Veteran-owned since 2019.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "301 A Avenue East",
+    "addressLocality": "Oskaloosa",
+    "addressRegion": "IA",
+    "postalCode": "52577",
+    "addressCountry": "US"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 41.2967, "longitude": -92.6394 },
+  "priceRange": "$"
+}
+</script>
+{%- if template == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "{{ shop.url }}",
+  "name": "{{ shop.name | escape }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ shop.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+{%- if template.name == 'collection' and collection != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ shop.url }}" },
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": "{{ shop.url }}{{ collection.url }}" }
+  ]
+}
+</script>
+{%- endif -%}
+{%- if template.name == 'product' and product != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ shop.url }}" },
+    {%- if collection != blank -%}
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": "{{ shop.url }}{{ collection.url }}" },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": "{{ shop.url }}{{ product.url }}" }
+    {%- else -%}
+    { "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": "{{ shop.url }}{{ product.url }}" }
+    {%- endif -%}
+  ]
+}
+</script>
+{%- endif -%}

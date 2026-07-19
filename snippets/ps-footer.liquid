@@ -31,7 +31,7 @@
   <div class="ps-footer-top">
     <div>
       <a href="{{ shop.url }}" class="ps-f-logo">
-        <img src="{{ 'logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" class="ps-f-logo-img">
+        <img src="{{ 'logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" class="ps-f-logo-img" loading="lazy">
       </a>
       <p class="ps-f-sub">of Iowa · Est. 2019 · Veteran-Owned</p>
       <p class="ps-f-desc">"The cleanest body products that money can buy" — handcrafted with love in Oskaloosa, Iowa.</p>
@@ -185,7 +185,7 @@ function psRenderCart(cart) {
   if (ft) ft.style.display = 'block';
   el.innerHTML = cart.items.map(item => `
     <div class="ps-cart-item">
-      <img class="ps-ci-img" src="${item.image ? item.image.replace('http:', 'https:') : ''}" alt="${item.title}" onerror="this.style.visibility='hidden'">
+      <img class="ps-ci-img" src="${item.image ? item.image.replace('http:', 'https:') : ''}" alt="${item.title}" onerror="this.style.visibility='hidden'" loading="lazy">
       <div>
         <div class="ps-ci-name">${item.product_title}</div>
         <div class="ps-ci-price">${psMoney(item.price)}</div>

@@ -14,6 +14,8 @@
     {%- endunless -%}
 
 {% render 'meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% render 'ps-structured-data' %}
 
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
 
@@ -50,11 +52,9 @@
   {%- endif -%}
   {{ content_for_header }}
 
-  {%- comment -%} Google Fonts — preconnect + non-blocking load {%- endcomment -%}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600;700&display=swap" onload="this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@400;600;700;800&family=Caveat:wght@400;600;700&display=swap"></noscript>
+  {%- comment -%} Self-hosted fonts — @font-face inlined in critical CSS below {%- endcomment -%}
+  <link rel="preload" as="font" type="font/woff2" href="{{ 'font-luckiestguy-latin.woff2' | asset_url }}" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="{{ 'font-nunito-latin.woff2' | asset_url }}" crossorigin>
 
   {%- comment -%} Critical CSS inlined — eliminates render-blocking request for above-fold styles {%- endcomment -%}
   <style>

@@ -68,14 +68,24 @@ function psRenderCart(cart) {
     : `Add <strong>${rem} more</strong> for free shipping 🚚`;
 }
 
+let psCartLastFocus = null;
 function psOpenCart() {
   psRefreshCart();
-  document.getElementById('psCartDrawer').classList.add('open');
+  psCartLastFocus = document.activeElement;
+  const d = document.getElementById('psCartDrawer');
+  d.classList.add('open');
   document.getElementById('psCartOverlay').classList.add('open');
+  d.focus();
 }
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  const d = document.getElementById('psCartDrawer');
+  if (d && d.classList.contains('open')) psCloseCart();
+});
 function psCloseCart() {
   document.getElementById('psCartDrawer').classList.remove('open');
   document.getElementById('psCartOverlay').classList.remove('open');
+  if (psCartLastFocus && psCartLastFocus.focus) psCartLastFocus.focus();
 }
 
 let psToastTimer;

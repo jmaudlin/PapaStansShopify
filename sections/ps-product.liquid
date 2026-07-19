@@ -6,7 +6,7 @@
   <section class="ps-pdp-stage" id="psPdpStage">
     <div class="ps-pdp-imgcol">
       {%- if product.featured_image -%}
-        <img id="psMainImg"
+        <img id="psMainImg" fetchpriority="high"
           src="{{ product.featured_image | image_url: width: 900, height: 900, crop: 'center' }}"
           alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
           width="900" height="900">
@@ -16,7 +16,7 @@
       {%- if product.images.size > 1 -%}
         <div class="ps-pdp-thumbs" role="list">
           {%- for image in product.images -%}
-            <img class="ps-product-thumb {% if forloop.first %}active{% endif %}"
+            <img loading="lazy" class="ps-product-thumb {% if forloop.first %}active{% endif %}"
               src="{{ image | image_url: width: 120, height: 120, crop: 'center' }}"
               alt="{{ image.alt | escape | default: product.title | escape }}"
               width="120" height="120"

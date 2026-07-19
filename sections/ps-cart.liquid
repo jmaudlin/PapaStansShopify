@@ -15,7 +15,7 @@
         {%- for item in cart.items -%}
           <div class="ps-cart-page-item">
             <a href="{{ item.url }}">
-              <img src="{{ item.image | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ item.title | escape }}" width="100" height="100" style="border:3px solid var(--border);border-radius:8px;">
+              <img src="{{ item.image | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ item.title | escape }}" width="100" height="100" style="border:3px solid var(--border);border-radius:8px;" loading="lazy">
             </a>
             <div class="ps-cart-page-item-info">
               <a href="{{ item.url }}" class="ps-cart-page-item-name">{{ item.product_title }}</a>
