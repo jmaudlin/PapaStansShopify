@@ -126,7 +126,9 @@
       el.style.top = y + 'px';
       el.style.transform = 'scale(' + scale + ')';
       var fadeOut = Math.max(0, lp - 0.78) * 3.5;
-      var baseOpacity = base.ambient ? 0.5 + lp * 0.4 : Math.min(1, lp * 1.8);
+      // Ambient bubbles fade in with the pour -- at rest (lp=0) they're invisible
+      // so they don't sit frozen at the rim next to the animated stream.
+      var baseOpacity = base.ambient ? Math.min(1, lp * 8) * (0.5 + lp * 0.4) : Math.min(1, lp * 1.8);
       el.style.opacity = (!base.ambient && lp <= 0) ? '0' : String(Math.max(0, baseOpacity * (1 - fadeOut)));
     });
 
