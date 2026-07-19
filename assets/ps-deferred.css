@@ -1275,12 +1275,12 @@
   .ps-hero-blog-layer .ps-blog-card-excerpt { display: none; }
   .ps-hero-blog-layer .ps-blog-card-title { font-size: 1rem; }
 }
-.ps-hblog-head { margin-bottom: 1.8rem; }
-.ps-hblog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; max-width: 1200px; }
-.ps-hblog-cta { margin-top: 2rem; }
+.ps-hblog-head { margin-bottom: 1.8rem; max-width: 1200px; margin-left: auto; margin-right: auto; width: 100%; }
+.ps-hblog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; max-width: 1200px; margin-left: auto; margin-right: auto; width: 100%; }
+.ps-hblog-cta { margin-top: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; width: 100%; }
 .ps-hblog-empty { font-family: 'Caveat', cursive; font-size: 1.3rem; color: rgba(255,255,255,.75); margin: 1rem 0 0; }
 @media (max-width: 900px) {
-  .ps-hblog-grid { grid-template-columns: 1fr; gap: 1.2rem; max-width: 480px; }
+  .ps-hblog-grid { grid-template-columns: 1fr; gap: 1.2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
   .ps-hblog-grid .ps-blog-card:nth-child(n+3) { display: none; }
 }
 .ps-hero-wipe-f { background: var(--lav); }
