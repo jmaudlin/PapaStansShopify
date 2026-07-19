@@ -66,6 +66,11 @@
         "type": "shopify://apps/hoppy-popups/blocks/Email_collection_Bar/0403c282-cb2c-4202-b054-d6c540cb0df9",
         "disabled": false,
         "settings": {}
+      },
+      "987408557691137581": {
+        "type": "shopify://apps/hoppy-bundles/blocks/bulk_offer_card/39b0734f-c894-4234-906e-b511bfd44522",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
