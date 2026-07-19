@@ -155,6 +155,48 @@
       {% render 'ps-testimonials' %}
     </div>
 
+    <!-- Blog chapter reveal: latest posts, kinetic cards -->
+    <div class="ps-hero-blog-layer" id="psHeroBlog">
+      <section class="ps-hblog">
+        {%- assign hblog = blogs[section.settings.blog_source] | default: blogs.news -%}
+        <div class="ps-hblog-head">
+          <div class="ps-section-tag">{{ section.settings.blog_eyebrow | default: '📖 From the Blog' }}</div>
+          <h2 class="ps-section-h2">{{ section.settings.blog_heading | default: 'Fresh From the Farmhouse' }}</h2>
+        </div>
+        {%- if hblog.articles_count > 0 -%}
+          <div class="ps-hblog-grid">
+            {%- for article in hblog.articles limit: section.settings.blog_count -%}
+              <article class="ps-blog-card">
+                <a href="{{ article.url }}" class="ps-blog-card-img-link">
+                  {%- if article.image -%}
+                    <img src="{{ article.image | image_url: width: 600, height: 400, crop: 'center' }}"
+                         alt="{{ article.image.alt | escape | default: article.title | escape }}"
+                         width="600" height="400" loading="lazy" class="ps-blog-card-img">
+                  {%- else -%}
+                    <div class="ps-blog-card-img-fallback">🧼</div>
+                  {%- endif -%}
+                </a>
+                <div class="ps-blog-card-body">
+                  <div class="ps-blog-card-meta">
+                    {%- if article.tags.size > 0 -%}<span class="ps-blog-tag">{{ article.tags.first }}</span>{%- endif -%}
+                    <span class="ps-blog-date">{{ article.published_at | date: "%b %d, %Y" }}</span>
+                  </div>
+                  <h3 class="ps-blog-card-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                  <p class="ps-blog-card-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 110 }}</p>
+                  <a href="{{ article.url }}" class="ps-blog-read-more">Read More →</a>
+                </div>
+              </article>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <p class="ps-hblog-empty">Stories from the soap shed are on their way — check back soon! 🌿</p>
+        {%- endif -%}
+        <div class="ps-hblog-cta">
+          <a href="{{ hblog.url | default: '/blogs/news' }}" class="ps-btn-primary">Read the Blog 📖</a>
+        </div>
+      </section>
+    </div>
+
     <!-- Phase F reveal: newsletter signup -->
     <div class="ps-hero-newsletter-layer" id="psHeroNewsletter">
       <section class="ps-newsletter">
@@ -172,6 +214,7 @@
     </div>
 
     <div class="ps-hero-wipe-d" id="psWipeD"></div>
+    <div class="ps-hero-wipe-blog" id="psWipeBlog"></div>
     <div class="ps-hero-wipe-f" id="psWipeF"></div>
 
     <!-- Persistent ticker: once revealed (phase B), stays on screen through every
@@ -221,7 +264,7 @@
       "type": "text",
       "id": "hero_eyebrow",
       "label": "Eyebrow text",
-      "default": "Oskaloosa, Iowa · Est. 2019"
+      "default": "Oskaloosa, Iowa \u00b7 Est. 2019"
     },
     {
       "type": "text",
@@ -249,7 +292,7 @@
     },
     {
       "type": "header",
-      "content": "Hero — reveal panel"
+      "content": "Hero \u2014 reveal panel"
     },
     {
       "type": "text",
@@ -271,7 +314,7 @@
       "type": "text",
       "id": "newsletter_eyebrow",
       "label": "Eyebrow tag",
-      "default": "📬 Stay Connected"
+      "default": "\ud83d\udcec Stay Connected"
     },
     {
       "type": "text",
@@ -284,6 +327,36 @@
       "id": "newsletter_subtext",
       "label": "Subtext",
       "default": "New scents, seasonal specials, local pop-up events, and exclusive deals!"
+    },
+    {
+      "type": "header",
+      "content": "Blog chapter"
+    },
+    {
+      "type": "blog",
+      "id": "blog_source",
+      "label": "Blog to feature"
+    },
+    {
+      "type": "text",
+      "id": "blog_eyebrow",
+      "label": "Eyebrow",
+      "default": "\ud83d\udcd6 From the Blog"
+    },
+    {
+      "type": "text",
+      "id": "blog_heading",
+      "label": "Heading",
+      "default": "Fresh From the Farmhouse"
+    },
+    {
+      "type": "range",
+      "id": "blog_count",
+      "label": "Posts to show",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
     }
   ],
   "presets": [
