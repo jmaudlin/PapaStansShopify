@@ -142,6 +142,7 @@
 
 {% render 'ps-cart-drawer' %}
 
+<script>window.PS_FREE_SHIP_CENTS = {{ settings.free_shipping_threshold | default: 100 | times: 100 }};</script>
 <script src="{{ 'ps-cart.js' | asset_url }}" defer></script>
 
 

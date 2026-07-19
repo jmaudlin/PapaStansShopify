@@ -1,5 +1,5 @@
 /* ─── Shared cart JS — do not duplicate in individual sections ─── */
-const PS_FREE_SHIP_CENTS = 5500;
+const PS_FREE_SHIP_CENTS = (typeof window.PS_FREE_SHIP_CENTS === 'number' && window.PS_FREE_SHIP_CENTS >= 0) ? window.PS_FREE_SHIP_CENTS : 10000;
 
 function psMoney(c) { return '$' + (c / 100).toFixed(2); }
 
@@ -60,6 +60,9 @@ function psRenderCart(cart) {
       <button class="ps-ci-remove" onclick="psRemoveLine('${item.key}')">✕</button>
     </div>`).join('');
   document.getElementById('psCartTotal').textContent = psMoney(cart.total_price);
+  const shipWrap = document.querySelector('.ps-ship-bar-wrap');
+  if (PS_FREE_SHIP_CENTS <= 0) { if (shipWrap) shipWrap.style.display = 'none'; return; }
+  if (shipWrap) shipWrap.style.display = '';
   const pct = Math.min((cart.total_price / PS_FREE_SHIP_CENTS) * 100, 100);
   document.getElementById('psShipFill').style.width = pct + '%';
   const rem = psMoney(Math.max(PS_FREE_SHIP_CENTS - cart.total_price, 0));

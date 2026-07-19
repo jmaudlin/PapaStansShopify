@@ -1,1 +1,22 @@
-[{"name":"theme_info","theme_name":"Papa Stan's Country Cute","theme_version":"3.0.0","theme_author":"Papa Stan's of Iowa","theme_documentation_url":"https://papastans.store","theme_support_url":"https://papastans.store"},{"name":"Colors","settings":[]}]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Papa Stan's Country Cute",
+    "theme_version": "3.0.0",
+    "theme_author": "Papa Stan's of Iowa",
+    "theme_documentation_url": "https://papastans.store",
+    "theme_support_url": "https://papastans.store"
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold ($)",
+        "info": "Orders at or above this amount show as qualifying for free shipping in the cart drawer. Set to 0 to hide the progress bar.",
+        "default": 100
+      }
+    ]
+  }
+]
