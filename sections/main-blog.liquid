@@ -18,11 +18,11 @@
     <button type="submit" class="ps-btn-primary ps-blog-search-btn">🔍 Search</button>
   </form>
 
-  {%- paginate blog.articles by 9 -%}
+  {%- assign all_articles = blogs.news.articles | concat: blogs.articles.articles | sort: 'published_at' | reverse -%}
 
-    {%- if blog.articles.size > 0 -%}
+    {%- if all_articles.size > 0 -%}
       <div class="ps-blog-grid">
-        {%- for article in blog.articles -%}
+        {%- for article in all_articles -%}
           <article class="ps-blog-card ps-reveal" style="transition-delay:{{ forloop.index0 | modulo: 3 | times: 80 }}ms">
             <a href="{{ article.url }}" class="ps-blog-card-img-link">
               {%- if article.image -%}
@@ -34,6 +34,7 @@
               {%- else -%}
                 <div class="ps-blog-card-img-fallback">🧼</div>
               {%- endif -%}
+              <span class="ps-type-badge">📝 {{ article.blog.title }}</span>
             </a>
             <div class="ps-blog-card-body">
               <div class="ps-blog-card-meta">
@@ -56,18 +57,6 @@
         {%- endfor -%}
       </div>
 
-      {%- if paginate.pages > 1 -%}
-        <div class="ps-pagination">
-          {%- if paginate.previous -%}
-            <a href="{{ paginate.previous.url }}" class="ps-btn-secondary">← Previous</a>
-          {%- endif -%}
-          <span class="ps-page-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
-          {%- if paginate.next -%}
-            <a href="{{ paginate.next.url }}" class="ps-btn-primary">Next →</a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
     {%- else -%}
       <div class="ps-blog-empty">
         <div style="font-size:3rem;margin-bottom:1rem">📝</div>
@@ -76,8 +65,7 @@
       </div>
     {%- endif -%}
 
-  {%- endpaginate -%}
-</div>
+  </div>
 
 
 <script>
