@@ -35,7 +35,7 @@
               <a href="{{ article.url }}" class="ps-hg-blog-card">
                 {%- if article.image -%}
                   <div class="ps-hg-blog-card-img">
-                    <img src="{{ article.image | img_url: '440x260', crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="440" height="260">
+                    <img src="{{ article.image | image_url: width: 440, height: 260, crop: 'center' }}" alt="{{ article.image.alt | escape | default: article.title | escape }}" loading="lazy" width="440" height="260">
                   </div>
                 {%- else -%}
                   <div class="ps-hg-blog-card-img ps-hg-blog-card-fallback">✍️</div>

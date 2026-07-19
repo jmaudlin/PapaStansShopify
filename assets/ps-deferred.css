@@ -1000,7 +1000,7 @@
 .jdgm-widget { font-family: 'Nunito', sans-serif !important; }
 .jdgm-rev-widg { padding: 0 !important; }
 .jdgm-rev-widg__title { font-family: 'Luckiest Guy', cursive !important; font-size: 1.6rem !important; letter-spacing: .04em !important; color: var(--lav-ink) !important; margin-bottom: 1rem !important; }
-.jdgm-write-rev-link, .jdgm-form__submit-btn { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 30px !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
+.jdgm-write-rev-link, .jdgm-form__submit-btn { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 0 !important; clip-path: polygon(6% 0,100% 0,94% 100%,0 100%); font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
 .jdgm-write-rev-link:hover, .jdgm-form__submit-btn:hover { background: var(--lav-dark) !important; border-color: var(--lav-dark) !important; }
 .jdgm-rev__rating .jdgm-star { color: #F5A623 !important; }
 .jdgm-rev { border-bottom: 1px solid var(--border) !important; padding: 1.25rem 0 !important; }
@@ -1055,7 +1055,7 @@
 .jdgm-testimonials-carousel .jdgm-reviews-count { color: var(--lav) !important; font-weight: 700 !important; }
 .jdgm-testimonials-carousel .jdgm-verified-badge-header {
   background: var(--lav-light) !important;
-  border-radius: 30px !important;
+  border-radius: 0 !important; clip-path: polygon(6% 0,100% 0,94% 100%,0 100%);
   padding: .1rem .55rem !important;
   font-size: .75rem !important;
 }

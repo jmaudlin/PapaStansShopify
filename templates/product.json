@@ -32,7 +32,7 @@
       ],
       "settings": {
         "show_description": true,
-        "show_reviews": true,
+        "show_reviews": false,
         "show_similar": true,
         "show_perks": true
       }

@@ -37,7 +37,7 @@
             <div class="ps-order-item">
               <div class="ps-order-item-img">
                 {%- if line_item.image -%}
-                  <img src="{{ line_item.image | img_url: '100x100', crop: 'center' }}" alt="{{ line_item.title | escape }}" width="100" height="100" loading="lazy">
+                  <img src="{{ line_item.image | image_url: width: 100, height: 100, crop: 'center' }}" alt="{{ line_item.title | escape }}" width="100" height="100" loading="lazy">
                 {%- else -%}
                   <div class="ps-order-item-img-fallback">🧼</div>
                 {%- endif -%}

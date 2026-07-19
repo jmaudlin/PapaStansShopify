@@ -56,7 +56,9 @@ function psToggleRecover(show) {
   document.getElementById('RecoverPasswordForm').style.display = show ? 'block' : 'none';
   document.getElementById('CustomerLoginForm').style.display = show ? 'none' : 'block';
 }
-window.addEventListener('scroll', () => document.getElementById('psNav').classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+const psNavOnScroll = () => document.getElementById('psNav').classList.toggle('scrolled', (document.body.scrollTop || window.scrollY) > 10);
+document.body.addEventListener('scroll', psNavOnScroll, { passive: true });
+window.addEventListener('scroll', psNavOnScroll, { passive: true });
 </script>
 
 {% schema %}

@@ -53,11 +53,11 @@
           {%- endif -%}
         {%- endif -%}
 
-        {%- comment -%} ── Image URL: img_url returns protocol-relative, prepend https: ── {%- endcomment -%}
+        {%- comment -%} ── Image URL: image_url returns protocol-relative, prepend https: ── {%- endcomment -%}
         {%- if variant.image -%}
-          {%- assign main_img = variant.image.src | img_url: '1200x1200' | prepend: 'https:' -%}
+          {%- assign main_img = variant.image.src | image_url: width: 1200 | prepend: 'https:' -%}
         {%- elsif product.featured_image -%}
-          {%- assign main_img = product.featured_image.src | img_url: '1200x1200' | prepend: 'https:' -%}
+          {%- assign main_img = product.featured_image.src | image_url: width: 1200 | prepend: 'https:' -%}
         {%- else -%}
           {%- assign main_img = '' -%}
         {%- endif -%}
@@ -73,7 +73,7 @@
   {%- endif -%}
   {%- for img in product.images limit: 9 -%}
     {%- unless img.src == product.featured_image.src -%}
-  <g:additional_image_link>{{ img.src | img_url: '1200x1200' | prepend: 'https:' }}</g:additional_image_link>
+  <g:additional_image_link>{{ img.src | image_url: width: 1200 | prepend: 'https:' }}</g:additional_image_link>
     {%- endunless -%}
   {%- endfor -%}
   <g:availability>{%- if variant.available -%}in_stock{%- else -%}out_of_stock{%- endif -%}</g:availability>
