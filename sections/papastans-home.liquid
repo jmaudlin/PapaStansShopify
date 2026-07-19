@@ -150,22 +150,24 @@
       </div>
     </div>
 
-    <!-- Phase D reveal: real Judge.me testimonials carousel -->
-    <div class="ps-hero-testimonials-layer ps-testimonials-dark" id="psHeroTestimonials">
-      {% render 'ps-testimonials' %}
-    </div>
-
-    <!-- Blog chapter reveal: latest posts, kinetic cards -->
+    <!-- Phase D reveal: latest blog posts, kinetic cards: latest posts, kinetic cards -->
     <div class="ps-hero-blog-layer" id="psHeroBlog">
       <section class="ps-hblog">
-        {%- assign hblog = blogs[section.settings.blog_source] | default: blogs.news -%}
+        {%- comment -%} Default: combined feed from every store blog, newest first. Picking a blog in the editor narrows it to that one. {%- endcomment -%}
+        {%- if section.settings.blog_source != blank and blogs[section.settings.blog_source].articles_count > 0 -%}
+          {%- assign harticles = blogs[section.settings.blog_source].articles -%}
+          {%- assign hblog_url = blogs[section.settings.blog_source].url -%}
+        {%- else -%}
+          {%- assign harticles = blogs.news.articles | concat: blogs.articles.articles | sort: 'published_at' | reverse -%}
+          {%- assign hblog_url = '/blogs/articles' -%}
+        {%- endif -%}
         <div class="ps-hblog-head">
           <div class="ps-section-tag">{{ section.settings.blog_eyebrow | default: '📖 From the Blog' }}</div>
           <h2 class="ps-section-h2">{{ section.settings.blog_heading | default: 'Fresh From the Farmhouse' }}</h2>
         </div>
-        {%- if hblog.articles_count > 0 -%}
+        {%- if harticles.size > 0 -%}
           <div class="ps-hblog-grid">
-            {%- for article in hblog.articles limit: section.settings.blog_count -%}
+            {%- for article in harticles limit: section.settings.blog_count -%}
               <article class="ps-blog-card">
                 <a href="{{ article.url }}" class="ps-blog-card-img-link">
                   {%- if article.image -%}
@@ -192,9 +194,14 @@
           <p class="ps-hblog-empty">Stories from the soap shed are on their way — check back soon! 🌿</p>
         {%- endif -%}
         <div class="ps-hblog-cta">
-          <a href="{{ hblog.url | default: '/blogs/news' }}" class="ps-btn-primary">Read the Blog 📖</a>
+          <a href="{{ section.settings.blog_cta_link | default: hblog_url }}" class="ps-btn-primary">Read the Blog 📖</a>
         </div>
       </section>
+    </div>
+
+    <!-- Post-blog reveal: real Judge.me testimonials carousel -->
+    <div class="ps-hero-testimonials-layer ps-testimonials-dark" id="psHeroTestimonials">
+      {% render 'ps-testimonials' %}
     </div>
 
     <!-- Phase F reveal: newsletter signup -->
@@ -335,7 +342,8 @@
     {
       "type": "blog",
       "id": "blog_source",
-      "label": "Blog to feature"
+      "label": "Blog to feature (optional)",
+      "info": "Leave unset to combine posts from all blogs, newest first."
     },
     {
       "type": "text",
@@ -357,6 +365,12 @@
       "max": 4,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "url",
+      "id": "blog_cta_link",
+      "label": "\"Read the Blog\" link",
+      "info": "Defaults to the featured blog."
     }
   ],
   "presets": [

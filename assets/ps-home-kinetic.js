@@ -24,11 +24,11 @@
   //   B  panel shrinks away, revealing Pick Your Favorites (products)
   //   C  products dwell -- browse via cat tabs / arrows
   //   D  wipe (right-anchored, opposite of B's left-anchored reveal):
-  //      products -> testimonials
-  //   E  testimonials dwell -- browse the Judge.me carousel
-  //   W2 wipe (left-anchored): testimonials -> blog
-  //   E2 blog dwell -- latest posts, kinetic cards
-  //   F  wipe (right-anchored): blog -> newsletter
+  //      products -> blog
+  //   E  blog dwell -- latest posts, kinetic cards
+  //   W2 wipe (left-anchored): blog -> testimonials
+  //   E2 testimonials dwell -- browse the Judge.me carousel
+  //   F  wipe (right-anchored): testimonials -> newsletter
   //   G  newsletter dwell, then the pin releases into the footer
   //
   // D+E (testimonials) and F+G (newsletter) are each sized to take exactly
@@ -36,7 +36,7 @@
   // "chapter" of the page has the same pacing. Wipe segments (B, D, F) are
   // all equal-length too. Phase C (products dwell) got an extra ~150vh on
   // top of that baseline so there's more time to browse before it wipes on.
-  // Chapter order: hero -> products -> testimonials -> blog -> newsletter.
+  // Chapter order: hero -> products -> blog -> testimonials -> newsletter.
   // Wrapper is 2200vh. Each chapter after the hero gets the same ~436vh of
   // scroll (wipe ~109vh + dwell ~327vh); products dwell keeps its extra ~150vh.
   // Wipes alternate anchor sides: B left, D right, blog left, F right.
@@ -140,7 +140,7 @@
     var topXD = lerp(0, 100, openD), bottomXD = lerp(0, 78, openD);
     if (wipeD) wipeD.style.clipPath = 'polygon(' + (100 - topXD) + '% 0, 100% 0, 100% 100%, ' + (100 - bottomXD) + '% 100%)';
 
-    // ── Blog wipe: testimonials -> blog (left-anchored, same direction as B) ──
+    // ── W2 wipe: blog -> testimonials (left-anchored, same direction as B) ──
     var pW2 = Math.min(1, Math.max(0, (p - PE_END) / (PW2_END - PE_END)));
     var pW2_grow = easeInOutCubic(Math.min(1, pW2 / 0.5));
     var pW2_shrink = easeInOutCubic(Math.max(0, (pW2 - 0.5) / 0.5));
@@ -148,7 +148,7 @@
     var topXW2 = lerp(0, 100, openW2), bottomXW2 = lerp(0, 78, openW2);
     if (wipeBlog) wipeBlog.style.clipPath = 'polygon(0 0, ' + topXW2 + '% 0, ' + bottomXW2 + '% 100%, 0 100%)';
 
-    // ── Phase F: blog -> newsletter (right-anchored wipe, opposite of blog wipe) ──
+    // ── Phase F: testimonials -> newsletter (right-anchored wipe, opposite of W2) ──
     var pF = Math.min(1, Math.max(0, (p - PE2_END) / (PF_END - PE2_END)));
     var pF_grow = easeInOutCubic(Math.min(1, pF / 0.5));
     var pF_shrink = easeInOutCubic(Math.max(0, (pF - 0.5) / 0.5));
@@ -169,16 +169,16 @@
       productGridTarget = maxScroll > 0 ? pC * maxScroll : 0;
     }
 
-    if (heroTestimonials) {
-      var testimOpacity = pD_shrink * (1 - pW2_grow);
-      heroTestimonials.style.opacity = String(testimOpacity);
-      heroTestimonials.style.pointerEvents = testimOpacity > 0.5 ? 'auto' : 'none';
-    }
-
     if (heroBlog) {
-      var blogOpacity = pW2_shrink * (1 - pF_grow);
+      var blogOpacity = pD_shrink * (1 - pW2_grow);
       heroBlog.style.opacity = String(blogOpacity);
       heroBlog.style.pointerEvents = blogOpacity > 0.5 ? 'auto' : 'none';
+    }
+
+    if (heroTestimonials) {
+      var testimOpacity = pW2_shrink * (1 - pF_grow);
+      heroTestimonials.style.opacity = String(testimOpacity);
+      heroTestimonials.style.pointerEvents = testimOpacity > 0.5 ? 'auto' : 'none';
     }
 
     if (heroNewsletter) {
