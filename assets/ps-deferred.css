@@ -1,7 +1,7 @@
 /* ── Buttons ── */
-.ps-btn-primary { display:inline-block;padding:.9rem 2.2rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
+.ps-btn-primary { display:inline-block;padding:.9rem 2.2rem;background:var(--lav);color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
 .ps-btn-primary:hover { background:var(--lav-dark);color:#fff;transform:translateX(3px); }
-.ps-btn-secondary { display:inline-block;padding:.9rem 2.2rem;background:var(--lav-xlight);color:var(--lav-ink);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;box-shadow:inset 0 0 0 2px var(--lav);cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
+.ps-btn-secondary { display:inline-block;padding:.9rem 2.2rem;background:var(--lav-xlight);color:var(--lav-ink);font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;box-shadow:inset 0 0 0 2px var(--lav);cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
 .ps-btn-secondary:hover { background:var(--lav);color:#fff;transform:translateX(3px); }
 
 /* ── Marquee ── */
@@ -51,7 +51,7 @@
 .ps-view-all { font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--barrel);text-decoration:none;border-bottom:3px solid var(--barrel);padding-bottom:.1rem;transition:color .2s; }
 .ps-view-all:hover { color:var(--barn2); }
 .ps-cat-tabs { display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap; }
-.ps-cat-tab { padding:.5rem 1.3rem;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;box-shadow:inset 0 0 0 2px var(--border);color:var(--lav-mid);cursor:pointer;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);transition:all .2s;text-decoration:none;display:inline-block; }
+.ps-cat-tab { padding:.5rem 1.3rem;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#fff;box-shadow:inset 0 0 0 2px var(--border);color:var(--lav-mid);cursor:pointer;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);transition:all .2s;text-decoration:none;display:inline-block; }
 .ps-cat-tab:hover, .ps-cat-tab.active { background:var(--lav);box-shadow:inset 0 0 0 2px var(--lav);color:#fff; }
 .ps-pgrid-wrap {
   position: relative;
@@ -96,7 +96,7 @@
 .ps-pc-badge.ps-sold { background:var(--brown); }
 .ps-pc-overlay { position:absolute;inset:0;background:rgba(74,40,112,.5);display:flex;align-items:center;justify-content:center;opacity:0;z-index:3;transition:opacity .3s; }
 .ps-pc:hover .ps-pc-overlay { opacity:1; }
-.ps-pc-quick { background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.6rem 1.3rem;border:none;cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s; }
+.ps-pc-quick { background:var(--lav);color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.6rem 1.3rem;border:none;cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s; }
 .ps-pc-quick:hover { background:var(--lav-dark); }
 .ps-pc-quick:disabled { opacity:.6;cursor:default; }
 .ps-pc-body { padding:1.1rem 1.2rem 1.3rem;flex:1;display:flex;flex-direction:column; }
@@ -108,7 +108,7 @@
 .ps-pc-price { font-family:'Luckiest Guy',cursive;font-size:1.3rem;color:var(--barrel);letter-spacing:.04em; }
 .ps-pc-price.ps-sold-out { color:var(--lav-mid);text-decoration:line-through;font-size:1rem; }
 .ps-pc-foot { display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:.8rem; }
-.ps-atc { padding:.45rem 1rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);transition:background .2s; }
+.ps-atc { padding:.45rem 1rem;background:var(--lav);color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:none;cursor:pointer;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);transition:background .2s; }
 .ps-atc:hover { background:var(--lav-dark); }
 .ps-atc:disabled { background:var(--tan);color:var(--lav-mid);cursor:not-allowed; }
 
@@ -183,10 +183,10 @@
 .ps-newsletter::before { content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.15) 1px,transparent 1px);background-size:20px 20px;pointer-events:none; }
 .ps-nl-sub { font-size:1rem;font-weight:600;color:rgba(255,255,255,.9);margin-bottom:2.5rem;position:relative;z-index:1; }
 .ps-nl-form { display:flex;max-width:460px;margin:0 auto;position:relative;z-index:1; }
-.ps-nl-input { flex:1;padding:.9rem 1.3rem;background:#fff;border:2px solid var(--lav-dark);border-right:none;color:var(--lav-ink);font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:600;outline:none;border-radius:0; }
+.ps-nl-input { flex:1;padding:.9rem 1.3rem;background:#fff;border:2px solid var(--lav-dark);border-right:none;color:var(--lav-ink);font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.9rem;font-weight:600;outline:none;border-radius:0; }
 .ps-nl-input::placeholder { color:var(--lav-mid);opacity:.5; }
 .ps-nl-input:focus { border-color:var(--barn); }
-.ps-nl-btn { padding:.9rem 1.8rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:none;clip-path:polygon(0 0,100% 0,92% 100%,0 100%);cursor:pointer;transition:background .25s; }
+.ps-nl-btn { padding:.9rem 1.8rem;background:var(--lav);color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:none;clip-path:polygon(0 0,100% 0,92% 100%,0 100%);cursor:pointer;transition:background .25s; }
 .ps-nl-btn:hover { background: var(--lav-dark); }
 
 /* ── Footer ── */
@@ -194,7 +194,7 @@
 .ps-footer-top { display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:2.5rem;max-width:1200px;margin:0 auto 3.5rem; }
 .ps-f-logo { text-decoration:none;display:block;margin-bottom:.8rem; }
 .ps-f-logo-img { height: 90px; width: auto; object-fit: contain; filter: invert(1) brightness(1.8) drop-shadow(1px 1px 3px rgba(0,0,0,.5)); }
-.ps-f-sub { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lavender);opacity:.7;margin-bottom:1rem; }
+.ps-f-sub { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lav-300,#C8A8E0);margin-bottom:1rem; }
 .ps-f-desc { font-size:.88rem;font-weight:600;line-height:1.7;color:rgba(255,255,255,.55);margin-bottom:1.2rem; }
 .ps-f-contact { font-family:'Caveat',cursive;font-size:1rem;color:var(--sun);margin-bottom:1.2rem; }
 .ps-f-contact a { color:var(--sun);text-decoration:none; }
@@ -202,13 +202,13 @@
 .ps-f-soc { display:flex;gap:.6rem; }
 .ps-soc-a { width:36px;height:36px;border:2px solid rgba(164,112,200,.25);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--tan);opacity:.6;text-decoration:none;font-size:.8rem;font-weight:800;transition:all .25s; }
 .ps-soc-a:hover { opacity:1;border-color:var(--lavender);color:var(--lavender);background:rgba(188,140,190,.15); }
-.ps-footer-col h5 { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lavender);margin-bottom:1.2rem; }
+.ps-footer-col h5 { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lav-300,#C8A8E0);margin-bottom:1.2rem; }
 .ps-footer-col ul { list-style:none; }
 .ps-footer-col li { margin-bottom:.6rem; }
-.ps-footer-col a { font-size:.82rem;font-weight:600;color:rgba(255,255,255,.5);text-decoration:none;transition:color .25s; }
+.ps-footer-col a { font-size:.82rem;font-weight:600;color:rgba(255,255,255,.72);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(200,168,224,.45);transition:color .25s; }
 .ps-footer-col a:hover { color:var(--lavender); }
 .ps-footer-btm { max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(164,112,200,.15);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem; }
-.ps-footer-btm p { font-size:.68rem;font-weight:600;color:rgba(255,255,255,.3); }
+.ps-footer-btm p { font-size:.68rem;font-weight:600;color:rgba(255,255,255,.65); }
 
 /* ── Cart Drawer ── */
 .ps-cart-overlay { position:fixed;inset:0;background:rgba(30,10,46,.65);z-index:500;opacity:0;pointer-events:none;transition:opacity .35s; }
@@ -240,7 +240,7 @@
 .ps-cart-subtotal { display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem; }
 .ps-cart-subtotal span:first-child { font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lav-mid); }
 .ps-cart-subtotal span:last-child { font-family:'Luckiest Guy',cursive;font-size:1.5rem;color:var(--barn);letter-spacing:.04em; }
-.ps-cart-checkout { display:block;width:100%;padding:.95rem;background:var(--lav);color:#fff;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-align:center;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);text-decoration:none; }
+.ps-cart-checkout { display:block;width:100%;padding:.95rem;background:var(--lav);color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-align:center;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);text-decoration:none; }
 .ps-cart-checkout:hover { background: var(--lav-dark);color:#fff; }
 .ps-cart-note { text-align:center;margin-top:.7rem;font-size:.68rem;font-weight:700;color:var(--lav-mid); }
 .ps-cart-note strong { color:var(--moss); }
@@ -485,7 +485,7 @@
 .ps-coll-desc { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); margin-top: .5rem; }
 .ps-coll-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
 .ps-cgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-.ps-sort-select { padding: .5rem 1rem; font-family: 'Nunito', sans-serif; font-size: .8rem; font-weight: 700; background: #fff; border: 2px solid var(--border); border-radius: 0; color: var(--lav-ink); cursor: pointer; }
+.ps-sort-select { padding: .5rem 1rem; font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: .8rem; font-weight: 700; background: #fff; border: 2px solid var(--border); border-radius: 0; color: var(--lav-ink); cursor: pointer; }
 .ps-sort-select:focus { outline: none; border-color: var(--barn); }
 .ps-pagination { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
 .ps-page-info { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-mid); }
@@ -521,12 +521,12 @@
 .ps-price-compare { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav-mid); text-decoration: line-through; margin-right: .5rem; opacity: .6; }
 .ps-variant-wrap { margin-bottom: 1rem; }
 .ps-variant-label { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); margin-bottom: .4rem; }
-.ps-variant-select { padding: .6rem 1rem; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 600; background: #fff; border: 2px solid var(--border); border-radius: 0; color: var(--lav-ink); width: 100%; cursor: pointer; }
+.ps-variant-select { padding: .6rem 1rem; font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: .9rem; font-weight: 600; background: #fff; border: 2px solid var(--border); border-radius: 0; color: var(--lav-ink); width: 100%; cursor: pointer; }
 .ps-qty-row { display: flex; gap: 1rem; align-items: center; margin: 1.2rem 0; flex-wrap: wrap; }
 .ps-qty-wrap { display: flex; align-items: center; border: 2px solid var(--border); border-radius: 0; overflow: hidden; }
 .ps-qty-btn { width: 36px; height: 40px; background: var(--lav-xlight); border: none; font-size: 1.2rem; font-weight: 800; cursor: pointer; color: var(--lav-ink); transition: background .2s; }
 .ps-qty-btn:hover { background: var(--tan); }
-.ps-qty-input { width: 50px; height: 40px; border: none; border-left: 2px solid var(--border); border-right: 2px solid var(--border); text-align: center; font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800; color: var(--lav-ink); background: #fff; }
+.ps-qty-input { width: 50px; height: 40px; border: none; border-left: 2px solid var(--border); border-right: 2px solid var(--border); text-align: center; font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: .95rem; font-weight: 800; color: var(--lav-ink); background: #fff; }
 .ps-qty-input:focus { outline: none; }
 .ps-atc-big { font-size: .9rem !important; padding: .9rem 2rem !important; }
 .ps-product-perks { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0; }
@@ -587,7 +587,7 @@
 .ps-form-group { margin-bottom: 1.2rem; }
 .ps-form-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lav-mid); margin-bottom: .4rem; }
 .ps-required { color: var(--pink); }
-.ps-form-input { width: 100%; padding: .75rem 1rem; background: var(--white); border: 3px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 600; color: var(--lav-ink); outline: none; transition: border-color .25s; box-shadow: 2px 2px 0 var(--border); appearance: none; }
+.ps-form-input { width: 100%; padding: .75rem 1rem; background: var(--white); border: 3px solid var(--border); border-radius: 8px; font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: .9rem; font-weight: 600; color: var(--lav-ink); outline: none; transition: border-color .25s; box-shadow: 2px 2px 0 var(--border); appearance: none; }
 .ps-form-input:focus { border-color: var(--lav); box-shadow: 2px 2px 0 var(--lav); }
 .ps-form-textarea { min-height: 140px; resize: vertical; }
 .ps-form-success { background: var(--lav-light); border: 3px solid var(--lav); border-radius: 8px; padding: 1rem 1.2rem; font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--lav-dark); margin-bottom: 1.5rem; }
@@ -615,7 +615,7 @@
 .ps-policy-content.rte h2 { font-family: 'Luckiest Guy', cursive; color: var(--lav); letter-spacing: .04em; margin: 2rem 0 .8rem; line-height: 1.15; }
 .ps-policy-content.rte h1 { font-size: 1.6rem; }
 .ps-policy-content.rte h2 { font-size: 1.25rem; }
-.ps-policy-content.rte h3 { font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--lav-dark); margin: 1.5rem 0 .5rem; text-transform: uppercase; letter-spacing: .08em; }
+.ps-policy-content.rte h3 { font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: 1rem; font-weight: 800; color: var(--lav-dark); margin: 1.5rem 0 .5rem; text-transform: uppercase; letter-spacing: .08em; }
 .ps-policy-content.rte p { margin-bottom: 1.1rem; }
 .ps-policy-content.rte ul,
 .ps-policy-content.rte ol { padding-left: 1.6rem; margin-bottom: 1.1rem; }
@@ -664,7 +664,7 @@
 .ps-account-sub { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--lav-mid); text-align: center; margin-bottom: 1.8rem; }
 .ps-account-section-h { font-family: 'Luckiest Guy', cursive; font-size: 1.3rem; color: var(--lav); letter-spacing: .04em; margin-bottom: .5rem; }
 .ps-account-forgot { text-align: right; margin-bottom: .4rem; }
-.ps-account-link-btn { background: none; border: none; cursor: pointer; color: var(--lav); font-family: 'Nunito', sans-serif; font-size: .82rem; font-weight: 800; text-decoration: underline; padding: 0; }
+.ps-account-link-btn { background: none; border: none; cursor: pointer; color: var(--lav); font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-size: .82rem; font-weight: 800; text-decoration: underline; padding: 0; }
 .ps-account-link-btn:hover { color: var(--lav-dark); }
 .ps-account-divider { text-align: center; margin: 1.5rem 0; position: relative; }
 .ps-account-divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
@@ -853,7 +853,7 @@
 
 .ps-search-bar-input {
   flex: 1;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', 'Nunito-fallback', sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--lav-ink);
@@ -874,7 +874,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background .2s;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', 'Nunito-fallback', sans-serif;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -1176,7 +1176,7 @@
 .ps-pdp-perks { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.4rem; opacity: 0; transform: translateX(-30px); transition: all .7s cubic-bezier(.34,1.56,.64,1) .3s; }
 .ps-pdp-perk { background: var(--lav-xlight); border: 2px solid var(--border); padding: .35rem .8rem; border-radius: 20px; font-size: .72rem; font-weight: 700; color: var(--lav-mid); }
 .ps-pdp-qty-row { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; opacity: 0; transform: translateX(-30px); transition: all .7s cubic-bezier(.34,1.56,.64,1) .4s; }
-.ps-pdp-btn { font-family: 'Nunito', sans-serif; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 1rem; padding: 1.05rem 2.2rem; cursor: pointer; background: var(--lav); color: #fff; border: none; clip-path: polygon(6% 0,100% 0,94% 100%,0 100%); transition: background .2s; }
+.ps-pdp-btn { font-family: 'Nunito', 'Nunito-fallback', sans-serif; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: 1rem; padding: 1.05rem 2.2rem; cursor: pointer; background: var(--lav); color: #fff; border: none; clip-path: polygon(6% 0,100% 0,94% 100%,0 100%); transition: background .2s; }
 .ps-pdp-btn:hover { background: var(--lav-dark); }
 .ps-pdp-stage.in .ps-pdp-title,
 .ps-pdp-stage.in .ps-pdp-price,
