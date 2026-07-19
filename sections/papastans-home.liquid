@@ -220,8 +220,7 @@
       </section>
     </div>
 
-    <!-- First-visit scroll cues: chevron + drifting hint bubbles + idle bucket nudge (JS) -->
-    <div class="ps-hint-bubbles" id="psHintBubbles" aria-hidden="true"><i></i><i></i><i></i></div>
+    <!-- First-visit scroll cues: chevron + idle bucket nudge; JS emits a bubble stream from the bucket until it tips -->
     <div class="ps-scroll-cue" id="psScrollCue" aria-hidden="true">
       <span class="ps-scroll-cue-text">{{ section.settings.scroll_cue_text | default: 'scroll to pour' }}</span>
       <svg class="ps-scroll-cue-chev" width="26" height="14" viewBox="0 0 26 14" fill="none"><path d="M2 2l11 10L24 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>

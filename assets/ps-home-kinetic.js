@@ -224,6 +224,42 @@
 
   // NOTE: this theme scrolls on <body>, not <window> — 'scroll' events on window alone
   // never fire here. Listen on both so this keeps working if that ever changes.
+  // ── Ambient bubble stream: a steady trickle rises from the bucket mouth
+  //    until the pour begins (p passes the tip threshold). Uses the Web
+  //    Animations API so it never fights the scroll-driven bubble field.
+  //    Resumes if the visitor scrolls back to the upright bucket. ──
+  var STREAM_STOP_P = 0.02;
+  function spawnStreamBubble() {
+    if (!heroPin || latestP > STREAM_STOP_P || document.hidden) return;
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var bucketW = heroPhoto ? heroPhoto.offsetWidth : 120;
+    var bucketH = heroPhoto ? heroPhoto.offsetHeight : 120;
+    var bucketX = vw - bucketW - vw * 0.06;
+    var bucketY = vh - bucketH - vh * 0.05;
+    var mouthX = bucketX + bucketW * (0.35 + Math.random() * 0.35);
+    var mouthY = bucketY + bucketH * 0.12;
+    var size = 7 + Math.random() * 13;
+    var el = document.createElement('div');
+    el.className = 'ps-stream-bubble';
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left = mouthX + 'px';
+    el.style.top = mouthY + 'px';
+    heroPin.appendChild(el);
+    var rise = vh * (0.35 + Math.random() * 0.3);
+    var sway = (Math.random() - 0.5) * 90;
+    var dur = 3200 + Math.random() * 2200;
+    var anim = el.animate([
+      { transform: 'translate(0, 0) scale(.55)', opacity: 0 },
+      { transform: 'translate(' + (sway * 0.35) + 'px, ' + (-rise * 0.3) + 'px) scale(.85)', opacity: .85, offset: 0.2 },
+      { transform: 'translate(' + (sway * 0.7) + 'px, ' + (-rise * 0.65) + 'px) scale(1)', opacity: .7, offset: 0.6 },
+      { transform: 'translate(' + sway + 'px, ' + (-rise) + 'px) scale(1.15)', opacity: 0 }
+    ], { duration: dur, easing: 'ease-out' });
+    anim.onfinish = function () { el.remove(); };
+  }
+  setInterval(spawnStreamBubble, 420);
+  spawnStreamBubble();
+
   // ── Idle bucket nudge: at rest on the hero, tease the pour every few seconds ──
   setInterval(function () {
     if (cuesDismissed || !heroBucketEl) return;
