@@ -1285,6 +1285,24 @@
 }
 .ps-hero-wipe-f { background: var(--lav); }
 
+/* ── Collections list (/collections): kinetic directory cards ── */
+.ps-lc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.ps-lc-card { display: flex; flex-direction: column; background: var(--white); box-shadow: inset 0 0 0 2px var(--border); clip-path: polygon(0 0, 100% 0, 100% 92%, 92% 100%, 0 100%); overflow: hidden; text-decoration: none; color: inherit; transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+.ps-lc-card:hover { transform: translateY(-5px); }
+.ps-lc-img { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--lav-xlight); }
+.ps-lc-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.ps-lc-card:hover .ps-lc-img img { transform: scale(1.05); }
+.ps-lc-img-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+.ps-lc-count { position: absolute; bottom: .8rem; left: 0; background: var(--lav); color: #fff; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: .35rem .9rem .35rem .7rem; clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%); }
+.ps-lc-body { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: .45rem; flex: 1; }
+.ps-lc-title { font-family: 'Luckiest Guy', cursive; font-size: 1.25rem; letter-spacing: .03em; color: var(--lav-ink); margin: 0; transition: color .2s; }
+.ps-lc-card:hover .ps-lc-title { color: var(--lav); }
+.ps-lc-desc { font-size: .85rem; font-weight: 600; color: var(--lav-mid); line-height: 1.6; margin: 0; flex: 1; }
+.ps-lc-go { font-size: .75rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--lav); margin-top: .4rem; }
+.ps-lc-card:hover .ps-lc-go { color: var(--lav-dark); }
+@media (max-width: 1000px) { .ps-lc-grid { grid-template-columns: repeat(2, 1fr); gap: 1.4rem; } }
+@media (max-width: 700px)  { .ps-lc-grid { grid-template-columns: 1fr; } }
+
 /* ── Split Kinetic page header band (collection/blog/search) ── */
 .ps-sk-head { position: relative; background: var(--lav); clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%); padding: 7.5rem 4rem 5.5rem; overflow: hidden; }
 .ps-sk-head::before { content: ''; position: absolute; inset: 0; background: var(--lav-dark); clip-path: polygon(72% 0, 100% 0, 100% 100%, 55% 100%); opacity: .5; }
