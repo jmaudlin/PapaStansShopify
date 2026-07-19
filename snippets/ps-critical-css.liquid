@@ -4,40 +4,40 @@
 @font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400 800; font-display: swap; src: url('{{ 'font-nunito-latin.woff2' | asset_url }}') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
-  --lav:       #7C4D9E;  /* deep lavender — primary              */
-  --lav-mid:   #A470C8;  /* mid lavender — buttons, accents      */
-  --lav-light: #E8D5F5;  /* pale lavender — card fills, borders  */
-  --lav-xlight:#F5EDFB;  /* whisper lavender — page background   */
-  --lav-dark:  #4A2870;  /* darkest lavender — hover, footer     */
-  --lav-ink:   #1E0A2E;  /* near-black purple — all body text    */
-  --pink:      #C8607A;  /* deep pink — secondary CTA            */
-  --pink-light:#F5D0DA;  /* pale pink — fills                    */
+  --lav:       {{ settings.color_primary | default: '#7C4D9E' }};
+  --lav-mid:   {{ settings.color_primary_mid | default: '#A470C8' }};
+  --lav-light: {{ settings.color_primary_light | default: '#E8D5F5' }};
+  --lav-xlight:{{ settings.color_bg_tint | default: '#F5EDFB' }};
+  --lav-dark:  {{ settings.color_primary_dark | default: '#4A2870' }};
+  --lav-ink:   {{ settings.color_text | default: '#1E0A2E' }};
+  --pink:      {{ settings.color_accent | default: '#C8607A' }};
+  --pink-light:{{ settings.color_accent_light | default: '#F5D0DA' }};
   --white:     #ffffff;
-  --offwhite:  #FDFAFF;  /* page background                      */
-  --border:    #D0B0E8;  /* lavender border                      */
+  --offwhite:  {{ settings.color_background | default: '#FDFAFF' }};
+  --border:    {{ settings.color_border | default: '#D0B0E8' }};
 
-  /* ── Every legacy alias → lavender equivalents, NO brown, NO yellow ── */
-  --cream:  #FDFAFF;
-  --warm:   #F5EDFB;
-  --tan:    #E8D5F5;
-  --brown:  #7C4D9E;
-  --bark:   #1E0A2E;
-  --ink:    #1E0A2E;
-  --border-alt: #D0B0E8;
-  --sun:    #E8D5F5;
-  --honey:  #A470C8;
-  --barn:   #7C4D9E;
-  --barn2:  #4A2870;
-  --barrel: #7C4D9E;
-  --barrel2:#4A2870;
-  --sage:   #A470C8;
-  --moss:   #7C4D9E;
-  --sky:    #E8D5F5;
-  --butter: #E8D5F5;
-  --butter-dk: #A470C8;
-  --spoon:  #C8A8E0;
-  --lavender: #7C4D9E;
-  --lav-mid-old: #A470C8;
+  /* ── Legacy aliases → follow the settings-driven palette ── */
+  --cream:  var(--offwhite);
+  --warm:   var(--lav-xlight);
+  --tan:    var(--lav-light);
+  --brown:  var(--lav);
+  --bark:   var(--lav-ink);
+  --ink:    var(--lav-ink);
+  --border-alt: var(--border);
+  --sun:    var(--lav-light);
+  --honey:  var(--lav-mid);
+  --barn:   var(--lav);
+  --barn2:  var(--lav-dark);
+  --barrel: var(--lav);
+  --barrel2:var(--lav-dark);
+  --sage:   var(--lav-mid);
+  --moss:   var(--lav);
+  --sky:    var(--lav-light);
+  --butter: var(--lav-light);
+  --butter-dk: var(--lav-mid);
+  --spoon:  {{ settings.color_highlight | default: '#C8A8E0' }};
+  --lavender: var(--lav);
+  --lav-mid-old: var(--lav-mid);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -105,7 +105,7 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 @keyframes psBump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 /* ── Redesign token bridge (Split Kinetic) ── */
 :root {
-  --lav-300: #C8A8E0;
+  --lav-300: {{ settings.color_highlight | default: '#C8A8E0' }};
   --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
   --font-display: 'Luckiest Guy', cursive;
   --font-script:  'Caveat', cursive;

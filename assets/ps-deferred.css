@@ -117,7 +117,7 @@
 .ps-scents-bg { position:absolute;inset:-20%;will-change:transform;
   background:radial-gradient(ellipse 60% 60% at 35% 50%, rgba(124,77,158,.9) 0%, transparent 55%),
              radial-gradient(ellipse 40% 50% at 75% 35%, rgba(74,40,112,.7) 0%, transparent 50%),
-             linear-gradient(150deg, #1E0A2E 0%, #4A2870 50%, #7C4D9E 100%); }
+             linear-gradient(150deg, #1E0A2E 0%, var(--lav-dark) 50%, var(--lav) 100%); }
 .ps-scents-pattern { position:absolute;inset:0;opacity:.04;pointer-events:none;
   background-image:repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(255,255,255,.8) 30px,rgba(255,255,255,.8) 32px),
                    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(255,255,255,.8) 30px,rgba(255,255,255,.8) 32px); }

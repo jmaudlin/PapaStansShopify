@@ -8,6 +8,81 @@
     "theme_support_url": "https://papastans.store"
   },
   {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Papa Stan's brand palette. Changing these updates the whole site \u2014 stick to lavender-family tones (no brown or yellow) to stay on brand."
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary lavender",
+        "default": "#7C4D9E"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_mid",
+        "label": "Mid lavender (accents)",
+        "default": "#A470C8"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_light",
+        "label": "Pale lavender (fills)",
+        "default": "#E8D5F5"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_dark",
+        "label": "Dark lavender (hover/footer)",
+        "default": "#4A2870"
+      },
+      {
+        "type": "color",
+        "id": "color_highlight",
+        "label": "Highlight lavender (hero glow)",
+        "default": "#C8A8E0"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text (ink)",
+        "default": "#1E0A2E"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent pink",
+        "default": "#C8607A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_light",
+        "label": "Pale pink",
+        "default": "#F5D0DA"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Page background",
+        "default": "#FDFAFF"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_tint",
+        "label": "Background tint",
+        "default": "#F5EDFB"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders",
+        "default": "#D0B0E8"
+      }
+    ]
+  },
+  {
     "name": "Cart",
     "settings": [
       {
