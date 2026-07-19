@@ -1258,6 +1258,23 @@
    instead of clipping its top under the fixed nav/announcement bars. */
 .ps-hero-blog-layer .ps-hblog > :first-child { margin-top: auto; }
 .ps-hero-blog-layer .ps-hblog > :last-child { margin-bottom: auto; }
+/* No visible scrollbar inside the pinned layer -- content is sized to fit;
+   scrolling stays possible as a safety net on very short viewports. */
+.ps-hero-blog-layer .ps-hblog { scrollbar-width: none; }
+.ps-hero-blog-layer .ps-hblog::-webkit-scrollbar { display: none; }
+/* Short viewports: compress the chapter so it fits without scrolling */
+@media (max-height: 860px) {
+  .ps-hero-blog-layer .ps-hblog { padding-top: calc(var(--nav-top, 44px) + 3.5rem); padding-bottom: 2rem; }
+  .ps-hblog-head { margin-bottom: 1.1rem; }
+  .ps-hblog-grid { gap: 1.2rem; }
+  .ps-hblog-cta { margin-top: 1.2rem; }
+  .ps-hero-blog-layer .ps-blog-card-img-link { aspect-ratio: 16/9; }
+  .ps-hero-blog-layer .ps-blog-card-body { padding: 1rem 1.1rem 1.1rem; }
+}
+@media (max-height: 720px) {
+  .ps-hero-blog-layer .ps-blog-card-excerpt { display: none; }
+  .ps-hero-blog-layer .ps-blog-card-title { font-size: 1rem; }
+}
 .ps-hblog-head { margin-bottom: 1.8rem; }
 .ps-hblog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; max-width: 1200px; }
 .ps-hblog-cta { margin-top: 2rem; }
