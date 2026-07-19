@@ -220,6 +220,13 @@
       </section>
     </div>
 
+    <!-- First-visit scroll cues: chevron + drifting hint bubbles + idle bucket nudge (JS) -->
+    <div class="ps-hint-bubbles" id="psHintBubbles" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="ps-scroll-cue" id="psScrollCue" aria-hidden="true">
+      <span class="ps-scroll-cue-text">{{ section.settings.scroll_cue_text | default: 'scroll to pour' }}</span>
+      <svg class="ps-scroll-cue-chev" width="26" height="14" viewBox="0 0 26 14" fill="none"><path d="M2 2l11 10L24 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
     <div class="ps-hero-wipe-d" id="psWipeD"></div>
     <div class="ps-hero-wipe-blog" id="psWipeBlog"></div>
     <div class="ps-hero-wipe-f" id="psWipeF"></div>
@@ -371,6 +378,12 @@
       "id": "blog_cta_link",
       "label": "\"Read the Blog\" link",
       "info": "Defaults to the featured blog."
+    },
+    {
+      "type": "text",
+      "id": "scroll_cue_text",
+      "label": "Scroll cue caption",
+      "default": "scroll to pour"
     }
   ],
   "presets": [

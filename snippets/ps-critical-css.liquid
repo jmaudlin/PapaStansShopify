@@ -135,12 +135,27 @@ body { font-family: 'Nunito', sans-serif; background: var(--offwhite); color: va
 .ps-hkbtn-ghost { background: transparent; color: #fff; border: 3px solid #fff; }
 @media (max-width: 900px) { .ps-hero-panel-content h1 { font-size: 2.4rem; } }
 
+/* ── First-visit scroll cues ── */
+.ps-scroll-cue { position: absolute; left: 50%; bottom: 2.2rem; transform: translateX(-50%); z-index: 7; display: flex; flex-direction: column; align-items: center; gap: .35rem; color: var(--lav-300); pointer-events: none; transition: opacity .5s; }
+.ps-scroll-cue-text { font-family: var(--font-script); font-size: 1.25rem; color: rgba(255,255,255,.85); }
+.ps-scroll-cue-chev { animation: ps-cue-bounce 1.8s ease-in-out infinite; }
+@keyframes ps-cue-bounce { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .5; } }
+.ps-cues-off .ps-scroll-cue, .ps-cues-off .ps-hint-bubbles { opacity: 0 !important; }
+.ps-hint-bubbles { position: absolute; left: 50%; bottom: 26vh; width: 140px; height: 160px; transform: translateX(-50%); z-index: 6; pointer-events: none; transition: opacity .5s; }
+.ps-hint-bubbles i { position: absolute; bottom: 0; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); background: radial-gradient(circle at 35% 35%, rgba(220,190,250,.9), rgba(150,100,200,.5)); opacity: 0; animation: ps-hint-rise 4.2s ease-in infinite; }
+.ps-hint-bubbles i:nth-child(1) { left: 12%; width: 14px; height: 14px; animation-delay: 0s; }
+.ps-hint-bubbles i:nth-child(2) { left: 52%; width: 22px; height: 22px; animation-delay: 1.3s; }
+.ps-hint-bubbles i:nth-child(3) { left: 80%; width: 10px; height: 10px; animation-delay: 2.6s; }
+@keyframes ps-hint-rise { 0% { transform: translateY(0) scale(.7); opacity: 0; } 15% { opacity: .8; } 100% { transform: translateY(-150px) scale(1.15); opacity: 0; } }
+.ps-nudge { animation: ps-bucket-nudge 1s ease-in-out; }
+@keyframes ps-bucket-nudge { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-9deg); } 55% { transform: rotate(2deg); } 75% { transform: rotate(-4deg); } }
+
 /* ── Reduced motion: unpin the kinetic sequence into a static stacked page ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .ps-herowrap { height: auto; }
   .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
-  .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee { display: none; }
+  .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue, .ps-hint-bubbles { display: none; }
   .ps-hero-zoomlabel { position: static; min-height: 68vh; background: radial-gradient(ellipse 60% 55% at 50% 45%, rgba(164,112,200,.5) 0%, transparent 60%), linear-gradient(180deg,#1E0A2E 0%,#120620 55%,#0A0313 100%); }
   .ps-hero-runway, .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static; opacity: 1; overflow: visible; }
   .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto; }

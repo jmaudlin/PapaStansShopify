@@ -16,6 +16,12 @@
   var marqueeLayer = document.getElementById('psMarqueeLayer');
   var marqueeRevealed = false;
   var bubbleField = document.getElementById('psBubbleField');
+  var heroPin = document.querySelector('.ps-heropin');
+  var heroBucketEl = document.getElementById('psHeroBucket');
+  var cuesDismissed = false;
+  var lastActivity = Date.now();
+  var nudgeCooldownUntil = 0;
+  var latestP = 0;
   if (!herowrap || !bubbleField) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -77,6 +83,14 @@
     var rect = herowrap.getBoundingClientRect();
     var total = rect.height - window.innerHeight;
     var p = Math.min(1, Math.max(0, -rect.top / total));
+    latestP = p;
+    lastActivity = Date.now();
+
+    // ── First-visit cues: chevron + hint bubbles vanish permanently on first real scroll ──
+    if (!cuesDismissed && p > 0.005) {
+      cuesDismissed = true;
+      if (heroPin) heroPin.classList.add('ps-cues-off');
+    }
     var pA = Math.min(1, p / PA_END);
     var ep = easeInOutCubic(pA);
     var pB = Math.min(1, Math.max(0, (p - PA_END) / (PB_END - PA_END)));
@@ -210,6 +224,19 @@
 
   // NOTE: this theme scrolls on <body>, not <window> — 'scroll' events on window alone
   // never fire here. Listen on both so this keeps working if that ever changes.
+  // ── Idle bucket nudge: at rest on the hero, tease the pour every few seconds ──
+  setInterval(function () {
+    if (cuesDismissed || !heroBucketEl) return;
+    var now = Date.now();
+    if (latestP > 0.005) return;
+    if (now - lastActivity < 2500 || now < nudgeCooldownUntil) return;
+    heroBucketEl.classList.add('ps-nudge');
+    nudgeCooldownUntil = now + 6000;
+  }, 500);
+  if (heroBucketEl) heroBucketEl.addEventListener('animationend', function (e) {
+    if (e.animationName === 'ps-bucket-nudge') heroBucketEl.classList.remove('ps-nudge');
+  });
+
   document.body.addEventListener('scroll', onHeroScroll, { passive: true });
   window.addEventListener('scroll', onHeroScroll, { passive: true });
   window.addEventListener('resize', onHeroScroll);
