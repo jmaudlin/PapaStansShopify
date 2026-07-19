@@ -1247,16 +1247,24 @@
 .ps-hero-wipe-f { position: absolute; inset: 0; z-index: 4; clip-path: polygon(0 0, 0 0, 0 0, 0 0); }
 .ps-hero-wipe-d { background: var(--lav-dark); }
 .ps-hero-wipe-blog { position: absolute; inset: 0; z-index: 4; clip-path: polygon(0 0, 0 0, 0 0, 0 0); background: var(--lav-mid); }
-.ps-hero-blog-layer { position: absolute; inset: 0; z-index: 3; overflow: hidden; opacity: 0; background: var(--offwhite); }
-.ps-hero-blog-layer .ps-hblog { height: 100%; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; padding: calc(var(--nav-top, 44px) + 4rem) 4vw 3rem; overflow-y: auto; }
+/* Blog band: mirrored (horizontally reversed) version of the testimonials
+   dark diagonal -- same two-tone lavender-ink treatment, diagonal slants the
+   opposite way, so blog / testimonials / newsletter alternate slant direction. */
+.ps-hero-blog-layer { position: absolute; inset: 0; z-index: 3; overflow: hidden; opacity: 0; background: var(--lav-ink); }
+.ps-hero-blog-layer .ps-hblog { position: relative; height: 100%; display: flex; flex-direction: column; box-sizing: border-box; padding: calc(var(--nav-top, 44px) + 5rem) 4vw 3rem; overflow-y: auto; }
+.ps-hero-blog-layer::before { content: ''; position: absolute; inset: 0; background: var(--lav-dark); clip-path: polygon(100% 30%, 0 0, 0 100%, 100% 100%); z-index: 0; pointer-events: none; }
+.ps-hero-blog-layer .ps-hblog > * { position: relative; z-index: 1; }
+/* Auto margins (not justify-content:center) so overflowing content scrolls
+   instead of clipping its top under the fixed nav/announcement bars. */
+.ps-hero-blog-layer .ps-hblog > :first-child { margin-top: auto; }
+.ps-hero-blog-layer .ps-hblog > :last-child { margin-bottom: auto; }
 .ps-hblog-head { margin-bottom: 1.8rem; }
 .ps-hblog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; max-width: 1200px; }
 .ps-hblog-cta { margin-top: 2rem; }
-.ps-hblog-empty { font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--lav-mid); margin: 1rem 0 0; }
+.ps-hblog-empty { font-family: 'Caveat', cursive; font-size: 1.3rem; color: rgba(255,255,255,.75); margin: 1rem 0 0; }
 @media (max-width: 900px) {
   .ps-hblog-grid { grid-template-columns: 1fr; gap: 1.2rem; max-width: 480px; }
   .ps-hblog-grid .ps-blog-card:nth-child(n+3) { display: none; }
-  .ps-hero-blog-layer .ps-hblog { justify-content: flex-start; }
 }
 .ps-hero-wipe-f { background: var(--lav); }
 

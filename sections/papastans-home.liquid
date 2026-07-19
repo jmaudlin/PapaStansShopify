@@ -162,8 +162,8 @@
           {%- assign hblog_url = '/blogs/articles' -%}
         {%- endif -%}
         <div class="ps-hblog-head">
-          <div class="ps-section-tag">{{ section.settings.blog_eyebrow | default: '📖 From the Blog' }}</div>
-          <h2 class="ps-section-h2">{{ section.settings.blog_heading | default: 'Fresh From the Farmhouse' }}</h2>
+          <div class="ps-section-tag" style="background:var(--white);">{{ section.settings.blog_eyebrow | default: '📖 From the Blog' }}</div>
+          <h2 class="ps-section-h2 ps-light">{{ section.settings.blog_heading | default: 'Fresh From the Farmhouse' }}</h2>
         </div>
         {%- if harticles.size > 0 -%}
           <div class="ps-hblog-grid">
