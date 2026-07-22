@@ -148,6 +148,8 @@ body { font-family: 'Nunito', 'Nunito-fallback', sans-serif; background: var(--o
 .ps-scroll-cue { position: absolute; left: 50%; bottom: 2.2rem; transform: translateX(-50%); z-index: 7; display: flex; flex-direction: column; align-items: center; gap: .35rem; color: var(--lav-300); pointer-events: none; transition: opacity .5s; }
 .ps-scroll-cue-text { font-family: var(--font-script); font-size: 1.25rem; color: rgba(255,255,255,.85); }
 .ps-scroll-cue-chev { animation: ps-cue-bounce 1.8s ease-in-out infinite; }
+.ps-cue-dark .ps-scroll-cue { color: var(--lav-dark); }
+.ps-cue-dark .ps-scroll-cue-text { color: var(--lav-ink); }
 @keyframes ps-cue-bounce { 0%,100% { transform: translateY(0); opacity: .9; } 50% { transform: translateY(8px); opacity: .5; } }
 .ps-cues-off .ps-scroll-cue { opacity: 0 !important; }
 .ps-stream-bubble { position: absolute; z-index: 6; border-radius: 50%; pointer-events: none; border: 2px solid rgba(255,255,255,.35); background: radial-gradient(circle at 35% 35%, rgba(220,190,250,.9), rgba(150,100,200,.5)); opacity: 0; }

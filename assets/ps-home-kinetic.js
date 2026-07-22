@@ -107,6 +107,8 @@
     //    chapter (phase C) so browsing isn't nagged. cuesDismissed still
     //    flips once so the bucket idle-nudge keeps its first-visit-only rule.
     if (!cuesDismissed && p > 0.005) { cuesDismissed = true; }
+    // Products chapter sits on the offwhite runway — flip cue to dark text there
+    if (heroPin) heroPin.classList.toggle('ps-cue-dark', p > PB_END && p < PD_END);
     if (p > 0.005 && heroPin) {
       heroPin.classList.add('ps-cues-off');
       if (cueIdleTimer) clearTimeout(cueIdleTimer);
