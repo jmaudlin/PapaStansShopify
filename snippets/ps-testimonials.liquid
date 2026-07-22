@@ -65,11 +65,13 @@
 .ps-testimonials .jdgm-carousel-number-of-reviews svg { width: 15px; height: 15px; }
 
 /* Cards: white, corner-notched like the rest of the homepage cards */
-/* Judge.me renders ALL cards inside ONE wrapper (their slider track), so
-   separation must come from per-card margins — container gap does nothing. */
-.ps-testimonials .jdgm-carousel__item-container { display: flex; justify-content: center; }
-.ps-testimonials .jdgm-carousel__item-wrapper { display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; }
-.ps-testimonials .jdgm-carousel-item { background: #fff !important; clip-path: polygon(0 0,100% 0,100% 92%,92% 100%,0 100%); border: 2px solid var(--border) !important; border-radius: 0 !important; padding: 2rem 1.8rem 1.6rem !important; margin: 0 1.25rem 1.25rem !important; display: flex; flex-direction: column; flex: 0 1 320px; max-width: 360px; transition: transform .25s ease; }
+/* Neutralize Judge.me's slider (inline-block track + translate3d) into a
+   static centered flex grid — with a handful of reviews there's nothing to
+   slide, and their JS positioning fought every layout we gave it. */
+.ps-testimonials .jdgm-carousel__item-container { display: block !important; height: auto !important; overflow: visible !important; }
+.ps-testimonials .jdgm-carousel__item-wrapper { display: flex !important; flex-wrap: wrap; justify-content: center; gap: 2.5rem; transform: none !important; font-size: 16px !important; width: 100% !important; }
+.ps-testimonials .jdgm-carousel__prev, .ps-testimonials .jdgm-carousel__next { display: none !important; }
+.ps-testimonials .jdgm-carousel-item { background: #fff !important; clip-path: polygon(0 0,100% 0,100% 92%,92% 100%,0 100%); border: 2px solid var(--border) !important; border-radius: 0 !important; padding: 2rem 1.8rem 1.6rem !important; margin: 0 !important; display: flex; flex-direction: column; flex: 0 1 320px; width: auto !important; max-width: 360px; position: static !important; transform: none !important; transition: transform .25s ease; }
 .ps-testimonials .jdgm-carousel-item:hover { transform: translateY(-4px); }
 /* Judge.me fixes items at 200px and line-clamps review text — undo both so
    full reviews show and cards size to content (flex keeps rows equal-height) */
