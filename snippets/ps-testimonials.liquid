@@ -24,8 +24,23 @@
       <p class="ps-testimonials-sub ps-reveal ps-rd2">Real words from real people who've brought a little Iowa into their homes.</p>
     </div>
 
+    {%- assign jm = shop.metafields.judgeme -%}
     <div class="ps-jdgm-wrap ps-reveal ps-rd2">
-      <div class="jdgm-widget jdgm-carousel-widget" data-id="jdgm-carousel"></div>
+      {%- if jm.featured_carousel != blank -%}
+        <div class="jdgm-carousel-wrapper">
+          <div class="jdgm-carousel-title-and-link">
+            <span class="jdgm-all-reviews-rating-wrapper">
+              <span style="display:block" data-score="{{ jm.all_reviews_rating }}" class="jdgm-all-reviews-rating" aria-label="{{ jm.all_reviews_rating }} stars" tabindex="0" role="img"></span>
+              <span style="display:block" class="jdgm-carousel-number-of-reviews" data-number-of-reviews="{{ jm.all_reviews_count }}">from {{ jm.all_reviews_count }} reviews</span>
+            </span>
+          </div>
+          {{ jm.featured_carousel }}
+        </div>
+      {%- else -%}
+        {%- comment -%} No featured reviews selected yet in Judge.me admin — the
+            carousel metafield is empty. Pick featured reviews in
+            Judge.me → Reviews to populate this. {%- endcomment -%}
+      {%- endif -%}
     </div>
 
   </div>
