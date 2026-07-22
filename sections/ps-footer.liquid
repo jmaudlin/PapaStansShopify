@@ -98,6 +98,21 @@
     {%- assign footer_nav = linklists['footer'] -%}
     {%- if footer_nav.links.size > 0 -%}
       {%- for col in footer_nav.links -%}
+        {%- assign col_title_l = col.title | downcase -%}
+        {%- if settings.auto_shop_dropdown and col_title_l == 'shop' -%}
+          {%- assign excl = settings.shop_dropdown_exclude | default: 'frontpage' | downcase | remove: ' ' | split: ',' -%}
+          <div class="ps-footer-col">
+            <p class="ps-footer-col-heading">{{ col.title }}</p>
+            <ul>
+              <li><a href="{{ shop.url }}/collections/all">All Products</a></li>
+              {%- for collection in collections -%}
+                {%- if excl contains collection.handle -%}{%- continue -%}{%- endif -%}
+                {%- if collection.products_count == 0 -%}{%- continue -%}{%- endif -%}
+                <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- else -%}
         <div class="ps-footer-col">
           <p class="ps-footer-col-heading">{{ col.title }}</p>
           <ul>
@@ -106,6 +121,7 @@
             {%- endfor -%}
           </ul>
         </div>
+        {%- endif -%}
       {%- endfor -%}
     {%- else -%}
       <div class="ps-footer-col"><p class="ps-footer-col-heading">Shop</p><ul>

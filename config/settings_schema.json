@@ -93,5 +93,24 @@
         "default": 100
       }
     ]
+  },
+  {
+    "name": "Navigation",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "auto_shop_dropdown",
+        "label": "Auto-list all collections under Shop",
+        "info": "Applies to the header Shop dropdown and the footer Shop column. Non-empty collections, alphabetical. Manual menu children for those items are ignored while enabled.",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "shop_dropdown_exclude",
+        "label": "Collections to hide from auto lists",
+        "info": "Comma-separated collection handles",
+        "default": "frontpage, featured-products, all-products"
+      }
+    ]
   }
 ]
