@@ -26,13 +26,17 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   // Phones get the static stacked layout (see the unpin CSS block) — pinned
   // scrubbing fights touch momentum scrolling and iOS URL-bar viewport changes.
-  if (window.matchMedia('(max-width: 680px)').matches) {
-    // If a rotation/resize crosses back above the breakpoint, the pinned CSS
-    // returns but the engine isn't running — reload once to boot it.
-    var mq680 = window.matchMedia('(max-width: 680px)');
-    var onCross = function (e) { if (!e.matches) location.reload(); };
-    if (mq680.addEventListener) { mq680.addEventListener('change', onCross); }
-    else if (mq680.addListener) { mq680.addListener(onCross); }
+  var psStaticMq = '(max-width: 680px), ((pointer: coarse) and (max-width: 1024px))';
+  if (window.matchMedia(psStaticMq).matches) {
+    // Touch devices stay static in BOTH orientations (no engine boot on
+    // landscape phones). Reload-to-boot only applies to fine-pointer desktops
+    // whose window is resized above the breakpoint — never to rotation.
+    if (window.matchMedia('(pointer: fine)').matches) {
+      var mq680 = window.matchMedia(psStaticMq);
+      var onCross = function (e) { if (!e.matches) location.reload(); };
+      if (mq680.addEventListener) { mq680.addEventListener('change', onCross); }
+      else if (mq680.addListener) { mq680.addListener(onCross); }
+    }
     return;
   }
 

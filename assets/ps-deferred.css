@@ -1320,7 +1320,7 @@
    block loses to this sheet's later-loading base rules at equal specificity,
    so the static-stacked rules are restated here where source order wins.
    Applies to reduced-motion and phones, matching the JS engine guard. ── */
-@media (prefers-reduced-motion: reduce), (max-width: 680px) {
+@media (prefers-reduced-motion: reduce), (max-width: 680px), ((pointer: coarse) and (max-width: 1024px)) {
   .ps-herowrap { height: auto; }
   .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
   .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none; }
