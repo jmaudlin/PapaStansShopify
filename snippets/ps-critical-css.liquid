@@ -163,12 +163,12 @@ body { font-family: 'Nunito', 'Nunito-fallback', sans-serif; background: var(--o
      fights touch momentum scrolling, so mobile gets a normal page. The JS
      engine early-returns under the same conditions. ── */
 @media (prefers-reduced-motion: reduce), (max-width: 680px) {
-  .ps-herowrap { height: auto; }
-  .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
-  .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none; }
-  .ps-hero-zoomlabel { position: static; min-height: 68vh; background: radial-gradient(ellipse 60% 55% at 50% 45%, rgba(164,112,200,.5) 0%, transparent 60%), linear-gradient(180deg,#1E0A2E 0%,#120620 55%,#0A0313 100%); }
-  .ps-hero-runway, .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static; opacity: 1; overflow: visible; }
-  .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto; }
+  .ps-herowrap { height: auto !important; }
+  .ps-heropin { position: static !important; height: auto !important; overflow: visible !important; display: flex !important; flex-direction: column !important; }
+  .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none !important; }
+  .ps-hero-zoomlabel { position: static !important; min-height: 68vh; background: radial-gradient(ellipse 60% 55% at 50% 45%, rgba(164,112,200,.5) 0%, transparent 60%), linear-gradient(180deg,#1E0A2E 0%,#120620 55%,#0A0313 100%); }
+  .ps-hero-runway, .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static !important; inset: auto !important; opacity: 1 !important; overflow: visible !important; }
+  .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto !important; }
   .ps-hero-panel-content, .ps-reveal { opacity: 1 !important; transform: none !important; }
 }
 /* ── Mobile rhythm for the stacked chapters ── */
