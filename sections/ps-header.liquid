@@ -58,8 +58,25 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="ps-nav-links" id="psNavLinks">
+    {%- assign excl = section.settings.shop_dropdown_exclude | default: 'frontpage' | downcase | remove: ' ' | split: ',' -%}
     {%- for link in linklists['main-menu'].links -%}
-      {%- if link.links != blank -%}
+      {%- assign is_shop_auto = false -%}
+      {%- if section.settings.auto_shop_dropdown and link.url contains '/collections/all' -%}
+        {%- assign is_shop_auto = true -%}
+      {%- endif -%}
+      {%- if is_shop_auto -%}
+        <li class="ps-nav-has-dropdown">
+          <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }} <span class="ps-nav-caret">▾</span></a>
+          <ul class="ps-nav-dropdown">
+            <li><a href="{{ shop.url }}/collections/all"{% if request.path == '/collections/all' %} class="active"{% endif %}>All Products</a></li>
+            {%- for collection in collections -%}
+              {%- if excl contains collection.handle -%}{%- continue -%}{%- endif -%}
+              {%- if collection.products_count == 0 -%}{%- continue -%}{%- endif -%}
+              <li><a href="{{ collection.url }}"{% if collection.url == request.path %} class="active"{% endif %}>{{ collection.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+      {%- elsif link.links != blank -%}
         <li class="ps-nav-has-dropdown">
           <a href="{{ link.url }}"{% if link.url == request.path %} class="active"{% endif %}>{{ link.title }} <span class="ps-nav-caret">▾</span></a>
           <ul class="ps-nav-dropdown">
@@ -144,9 +161,31 @@ document.querySelectorAll('.ps-nav-has-dropdown').forEach(function(item) {
       "id": "announcement_fallback",
       "label": "Fallback announcement text",
       "info": "Shown when no 'Announcement Bar' navigation menu exists.",
-      "default": "🎁 Free Samples with every order · 🚚 Free Shipping $100+ · 📞 641.670.1573"
+      "default": "\ud83c\udf81 Free Samples with every order \u00b7 \ud83d\ude9a Free Shipping $100+ \u00b7 \ud83d\udcde 641.670.1573"
+    },
+    {
+      "type": "header",
+      "content": "Shop dropdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_shop_dropdown",
+      "label": "Auto-list all collections under Shop",
+      "info": "When the main-menu item linking to /collections/all has this on, its dropdown shows every non-empty collection automatically (alphabetical). Manual sub-items on that menu entry are ignored while enabled.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shop_dropdown_exclude",
+      "label": "Collections to hide from the dropdown",
+      "info": "Comma-separated collection handles, e.g. frontpage, featured-products",
+      "default": "frontpage, featured-products"
     }
   ],
-  "blocks": [{ "type": "@app" }]
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
 }
 {% endschema %}
