@@ -1345,3 +1345,7 @@
 @keyframes ps-swipe-nudge { 0%,100% { transform:translateX(0); opacity:.9; } 50% { transform:translateX(7px); opacity:.5; } }
 .ps-swipe-hint.seen { opacity:0; }
 @media (pointer: coarse) { .ps-swipe-hint { display:flex; } .ps-pgrid-arrow { display:none; } }
+
+/* Judge.me stars: brand lavender site-wide (brand rule: no yellow) */
+.jdgm-star.jdgm--on, .jdgm-star.jdgm--half:before { color: var(--lav) !important; }
+.jdgm-star.jdgm--off { color: rgba(124,77,158,.25) !important; }
