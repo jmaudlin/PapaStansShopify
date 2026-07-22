@@ -1330,3 +1330,5 @@
   .ps-runway-body { overflow: visible; }
   .ps-hero-panel-content, .ps-reveal { opacity: 1 !important; transform: none !important; }
 }
+
+/* sync-bump: force Shopify to re-pull this asset (aafc903 sync was dropped) */
