@@ -46,17 +46,6 @@
         "disabled": false,
         "settings": {}
       },
-      "6159598353363395418": {
-        "type": "shopify://apps/google-youtube/blocks/store_widget/14ec7bd0-ac77-49a9-9417-90752398bdff",
-        "disabled": false,
-        "settings": {
-          "widget_position": "RIGHT_BOTTOM",
-          "side_margin": 36,
-          "bottom_margin": 36,
-          "mobile_side_margin": 16,
-          "mobile_bottom_margin": 46
-        }
-      },
       "10597026053260177897": {
         "type": "shopify://apps/wb-frequently-bought-together/blocks/app-embed/5f9bd783-09d5-43d2-bb37-85281ca56a6b",
         "disabled": false,
@@ -71,6 +60,17 @@
         "type": "shopify://apps/hoppy-bundles/blocks/bulk_offer_card/39b0734f-c894-4234-906e-b511bfd44522",
         "disabled": false,
         "settings": {}
+      },
+      "6159598353363395418": {
+        "type": "shopify://apps/google-youtube/blocks/store_widget/14ec7bd0-ac77-49a9-9417-90752398bdff",
+        "disabled": false,
+        "settings": {
+          "widget_position": "LEFT_BOTTOM",
+          "side_margin": 36,
+          "bottom_margin": 36,
+          "mobile_side_margin": 16,
+          "mobile_bottom_margin": 46
+        }
       }
     }
   }
