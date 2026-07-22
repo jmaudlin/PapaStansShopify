@@ -1324,8 +1324,8 @@
   .ps-herowrap { height: auto; }
   .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
   .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none; }
-  .ps-hero-runway { position: static; inset: auto; opacity: 1; overflow: visible; }
-  .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static; inset: auto; opacity: 1; overflow: visible; }
+  .ps-hero-runway { position: relative; inset: auto; opacity: 1; overflow: visible; }
+  .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: relative; inset: auto; opacity: 1; overflow: visible; }
   .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto; }
   .ps-runway-body { overflow: visible; }
   .ps-hero-panel-content, .ps-reveal { opacity: 1 !important; transform: none !important; }
