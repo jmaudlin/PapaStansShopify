@@ -19,6 +19,7 @@
   var heroPin = document.querySelector('.ps-heropin');
   var heroBucketEl = document.getElementById('psHeroBucket');
   var cuesDismissed = false;
+  var cueIdleTimer = null;
   var lastActivity = Date.now();
   var nudgeCooldownUntil = 0;
   var latestP = 0;
@@ -101,10 +102,18 @@
     latestP = p;
     lastActivity = Date.now();
 
-    // ── First-visit cues: chevron + hint bubbles vanish permanently on first real scroll ──
-    if (!cuesDismissed && p > 0.005) {
-      cuesDismissed = true;
-      if (heroPin) heroPin.classList.add('ps-cues-off');
+    // ── Scroll cue: hides while scrolling, returns after idle —
+    //    2.5s anywhere on the page, 5s while dwelling in the products
+    //    chapter (phase C) so browsing isn't nagged. cuesDismissed still
+    //    flips once so the bucket idle-nudge keeps its first-visit-only rule.
+    if (!cuesDismissed && p > 0.005) { cuesDismissed = true; }
+    if (p > 0.005 && heroPin) {
+      heroPin.classList.add('ps-cues-off');
+      if (cueIdleTimer) clearTimeout(cueIdleTimer);
+      var inProducts = p > PB_END && p <= PC_END;
+      cueIdleTimer = setTimeout(function () {
+        if (heroPin) heroPin.classList.remove('ps-cues-off');
+      }, inProducts ? 5000 : 2500);
     }
     var pA = Math.min(1, p / PA_END);
     var ep = easeInOutCubic(pA);
