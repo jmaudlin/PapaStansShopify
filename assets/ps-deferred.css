@@ -3,6 +3,8 @@
 .ps-btn-primary:hover { background:var(--lav-dark);color:#fff;transform:translateX(3px); }
 .ps-btn-secondary { display:inline-block;padding:.9rem 2.2rem;background:var(--lav-xlight);color:var(--lav-ink);font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;box-shadow:inset 0 0 0 2px var(--lav);cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
 .ps-btn-secondary:hover { background:var(--lav);color:#fff;transform:translateX(3px); }
+.ps-btn-danger { display:inline-block;padding:.9rem 2.2rem;background:#8E2A2A;color:#fff;font-family:'Nunito','Nunito-fallback',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:background .2s,transform .2s; }
+.ps-btn-danger:hover { background:#6E1F1F;color:#fff;transform:translateX(3px); }
 
 /* ── Marquee ── */
 .ps-marquee { background:var(--lav);border-top:4px solid var(--lav-dark);border-bottom:4px solid var(--lav-dark);overflow:hidden;padding:.7rem 0; }
@@ -226,7 +228,7 @@
 .ps-ci-name { font-family:'Caveat','Caveat-fallback',cursive;font-size:1.05rem;font-weight:700;color:var(--lav-ink);margin-bottom:.2rem; }
 .ps-ci-price { font-family:'Luckiest Guy','LuckiestGuy-fallback',cursive;font-size:.95rem;color:var(--barn);letter-spacing:.04em; }
 .ps-ci-qty { display:flex;align-items:center;gap:.4rem;margin-top:.4rem; }
-.ps-ci-qty button { width:22px;height:22px;background: var(--lav-xlight);border:2px solid var(--border);cursor:pointer;font-size:.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:background .2s; }
+.ps-ci-qty button { width:22px;height:22px;background: var(--lav-xlight);border:2px solid var(--border);cursor:pointer;font-size:.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;border-radius:0;transition:background .2s; }
 .ps-ci-qty button:hover { background:var(--tan); }
 .ps-ci-qty span { font-size:.85rem;font-weight:800;min-width:20px;text-align:center;color:var(--lav-ink); }
 .ps-ci-remove { background:none;border:none;cursor:pointer;color:var(--barn);font-size:1rem;font-weight:800;opacity:.6;padding:.2rem;transition:opacity .2s; }
@@ -539,7 +541,7 @@
 .ps-cart-page-item { display: grid; grid-template-columns: 100px 1fr auto; gap: 1rem; align-items: start; padding: 1.2rem 0; border-bottom: 2px dashed var(--border); }
 .ps-cart-page-item-name { font-family: 'Caveat', 'Caveat-fallback', cursive; font-size: 1.15rem; font-weight: 700; color: var(--lav-ink); text-decoration: none; display: block; margin-bottom: .2rem; }
 .ps-cart-page-item-name:hover { color: var(--barn); }
-.ps-qty-btn-a { width: 26px; height: 26px; background: var(--lav-xlight); border: 2px solid var(--border); color: var(--lav-ink); text-decoration: none; font-weight: 800; font-size: .9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background .2s; }
+.ps-qty-btn-a { width: 26px; height: 26px; background: var(--lav-xlight); border: 2px solid var(--border); color: var(--lav-ink); text-decoration: none; font-weight: 800; font-size: .9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 0; transition: background .2s; }
 .ps-qty-btn-a:hover { background: var(--tan); }
 .ps-cart-summary-box { background: var(--lav-xlight); border: 2px solid var(--border); clip-path: polygon(0 0, 100% 0, 100% 96%, 96% 100%, 0 100%); padding: 2rem; position: sticky; top: 100px; }
 
@@ -578,7 +580,7 @@
 .ps-contact-info-row a, .ps-contact-info-row span:last-child { font-weight: 600; color: var(--lav); text-decoration: none; }
 .ps-contact-info-row a:hover { color: var(--lav-dark); }
 .ps-contact-socials { display: flex; flex-direction: column; gap: .6rem; }
-.ps-contact-social-btn { display: flex; align-items: center; gap: .7rem; padding: .6rem 1rem; background: var(--white); border: 2px solid var(--border); border-radius: 8px; text-decoration: none; font-size: .82rem; font-weight: 700; color: var(--lav-ink); transition: all .2s; }
+.ps-contact-social-btn { display: flex; align-items: center; gap: .7rem; padding: .6rem 1rem; background: var(--white); border: 2px solid var(--border); border-radius: 0; text-decoration: none; font-size: .82rem; font-weight: 700; color: var(--lav-ink); transition: all .2s; }
 .ps-contact-social-btn:hover { background: var(--lav-light); border-color: var(--lav); color: var(--lav); transform: translateX(3px); }
 .ps-contact-social-btn strong { font-family: 'Luckiest Guy', 'LuckiestGuy-fallback', cursive; font-size: .85rem; letter-spacing: .04em; color: var(--lav); }
 
