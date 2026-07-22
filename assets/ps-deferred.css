@@ -1315,3 +1315,18 @@
 .ps-sk-head-sub { font-family: 'Caveat', 'Caveat-fallback', cursive; font-size: clamp(1.1rem,2vw,1.4rem); color: var(--lav-light); margin: .8rem 0 0; max-width: 640px; }
 .ps-sk-head + .ps-page-wrap { padding-top: 1.5rem; }
 @media (max-width: 700px) { .ps-sk-head { padding: 6rem 1.5rem 4rem; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); } }
+
+/* ── Unpin overrides (MUST stay at end of file): the inline critical-CSS unpin
+   block loses to this sheet's later-loading base rules at equal specificity,
+   so the static-stacked rules are restated here where source order wins.
+   Applies to reduced-motion and phones, matching the JS engine guard. ── */
+@media (prefers-reduced-motion: reduce), (max-width: 680px) {
+  .ps-herowrap { height: auto; }
+  .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
+  .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none; }
+  .ps-hero-runway { position: static; inset: auto; opacity: 1; overflow: visible; }
+  .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static; inset: auto; opacity: 1; overflow: visible; }
+  .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto; }
+  .ps-runway-body { overflow: visible; }
+  .ps-hero-panel-content, .ps-reveal { opacity: 1 !important; transform: none !important; }
+}
