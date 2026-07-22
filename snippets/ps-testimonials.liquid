@@ -53,38 +53,44 @@
 .ps-testimonials-sub { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--lav-ink); max-width: 480px; margin: .75rem auto 0; line-height: 1.5; }
 .ps-jdgm-wrap { width: 100%; }
 
-/* Judge.me carousel overrides to match Papa Stan's theme */
-.ps-testimonials .jdgm-widget { font-family: 'Nunito', sans-serif !important; }
+/* Judge.me carousel overrides — targets the REAL rendered classes
+   (.jdgm-carousel-item etc. from the featured_carousel metafield markup).
+   Section sits on the dark testimonials backdrop on the homepage. */
+.ps-testimonials .jdgm-widget { font-family: 'Nunito', 'Nunito-fallback', sans-serif !important; }
 
-/* Carousel card styling */
-.ps-testimonials .jdgm-carousel-card { background: var(--white) !important; border-radius: 16px !important; border: 1.5px solid var(--border) !important; box-shadow: 0 4px 18px rgba(147,112,178,.1) !important; }
-.ps-testimonials .jdgm-carousel-card:hover { box-shadow: 0 8px 28px rgba(147,112,178,.18) !important; transform: translateY(-3px); transition: all .25s ease; }
+/* Header: rating + count, centered and readable on dark */
+.ps-testimonials .jdgm-carousel-title-and-link { text-align: center; margin-bottom: 2rem; }
+.ps-testimonials .jdgm-all-reviews-rating-wrapper { display: inline-flex; flex-direction: column; align-items: center; gap: .3rem; }
+.ps-testimonials .jdgm-carousel-number-of-reviews { color: rgba(255,255,255,.85) !important; font-weight: 700; font-size: .9rem; display: inline-flex; align-items: center; gap: .35rem; }
+.ps-testimonials .jdgm-carousel-number-of-reviews svg { width: 15px; height: 15px; }
+
+/* Cards: white, corner-notched like the rest of the homepage cards */
+.ps-testimonials .jdgm-carousel__item-container { display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+.ps-testimonials .jdgm-carousel__item-wrapper { flex: 0 1 320px; display: flex; }
+.ps-testimonials .jdgm-carousel-item { background: #fff !important; clip-path: polygon(0 0,100% 0,100% 92%,92% 100%,0 100%); border: 2px solid var(--border) !important; border-radius: 0 !important; padding: 1.5rem 1.4rem 1.2rem !important; display: flex; flex-direction: column; width: 100%; transition: transform .25s ease; }
+.ps-testimonials .jdgm-carousel-item:hover { transform: translateY(-4px); }
 
 /* Stars */
 .ps-testimonials .jdgm-star { color: #F5A623 !important; }
+.ps-testimonials .jdgm-carousel-item__review-rating { margin-bottom: .7rem; }
 
-/* Reviewer name */
-.ps-testimonials .jdgm-carousel-card__reviewer-name,
-.ps-testimonials .jdgm-carousel-card__author { font-weight: 800 !important; color: var(--lav-ink) !important; font-family: 'Nunito', sans-serif !important; }
+/* Review title + body */
+.ps-testimonials .jdgm-carousel-item__review-title { font-family: 'Caveat', 'Caveat-fallback', cursive !important; font-size: 1.35rem !important; font-weight: 700 !important; color: var(--lav-ink) !important; margin-bottom: .35rem; }
+.ps-testimonials .jdgm-carousel-item__review-body { color: var(--lav-ink) !important; font-size: .95rem !important; line-height: 1.65 !important; font-weight: 600; }
 
-/* Review body */
-.ps-testimonials .jdgm-carousel-card__review-body,
-.ps-testimonials .jdgm-carousel-card__body { color: var(--lav-ink) !important; line-height: 1.65 !important; font-size: 1rem !important; }
+/* Reviewer + timestamp */
+.ps-testimonials .jdgm-carousel-item__reviewer-name-wrapper { margin-top: auto; padding-top: 1rem; }
+.ps-testimonials .jdgm-carousel-item__reviewer-name { font-weight: 800 !important; color: var(--lav) !important; font-size: .82rem !important; text-transform: uppercase; letter-spacing: .06em; }
+.ps-testimonials .jdgm-carousel-item__timestamp { color: #8a7f92 !important; font-size: .75rem !important; }
 
-/* Navigation arrows */
-.ps-testimonials .jdgm-carousel__prev,
-.ps-testimonials .jdgm-carousel__next { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 50% !important; color: var(--white) !important; }
-.ps-testimonials .jdgm-carousel__prev:hover,
-.ps-testimonials .jdgm-carousel__next:hover { background: var(--lav-dark) !important; }
+/* Product chip link on shop/product reviews */
+.ps-testimonials .jdgm-carousel-item__product { color: var(--lav-dark) !important; font-size: .78rem !important; font-weight: 700; text-decoration: none; margin-top: .5rem; }
+.ps-testimonials .jdgm-carousel-item__product:hover { text-decoration: underline; }
 
-/* Dots */
-.ps-testimonials .jdgm-carousel__dot { background: var(--lav-light) !important; }
-.ps-testimonials .jdgm-carousel__dot--active { background: var(--lav) !important; }
+/* Navigation arrows + dots (if carousel paginates) */
+.ps-testimonials .jdgm-carousel__prev, .ps-testimonials .jdgm-carousel__next { background: var(--lav) !important; border-color: var(--lav) !important; color: #fff !important; }
+.ps-testimonials .jdgm-carousel__prev:hover, .ps-testimonials .jdgm-carousel__next:hover { background: var(--lav-dark) !important; }
+.ps-testimonials .jdgm-carousel__dot { background: rgba(255,255,255,.35) !important; }
+.ps-testimonials .jdgm-carousel__dot--active { background: #fff !important; }
 
-/* "Write a review" button */
-.ps-testimonials .jdgm-write-rev-link { background: var(--lav) !important; border-color: var(--lav) !important; border-radius: 30px !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .06em !important; }
-.ps-testimonials .jdgm-write-rev-link:hover { background: var(--lav-dark) !important; }
-
-/* Summary badge */
-.ps-testimonials .jdgm-all-reviews-text-summary { color: var(--lav) !important; font-family: 'Luckiest Guy', cursive !important; letter-spacing: .04em !important; }
 </style>
