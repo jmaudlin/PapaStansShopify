@@ -232,6 +232,15 @@
   gap: 0.5rem;
   padding: 0.75rem 0 1.25rem;
 }
+/* Mobile: collection tabs as one swipeable row (asset-CSS copy exists too,
+   but the assets/ sync path has dropped updates — section styles sync reliably) */
+@media (max-width: 680px) {
+  .ps-coll-toolbar { display: block; }
+  .ps-coll-toolbar .ps-cat-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: .5rem; margin-bottom: 1rem; }
+  .ps-coll-toolbar .ps-cat-tabs::-webkit-scrollbar { display: none; }
+  .ps-coll-toolbar .ps-cat-tab { flex-shrink: 0; white-space: nowrap; }
+  .ps-coll-toolbar .ps-sort-form, .ps-coll-toolbar .ps-sort-select { width: 100%; }
+}
 .ps-scent-btn {
   background: var(--lav-light, #f3eeff);
   color: var(--lav-ink, #3b2d6e);
