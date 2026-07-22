@@ -154,9 +154,15 @@ body { font-family: 'Nunito', 'Nunito-fallback', sans-serif; background: var(--o
 .ps-nudge { animation: ps-bucket-nudge 1s ease-in-out; }
 @keyframes ps-bucket-nudge { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-9deg); } 55% { transform: rotate(2deg); } 75% { transform: rotate(-4deg); } }
 
-/* ── Reduced motion: unpin the kinetic sequence into a static stacked page ── */
+/* ── Reduced motion: kill animation timing (motion-sensitivity only) ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+/* ── Unpin the kinetic sequence into a static stacked page.
+     Applies to reduced-motion AND phones (≤680px): pinned scroll-scrubbing
+     fights touch momentum scrolling, so mobile gets a normal page. The JS
+     engine early-returns under the same conditions. ── */
+@media (prefers-reduced-motion: reduce), (max-width: 680px) {
   .ps-herowrap { height: auto; }
   .ps-heropin { position: static; height: auto; overflow: visible; display: flex; flex-direction: column; }
   .ps-hero-bgdark, .ps-hero-photo, #psBubbleField, .ps-hero-panel, .ps-hero-wipe-d, .ps-hero-wipe-blog, .ps-hero-wipe-f, .ps-kmarquee, .ps-scroll-cue { display: none; }
@@ -164,4 +170,12 @@ body { font-family: 'Nunito', 'Nunito-fallback', sans-serif; background: var(--o
   .ps-hero-runway, .ps-hero-testimonials-layer, .ps-hero-blog-layer, .ps-hero-newsletter-layer { position: static; opacity: 1; overflow: visible; }
   .ps-hero-testimonials-layer .ps-testimonials, .ps-hero-newsletter-layer .ps-newsletter { height: auto; }
   .ps-hero-panel-content, .ps-reveal { opacity: 1 !important; transform: none !important; }
+}
+/* ── Mobile rhythm for the stacked chapters ── */
+@media (max-width: 680px) {
+  .ps-hero-zoomlabel { padding: calc(var(--nav-top, 44px) + 84px) 1.3rem 3.2rem; min-height: 78vh; justify-content: center; }
+  .ps-hero-zoomlabel h1 { margin: 1rem 0 1.6rem; }
+  .ps-hero-runway { padding: 3rem 0 1.5rem; }
+  .ps-hero-blog-layer, .ps-hero-testimonials-layer { padding: 1.5rem 0; }
+  .ps-hero-newsletter-layer { margin-top: 1.5rem; }
 }

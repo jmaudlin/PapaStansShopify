@@ -24,6 +24,17 @@
   var latestP = 0;
   if (!herowrap || !bubbleField) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Phones get the static stacked layout (see the unpin CSS block) — pinned
+  // scrubbing fights touch momentum scrolling and iOS URL-bar viewport changes.
+  if (window.matchMedia('(max-width: 680px)').matches) {
+    // If a rotation/resize crosses back above the breakpoint, the pinned CSS
+    // returns but the engine isn't running — reload once to boot it.
+    var mq680 = window.matchMedia('(max-width: 680px)');
+    var onCross = function (e) { if (!e.matches) location.reload(); };
+    if (mq680.addEventListener) { mq680.addEventListener('change', onCross); }
+    else if (mq680.addListener) { mq680.addListener(onCross); }
+    return;
+  }
 
   // One continuous pin, six phases back to back:
   //   A  bucket tips, panel grows in (covers screen)
