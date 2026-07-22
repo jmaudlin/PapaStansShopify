@@ -399,7 +399,6 @@
   .ps-products--in-hero .ps-pgrid { display: flex; overflow-x: auto; padding: 1rem .5rem 1.5rem; }
   .ps-products--in-hero .ps-pc { flex: 0 0 190px; }
   .ps-products--in-hero .ps-pgrid .ps-pc:nth-child(n+7) { display: flex; }
-  .ps-products--in-hero .ps-mobile-view-all { display: none !important; }
 }
 
 /* Landscape mobile / tablet: show links normally, hide hamburger */
