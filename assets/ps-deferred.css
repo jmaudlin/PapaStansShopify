@@ -201,7 +201,8 @@
 .ps-f-contact { font-family:'Caveat','Caveat-fallback',cursive;font-size:1rem;color:var(--sun);margin-bottom:1.2rem; }
 .ps-f-contact a { color:var(--sun);text-decoration:none; }
 .ps-f-contact a:hover { color:var(--honey); }
-.ps-f-soc { display:flex;gap:.6rem; }
+.ps-f-soc { display:flex;flex-wrap:wrap;gap:.6rem; }
+.ps-soc-a { flex-shrink:0; }
 .ps-soc-a { width:36px;height:36px;border:2px solid rgba(164,112,200,.25);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--tan);opacity:.6;text-decoration:none;font-size:.8rem;font-weight:800;transition:all .25s; }
 .ps-soc-a:hover { opacity:1;border-color:var(--lavender);color:var(--lavender);background:rgba(188,140,190,.15); }
 .ps-footer-col h5 { font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lav-300,#C8A8E0);margin-bottom:1.2rem; }
