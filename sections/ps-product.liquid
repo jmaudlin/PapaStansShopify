@@ -69,7 +69,7 @@
           <span class="ps-pdp-perk">🌿 All Natural</span>
           <span class="ps-pdp-perk">⭐ Made in Iowa</span>
           <span class="ps-pdp-perk">🎁 Free Samples on Orders</span>
-          <span class="ps-pdp-perk">🚚 Free Shipping $55+</span>
+          <span class="ps-pdp-perk">🚚 Free Shipping ${{ settings.free_shipping_threshold | default: 100 }}+</span>
         </div>
         {%- endif -%}
 

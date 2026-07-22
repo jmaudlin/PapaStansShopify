@@ -31,7 +31,7 @@
     {%- endfor -%}
   {%- else -%}
     🎁 <strong>Try 4 FREE Samples</strong> with any order! &nbsp;·&nbsp;
-    🚚 <strong>FREE Shipping</strong> on $55+ &nbsp;·&nbsp;
+    🚚 <strong>FREE Shipping</strong> on ${{ settings.free_shipping_threshold | default: 100 }}+ &nbsp;·&nbsp;
     📞 <a href="tel:6416701573">641.670.1573</a>
   {%- endif -%}
 </div>
