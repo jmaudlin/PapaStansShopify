@@ -38,7 +38,10 @@
 
 <nav class="ps-nav{% if nav_solid %} ps-nav-solid{% endif %}" id="psNav">
   <a href="{{ shop.url }}" class="ps-nav-logo">
-    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img" width="320" height="133" loading="eager">
+    <img src="{{ 'logo.png' | asset_img_url: '320x' }}"
+         srcset="{{ 'logo.png' | asset_img_url: '160x' }} 160w, {{ 'logo.png' | asset_img_url: '320x' }} 320w, {{ 'logo.png' | asset_img_url: '480x' }} 480w"
+         sizes="155px"
+         alt="{{ shop.name }}" class="ps-nav-logo-img" width="324" height="134" loading="eager" fetchpriority="high">
   </a>
   <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
     <span></span><span></span><span></span>

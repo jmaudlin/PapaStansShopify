@@ -48,7 +48,10 @@
            height="{{ section.settings.logo_width | divided_by: 4 }}"
            loading="eager">
     {%- else -%}
-      <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" class="ps-nav-logo-img" loading="eager">
+      <img src="{{ 'logo.png' | asset_img_url: '320x' }}"
+           srcset="{{ 'logo.png' | asset_img_url: '160x' }} 160w, {{ 'logo.png' | asset_img_url: '320x' }} 320w, {{ 'logo.png' | asset_img_url: '480x' }} 480w"
+           sizes="155px"
+           alt="{{ shop.name }}" class="ps-nav-logo-img" width="324" height="134" loading="eager" fetchpriority="high">
     {%- endif -%}
   </a>
   <button class="ps-hamburger" id="psHamburger" aria-label="Open menu" aria-expanded="false" onclick="psToggleMenu(this)">
