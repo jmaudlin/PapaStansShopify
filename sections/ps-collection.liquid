@@ -35,6 +35,16 @@
         {%- endunless -%}
       {%- endfor -%}
     </div>
+    <script>
+      /* Mobile: start the swipe row with the active collection in view */
+      (function(){
+        var bar=document.getElementById('psCatTabs');
+        var act=bar&&bar.querySelector('.ps-cat-tab.active');
+        if(bar&&act&&bar.scrollWidth>bar.clientWidth){
+          bar.scrollLeft=Math.max(0,act.offsetLeft-(bar.clientWidth-act.offsetWidth)/2);
+        }
+      })();
+    </script>
     <form method="get" class="ps-sort-form">
       <select name="sort_by" class="ps-sort-select" onchange="this.form.submit()">
         <option value="manual"             {% if collection.sort_by == 'manual'             %}selected{% endif %}>Featured</option>

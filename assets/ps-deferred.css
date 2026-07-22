@@ -1349,3 +1349,13 @@
 /* Judge.me stars: brand lavender site-wide (brand rule: no yellow) */
 .jdgm-star.jdgm--on, .jdgm-star.jdgm--half:before { color: var(--lav) !important; }
 .jdgm-star.jdgm--off { color: rgba(124,77,158,.25) !important; }
+
+/* ── Collection page tabs on mobile: one swipeable row instead of a 6-row chip wall ── */
+@media (max-width: 680px) {
+  .ps-coll-toolbar { display: block; }
+  .ps-coll-toolbar .ps-cat-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: .5rem; margin-bottom: 1rem; }
+  .ps-coll-toolbar .ps-cat-tabs::-webkit-scrollbar { display: none; }
+  .ps-coll-toolbar .ps-cat-tab { flex-shrink: 0; white-space: nowrap; }
+  .ps-coll-toolbar .ps-sort-form { width: 100%; }
+  .ps-coll-toolbar .ps-sort-select { width: 100%; }
+}
