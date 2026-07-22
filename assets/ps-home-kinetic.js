@@ -386,6 +386,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     prev.style.pointerEvents = atStart ? 'none' : 'auto';
     next.style.opacity = atEnd ? '0.3' : '1';
     next.style.pointerEvents = atEnd ? 'none' : 'auto';
+    var wrap = grid.closest('.ps-pgrid-wrap');
+    if (wrap) {
+      wrap.classList.toggle('at-start', atStart);
+      wrap.classList.toggle('at-end', atEnd);
+    }
+    var hint = document.getElementById('psSwipeHint');
+    if (hint && !atStart) hint.classList.add('seen');
   }
 
   prev.addEventListener('click', function() { scrollBy(-1); });

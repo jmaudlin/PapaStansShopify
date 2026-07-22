@@ -1333,3 +1333,15 @@
 }
 
 /* sync-bump: force Shopify to re-pull this asset (aafc903 sync was dropped) */
+
+/* ── Product row scroll affordance: edge fades + touch swipe hint ── */
+.ps-pgrid-wrap::before, .ps-pgrid-wrap::after { content:''; position:absolute; top:0; bottom:0; width:56px; z-index:5; pointer-events:none; transition:opacity .3s; }
+.ps-pgrid-wrap::before { left:0; background:linear-gradient(90deg, var(--offwhite), transparent); opacity:0; }
+.ps-pgrid-wrap::after { right:0; background:linear-gradient(270deg, var(--offwhite), transparent); }
+.ps-pgrid-wrap.at-end::after { opacity:0; }
+.ps-pgrid-wrap:not(.at-start)::before { opacity:1; }
+.ps-swipe-hint { display:none; align-items:center; justify-content:center; gap:.45rem; margin:-.4rem 0 .4rem; font-family:'Caveat','Caveat-fallback',cursive; font-size:1.15rem; font-weight:600; color:var(--lav-mid); transition:opacity .6s; }
+.ps-swipe-hint .chev { display:inline-block; animation: ps-swipe-nudge 1.6s ease-in-out infinite; }
+@keyframes ps-swipe-nudge { 0%,100% { transform:translateX(0); opacity:.9; } 50% { transform:translateX(7px); opacity:.5; } }
+.ps-swipe-hint.seen { opacity:0; }
+@media (pointer: coarse) { .ps-swipe-hint { display:flex; } .ps-pgrid-arrow { display:none; } }
