@@ -95,10 +95,29 @@
   var productGrid = document.getElementById('psProductGrid');
   var productGridTarget = 0;
 
-  function onHeroScroll() {
+  // ── Layout cache: geometry is measured on load/resize only, never in the
+  //    scroll path. The old per-tick getBoundingClientRect / innerWidth /
+  //    scrollWidth reads landed right after the previous tick's style writes,
+  //    forcing a synchronous reflow on every scroll event. ──
+  var vwC = window.innerWidth, vhC = window.innerHeight;
+  var heroTopC = 0, heroTotalC = 1, gridMaxC = 0;
+  function psReadScrollY() {
+    return document.documentElement.scrollTop || document.body.scrollTop || window.scrollY || 0;
+  }
+  function psMeasure() {
+    vwC = window.innerWidth; vhC = window.innerHeight;
     var rect = herowrap.getBoundingClientRect();
-    var total = rect.height - window.innerHeight;
-    var p = Math.min(1, Math.max(0, -rect.top / total));
+    heroTopC = rect.top + psReadScrollY();
+    heroTotalC = Math.max(1, rect.height - vhC);
+    if (productGrid) gridMaxC = productGrid.scrollWidth - productGrid.clientWidth;
+  }
+  psMeasure();
+  window.addEventListener('load', psMeasure);
+  window.addEventListener('ps:gridchange', psMeasure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(psMeasure);
+
+  function onHeroScroll() {
+    var p = Math.min(1, Math.max(0, (psReadScrollY() - heroTopC) / heroTotalC));
     latestP = p;
     lastActivity = Date.now();
 
@@ -121,7 +140,7 @@
     var ep = easeInOutCubic(pA);
     var pB = Math.min(1, Math.max(0, (p - PA_END) / (PB_END - PA_END)));
     var epB = easeInOutCubic(pB);
-    var vw = window.innerWidth, vh = window.innerHeight;
+    var vw = vwC, vh = vhC;
 
     var bucketW = 140, bucketH = 140;
     var bucketX = vw - bucketW - vw * 0.06;
@@ -207,7 +226,7 @@
     //     frame instead of jumping straight to it on every scroll tick. ──
     if (productGrid) {
       var pC = Math.min(1, Math.max(0, (p - PB_END) / (PC_END - PB_END)));
-      var maxScroll = productGrid.scrollWidth - productGrid.clientWidth;
+      var maxScroll = gridMaxC;
       productGridTarget = maxScroll > 0 ? pC * maxScroll : 0;
     }
 
@@ -241,14 +260,20 @@
     }
   }
 
-  function smoothProductGrid() {
+  // ── Master rAF engine: reads happen at the top of the frame while layout
+  //    is clean, then all writes. Scroll events only raise a flag, so the
+  //    handler runs at most once per frame no matter how often 'scroll' fires. ──
+  var scrollDirty = false;
+  function psFrame() {
+    var gridPos = productGrid ? productGrid.scrollLeft : 0; // read phase
+    if (scrollDirty) { scrollDirty = false; onHeroScroll(); } // write phase
     if (productGrid) {
-      var dist = productGridTarget - productGrid.scrollLeft;
-      if (Math.abs(dist) > 0.5) productGrid.scrollLeft += dist * 0.12;
+      var dist = productGridTarget - gridPos;
+      if (Math.abs(dist) > 0.5) productGrid.scrollLeft = gridPos + dist * 0.12;
     }
-    requestAnimationFrame(smoothProductGrid);
+    requestAnimationFrame(psFrame);
   }
-  requestAnimationFrame(smoothProductGrid);
+  requestAnimationFrame(psFrame);
 
   // NOTE: this theme scrolls on <body>, not <window> — 'scroll' events on window alone
   // never fire here. Listen on both so this keeps working if that ever changes.
@@ -259,9 +284,8 @@
   var STREAM_STOP_P = 0.02;
   function spawnStreamBubble() {
     if (!heroPin || latestP > STREAM_STOP_P || document.hidden) return;
-    var vw = window.innerWidth, vh = window.innerHeight;
-    var bucketW = heroPhoto ? heroPhoto.offsetWidth : 120;
-    var bucketH = heroPhoto ? heroPhoto.offsetHeight : 120;
+    var vw = vwC, vh = vhC;
+    var bucketW = 140, bucketH = 140; // matches the fixed size set in onHeroScroll
     var bucketX = vw - bucketW - vw * 0.06;
     var bucketY = vh - bucketH - vh * 0.05;
     var mouthX = bucketX + bucketW * (0.35 + Math.random() * 0.35);
@@ -301,10 +325,11 @@
     if (e.animationName === 'ps-bucket-nudge') heroBucketEl.classList.remove('ps-nudge');
   });
 
-  document.body.addEventListener('scroll', onHeroScroll, { passive: true });
-  window.addEventListener('scroll', onHeroScroll, { passive: true });
-  window.addEventListener('resize', onHeroScroll);
-  onHeroScroll();
+  function psQueueScroll() { scrollDirty = true; }
+  document.body.addEventListener('scroll', psQueueScroll, { passive: true });
+  window.addEventListener('scroll', psQueueScroll, { passive: true });
+  window.addEventListener('resize', function () { psMeasure(); scrollDirty = true; });
+  scrollDirty = true;
 })();
 
 // ── Parallax ──
@@ -324,14 +349,31 @@ function psSetNavTop() {
   document.documentElement.style.setProperty('--nav-top', h + 'px');
   document.documentElement.style.setProperty('--nav-height', (nav ? nav.offsetHeight : 70) + 'px');
 }
+const psNavEl = document.getElementById('psNav');
+let psNavScrolled = null;
 function psOnScroll() {
   const sy = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY;
   if (psHeroBgEl)   psHeroBgEl.style.transform  = `translateY(${sy * 0.45}px)`;
   if (psHeroArtEl)  psHeroArtEl.style.transform  = `translateY(${sy * 0.25}px) scaleX(-1)`;
-  document.getElementById('psNav').classList.toggle('scrolled', sy > 50);
-  document.documentElement.style.setProperty('--nav-height', (document.getElementById('psNav')?.offsetHeight || 70) + 'px');
+  const scrolled = sy > 50;
+  if (scrolled !== psNavScrolled) {
+    psNavScrolled = scrolled;
+    if (psNavEl) psNavEl.classList.toggle('scrolled', scrolled);
+    // Nav height only changes when this state flips — no need to read
+    // offsetHeight (a forced reflow) on every scroll tick like before.
+    requestAnimationFrame(psSetNavTop);
+  }
 }
-window.addEventListener('scroll', psOnScroll, { passive: true });
+if (psNavEl) psNavEl.addEventListener('transitionend', psSetNavTop);
+let psParTick = false;
+function psQueueParallax() {
+  if (psParTick) return;
+  psParTick = true;
+  requestAnimationFrame(() => { psParTick = false; psOnScroll(); });
+}
+// Theme scrolls on <body>; listen there too or the parallax never ticks.
+document.body.addEventListener('scroll', psQueueParallax, { passive: true });
+window.addEventListener('scroll', psQueueParallax, { passive: true });
 window.addEventListener('resize', psSetNavTop, { passive: true });
 psSetNavTop();
 psOnScroll();
@@ -365,6 +407,7 @@ document.getElementById('psCatTabs').addEventListener('click', e => {
   var grid = document.getElementById('psProductGrid');
   if (grid) {
     grid.scrollLeft = 0;
+    window.dispatchEvent(new Event('ps:gridchange'));
     grid.dispatchEvent(new Event('scroll'));
   }
 });
@@ -390,9 +433,15 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     grid.scrollBy({ left: dir * step, behavior: 'smooth' });
   }
 
+  var gridMaxLocal = 0;
+  function measureGrid() { gridMaxLocal = grid.scrollWidth - grid.offsetWidth; }
+  measureGrid();
+  window.addEventListener('resize', measureGrid);
+  window.addEventListener('ps:gridchange', measureGrid);
+
   function updateArrows() {
     var atStart = grid.scrollLeft <= 4;
-    var atEnd = grid.scrollLeft >= grid.scrollWidth - grid.offsetWidth - 4;
+    var atEnd = grid.scrollLeft >= gridMaxLocal - 4;
     prev.style.opacity = atStart ? '0.3' : '1';
     prev.style.pointerEvents = atStart ? 'none' : 'auto';
     next.style.opacity = atEnd ? '0.3' : '1';
@@ -408,7 +457,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   prev.addEventListener('click', function() { scrollBy(-1); });
   next.addEventListener('click', function() { scrollBy(1); });
-  grid.addEventListener('scroll', updateArrows, { passive: true });
+  var arrowTick = false;
+  grid.addEventListener('scroll', function () {
+    if (arrowTick) return;
+    arrowTick = true;
+    requestAnimationFrame(function () { arrowTick = false; updateArrows(); });
+  }, { passive: true });
   updateArrows();
 })();
 
