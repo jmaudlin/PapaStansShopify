@@ -27,6 +27,10 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   // Phones get the static stacked layout (see the unpin CSS block) — pinned
   // scrubbing fights touch momentum scrolling and iOS URL-bar viewport changes.
+  // CSS scroll-driven animations handle the pure-lerp layers (wipes, panel
+  // clip, bgdark, section opacities, bucket-photo geometry) when supported.
+  // JS keeps: bucket physics, bubbles, carousel scrub, cues, pointer-events.
+  var CSS_SDA = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline: scroll()');
   var psStaticMq = '(max-width: 680px), ((pointer: coarse) and (max-width: 1024px))';
   if (window.matchMedia(psStaticMq).matches) {
     // Touch devices stay static in BOTH orientations (no engine boot on
@@ -145,16 +149,18 @@
     var bucketW = 140, bucketH = 140;
     var bucketX = vw - bucketW - vw * 0.06;
     var bucketY = vh - bucketH - vh * 0.05;
-    heroPhoto.style.left = bucketX + 'px';
-    heroPhoto.style.top = bucketY + 'px';
-    heroPhoto.style.width = bucketW + 'px';
-    heroPhoto.style.height = bucketH + 'px';
+    if (!CSS_SDA) {
+      heroPhoto.style.left = bucketX + 'px';
+      heroPhoto.style.top = bucketY + 'px';
+      heroPhoto.style.width = bucketW + 'px';
+      heroPhoto.style.height = bucketH + 'px';
+    }
 
     var tip = Math.min(1, Math.max(0, (ep - 0.12) / 0.35));
     var angle = lerp(0, -104, tip);
     heroBucket.style.transform = 'rotate(' + angle + 'deg)';
 
-    heroBgDark.style.opacity = String(1 - Math.min(1, Math.max(0, (ep - 0.6) / 0.35)));
+    if (!CSS_SDA) heroBgDark.style.opacity = String(1 - Math.min(1, Math.max(0, (ep - 0.6) / 0.35)));
 
     var spoutX = bucketX + bucketW * lerp(0.55, 0.05, tip);
     var spoutY = bucketY + bucketH * lerp(0.15, 0.45, tip);
@@ -178,47 +184,59 @@
     });
 
     var openT = Math.max(0, ep - epB);
-    var topX = lerp(0, 100, openT), bottomX = lerp(0, 78, openT);
-    heroPanel.style.clipPath = 'polygon(0 0, ' + topX + '% 0, ' + bottomX + '% 100%, 0 100%)';
+    if (!CSS_SDA) {
+      var topX = lerp(0, 100, openT), bottomX = lerp(0, 78, openT);
+      heroPanel.style.clipPath = 'polygon(0 0, ' + topX + '% 0, ' + bottomX + '% 100%, 0 100%)';
+    }
 
     var contentP = Math.min(1, Math.max(0, (ep - 0.45) / 0.55)) * (1 - epB);
-    heroPanelContent.style.opacity = contentP;
-    heroPanelContent.style.transform = 'translateX(' + lerp(-40, 0, contentP) + 'px)';
+    if (!CSS_SDA) {
+      heroPanelContent.style.opacity = contentP;
+      heroPanelContent.style.transform = 'translateX(' + lerp(-40, 0, contentP) + 'px)';
+    }
     heroPanelContent.style.pointerEvents = contentP > 0.5 ? 'auto' : 'none';
 
     var labelOpacity = (1 - Math.min(1, ep / 0.3)) * (1 - epB);
-    heroZoomLabel.style.opacity = labelOpacity;
+    if (!CSS_SDA) heroZoomLabel.style.opacity = labelOpacity;
     heroZoomLabel.style.pointerEvents = labelOpacity > 0.5 ? 'auto' : 'none';
 
-    heroPhoto.style.opacity = String(1 - epB);
-    bubbleField.style.opacity = String(1 - epB);
+    if (!CSS_SDA) {
+      heroPhoto.style.opacity = String(1 - epB);
+      bubbleField.style.opacity = String(1 - epB);
+    }
 
     // ── Phase D: products -> testimonials (right-anchored wipe, opposite of B) ──
     var pD = Math.min(1, Math.max(0, (p - PC_END) / (PD_END - PC_END)));
     var pD_grow = easeInOutCubic(Math.min(1, pD / 0.5));
     var pD_shrink = easeInOutCubic(Math.max(0, (pD - 0.5) / 0.5));
     var openD = pD_grow - pD_shrink;
-    var topXD = lerp(0, 100, openD), bottomXD = lerp(0, 78, openD);
-    if (wipeD) wipeD.style.clipPath = 'polygon(' + (100 - topXD) + '% 0, 100% 0, 100% 100%, ' + (100 - bottomXD) + '% 100%)';
+    if (!CSS_SDA && wipeD) {
+      var topXD = lerp(0, 100, openD), bottomXD = lerp(0, 78, openD);
+      wipeD.style.clipPath = 'polygon(' + (100 - topXD) + '% 0, 100% 0, 100% 100%, ' + (100 - bottomXD) + '% 100%)';
+    }
 
     // ── W2 wipe: blog -> testimonials (left-anchored, same direction as B) ──
     var pW2 = Math.min(1, Math.max(0, (p - PE_END) / (PW2_END - PE_END)));
     var pW2_grow = easeInOutCubic(Math.min(1, pW2 / 0.5));
     var pW2_shrink = easeInOutCubic(Math.max(0, (pW2 - 0.5) / 0.5));
     var openW2 = pW2_grow - pW2_shrink;
-    var topXW2 = lerp(0, 100, openW2), bottomXW2 = lerp(0, 78, openW2);
-    if (wipeBlog) wipeBlog.style.clipPath = 'polygon(0 0, ' + topXW2 + '% 0, ' + bottomXW2 + '% 100%, 0 100%)';
+    if (!CSS_SDA && wipeBlog) {
+      var topXW2 = lerp(0, 100, openW2), bottomXW2 = lerp(0, 78, openW2);
+      wipeBlog.style.clipPath = 'polygon(0 0, ' + topXW2 + '% 0, ' + bottomXW2 + '% 100%, 0 100%)';
+    }
 
     // ── Phase F: testimonials -> newsletter (right-anchored wipe, opposite of W2) ──
     var pF = Math.min(1, Math.max(0, (p - PE2_END) / (PF_END - PE2_END)));
     var pF_grow = easeInOutCubic(Math.min(1, pF / 0.5));
     var pF_shrink = easeInOutCubic(Math.max(0, (pF - 0.5) / 0.5));
     var openF = pF_grow - pF_shrink;
-    var topXF = lerp(0, 100, openF), bottomXF = lerp(0, 78, openF);
-    if (wipeF) wipeF.style.clipPath = 'polygon(' + (100 - topXF) + '% 0, 100% 0, 100% 100%, ' + (100 - bottomXF) + '% 100%)';
+    if (!CSS_SDA && wipeF) {
+      var topXF = lerp(0, 100, openF), bottomXF = lerp(0, 78, openF);
+      wipeF.style.clipPath = 'polygon(' + (100 - topXF) + '% 0, 100% 0, 100% 100%, ' + (100 - bottomXF) + '% 100%)';
+    }
 
     var runwayOpacity = epB * (1 - pD_grow);
-    heroRunway.style.opacity = String(runwayOpacity);
+    if (!CSS_SDA) heroRunway.style.opacity = String(runwayOpacity);
     heroRunway.style.pointerEvents = runwayOpacity > 0.5 ? 'auto' : 'none';
 
     // ── Phase C: auto-scroll the product carousel horizontally as the page scrolls.
@@ -232,19 +250,19 @@
 
     if (heroBlog) {
       var blogOpacity = pD_shrink * (1 - pW2_grow);
-      heroBlog.style.opacity = String(blogOpacity);
+      if (!CSS_SDA) heroBlog.style.opacity = String(blogOpacity);
       heroBlog.style.pointerEvents = blogOpacity > 0.5 ? 'auto' : 'none';
     }
 
     if (heroTestimonials) {
       var testimOpacity = pW2_shrink * (1 - pF_grow);
-      heroTestimonials.style.opacity = String(testimOpacity);
+      if (!CSS_SDA) heroTestimonials.style.opacity = String(testimOpacity);
       heroTestimonials.style.pointerEvents = testimOpacity > 0.5 ? 'auto' : 'none';
     }
 
     if (heroNewsletter) {
       var newsletterOpacity = pF_shrink;
-      heroNewsletter.style.opacity = String(newsletterOpacity);
+      if (!CSS_SDA) heroNewsletter.style.opacity = String(newsletterOpacity);
       heroNewsletter.style.pointerEvents = newsletterOpacity > 0.5 ? 'auto' : 'none';
     }
 
