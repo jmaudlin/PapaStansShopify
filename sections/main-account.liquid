@@ -1,14 +1,15 @@
 
-<div class="ps-page-wrap">
-
-  <!-- Account header -->
-  <div class="ps-account-header">
+<div class="ps-sk-head">
+  <div class="ps-sk-head-inner ps-sk-head-row">
     <div>
-      <div class="ps-section-tag" style="margin-bottom:.5rem">👤 My Account</div>
-      <h1 class="ps-section-h2">Hello, <em>{{ customer.first_name }}!</em></h1>
+      <div class="ps-section-tag">👤 My Account</div>
+      <h1>Hello, <em>{{ customer.first_name }}!</em></h1>
     </div>
-    <a href="{{ routes.account_logout_url }}" class="ps-account-logout">Sign Out →</a>
+    <a href="{{ routes.account_logout_url }}" class="ps-account-logout ps-sk-head-logout">Sign Out →</a>
   </div>
+</div>
+
+<div class="ps-page-wrap">
 
   <div class="ps-account-grid">
 

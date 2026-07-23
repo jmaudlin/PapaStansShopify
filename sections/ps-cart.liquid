@@ -1,7 +1,12 @@
 
+<div class="ps-sk-head">
+  <div class="ps-sk-head-inner">
+    <div class="ps-section-tag">🛒 Cart</div>
+    <h1>Your Cart{% if cart.item_count > 0 %} <em>({{ cart.item_count }})</em>{% endif %}</h1>
+  </div>
+</div>
+
 <div class="ps-page-wrap">
-  <div class="ps-section-tag" style="margin-bottom:.5rem">🛒 Your Cart</div>
-  <h1 class="ps-section-h2" style="margin-bottom:2rem">Your Cart</h1>
 
   {%- if cart.item_count == 0 -%}
     <div style="text-align:center;padding:4rem 1rem">

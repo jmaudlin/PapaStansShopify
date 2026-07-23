@@ -1313,6 +1313,9 @@
 .ps-sk-head h1 { font-family: 'Luckiest Guy', 'LuckiestGuy-fallback', cursive; font-size: clamp(2.4rem,5.5vw,4.4rem); line-height: 1; letter-spacing: .02em; color: #fff; text-shadow: 5px 5px 0 var(--lav-dark); margin: .4rem 0 0; text-transform: uppercase; }
 .ps-sk-head h1 em { font-style: normal; color: var(--lav-light); }
 .ps-sk-head-sub { font-family: 'Caveat', 'Caveat-fallback', cursive; font-size: clamp(1.1rem,2vw,1.4rem); color: var(--lav-light); margin: .8rem 0 0; max-width: 640px; }
+.ps-sk-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.ps-sk-head .ps-sk-head-logout { color: #fff; border-color: rgba(255,255,255,.7); }
+.ps-sk-head .ps-sk-head-logout:hover { color: var(--lav-light); border-color: var(--lav-light); }
 .ps-sk-head + .ps-page-wrap { padding-top: 1.5rem; }
 @media (max-width: 700px) { .ps-sk-head { padding: 6rem 1.5rem 4rem; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); } }
 
